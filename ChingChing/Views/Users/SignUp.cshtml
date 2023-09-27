@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="min-height: 600px; margin: 60px auto;">
+    <div class="row">
+        <div class="col-lg-6" style="height:500px">
+            <img src="~/Images/signup.png" alt="" style="width:100%; height:80%">
+        </div>
+        <div class="col-lg-6 right-signup">
+            <h3>Đăng ký tài khoản</h3>
+            <small style="color:red">@ViewBag.Warning</small>
+            @using (Html.BeginForm("SignUp", "Users", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+                if (ViewBag.Notif != null)
+                {
+                    <small class="text-danger">@ViewBag.Notif</small> <br />
+                }
+
+                <input type="text" name="NameCus" placeholder="Họ tên của bạn" class="form-control" required>
+                <input type="email" name="EmailCus" placeholder="Email" class="form-control" required>
+                <input type="password" name="PassCus" placeholder="Mật khẩu" class="form-control" required>
+                <input type="password" name="Repass" placeholder="Nhập lại mật khẩu" class="form-control" required>
+
+                <button type="submit" class="btn" style="background-color: rgb(248, 117, 139) ; color:#fff;">Đăng ký ngay</button>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+

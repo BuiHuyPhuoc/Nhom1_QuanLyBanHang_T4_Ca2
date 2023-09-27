@@ -1,0 +1,658 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_ChinhChinhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BILL">
+          <Key>
+            <PropertyRef Name="IDBILL" />
+          </Key>
+          <Property Name="IDBILL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DATEBILL" Type="date" />
+        </EntityType>
+        <EntityType Name="BILLDETAIL">
+          <Key>
+            <PropertyRef Name="IDBILLDETAIL" />
+          </Key>
+          <Property Name="IDBILLDETAIL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+          <Property Name="IDBILL" Type="int" />
+          <Property Name="IDPRO" Type="int" />
+          <Property Name="QUANTITY" Type="smallint" />
+          <Property Name="ADDRESS" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CART">
+          <Key>
+            <PropertyRef Name="IDCART" />
+          </Key>
+          <Property Name="IDCART" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+          <Property Name="IDPRO" Type="int" />
+          <Property Name="QUANTITY" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="IDCATE" />
+          </Key>
+          <Property Name="IDCATE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TENCATE" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="COMMENT">
+          <Key>
+            <PropertyRef Name="IDCMT" />
+          </Key>
+          <Property Name="IDCMT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+          <Property Name="CONTENT" Type="varchar(max)" />
+          <Property Name="DATECMT" Type="date" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="EMAILCUS" />
+          </Key>
+          <Property Name="EMAILCUS" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MATKHAU" Type="varchar(max)" />
+          <Property Name="CUSNAME" Type="nvarchar(max)" />
+          <Property Name="ADDRESS" Type="nvarchar(max)" />
+          <Property Name="MAROLE" Type="int" />
+        </EntityType>
+        <EntityType Name="ORDER">
+          <Key>
+            <PropertyRef Name="IDORDER" />
+          </Key>
+          <Property Name="IDORDER" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DATEORDER" Type="date" />
+        </EntityType>
+        <EntityType Name="ORDERDETAIL">
+          <Key>
+            <PropertyRef Name="IDORDERDETAIL" />
+          </Key>
+          <Property Name="IDORDERDETAIL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+          <Property Name="IDORDER" Type="int" />
+          <Property Name="IDPRO" Type="int" />
+          <Property Name="QUANTITY" Type="smallint" />
+          <Property Name="ADDRESS" Type="nvarchar(max)" />
+          <Property Name="STATUS" Type="bit" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="IDPRO" />
+          </Key>
+          <Property Name="IDPRO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDCATE" Type="int" />
+          <Property Name="NAMEPRO" Type="nvarchar" MaxLength="100" />
+          <Property Name="DESCRIPTIONPRO" Type="nvarchar(max)" />
+          <Property Name="PRICE" Type="money" />
+          <Property Name="IMAGEPRO" Type="varchar(max)" />
+          <Property Name="QUANTITY" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="MAROLE" />
+          </Key>
+          <Property Name="MAROLE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TENROLE" Type="nvarchar" MaxLength="20" />
+          <Property Name="CHIETKHAU" Type="real" />
+        </EntityType>
+        <Association Name="FK_BILLDETAIL_BILL">
+          <End Role="BILL" Type="Self.BILL" Multiplicity="0..1" />
+          <End Role="BILLDETAIL" Type="Self.BILLDETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BILL">
+              <PropertyRef Name="IDBILL" />
+            </Principal>
+            <Dependent Role="BILLDETAIL">
+              <PropertyRef Name="IDBILL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BILLDETAIL_PRODUCT">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+          <End Role="BILLDETAIL" Type="Self.BILLDETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="IDPRO" />
+            </Principal>
+            <Dependent Role="BILLDETAIL">
+              <PropertyRef Name="IDPRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CART_CUSTOMER">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
+          <End Role="CART" Type="Self.CART" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="EMAILCUS" />
+            </Principal>
+            <Dependent Role="CART">
+              <PropertyRef Name="EMAILCUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CART_PRODUCT">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+          <End Role="CART" Type="Self.CART" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="IDPRO" />
+            </Principal>
+            <Dependent Role="CART">
+              <PropertyRef Name="IDPRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COMMENT_CUSTOMER">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
+          <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="EMAILCUS" />
+            </Principal>
+            <Dependent Role="COMMENT">
+              <PropertyRef Name="EMAILCUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CUSTOMER_ROLE">
+          <End Role="ROLE" Type="Self.ROLE" Multiplicity="0..1" />
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE">
+              <PropertyRef Name="MAROLE" />
+            </Principal>
+            <Dependent Role="CUSTOMER">
+              <PropertyRef Name="MAROLE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERDETAIL_ORDER">
+          <End Role="ORDER" Type="Self.ORDER" Multiplicity="0..1" />
+          <End Role="ORDERDETAIL" Type="Self.ORDERDETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDER">
+              <PropertyRef Name="IDORDER" />
+            </Principal>
+            <Dependent Role="ORDERDETAIL">
+              <PropertyRef Name="IDORDER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERDETAIL_PRODUCT">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+          <End Role="ORDERDETAIL" Type="Self.ORDERDETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="IDPRO" />
+            </Principal>
+            <Dependent Role="ORDERDETAIL">
+              <PropertyRef Name="IDPRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_CATEGORY">
+          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY">
+              <PropertyRef Name="IDCATE" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IDCATE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_ChinhChinhModelStoreContainer">
+          <EntitySet Name="BILL" EntityType="Self.BILL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BILLDETAIL" EntityType="Self.BILLDETAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CART" EntityType="Self.CART" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORY" EntityType="Self.CATEGORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="COMMENT" EntityType="Self.COMMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDER" EntityType="Self.ORDER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDERDETAIL" EntityType="Self.ORDERDETAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCT" EntityType="Self.PRODUCT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLE" EntityType="Self.ROLE" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BILLDETAIL_BILL" Association="Self.FK_BILLDETAIL_BILL">
+            <End Role="BILL" EntitySet="BILL" />
+            <End Role="BILLDETAIL" EntitySet="BILLDETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BILLDETAIL_PRODUCT" Association="Self.FK_BILLDETAIL_PRODUCT">
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+            <End Role="BILLDETAIL" EntitySet="BILLDETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CART_CUSTOMER" Association="Self.FK_CART_CUSTOMER">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="CART" EntitySet="CART" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CART_PRODUCT" Association="Self.FK_CART_PRODUCT">
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+            <End Role="CART" EntitySet="CART" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COMMENT_CUSTOMER" Association="Self.FK_COMMENT_CUSTOMER">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="COMMENT" EntitySet="COMMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CUSTOMER_ROLE" Association="Self.FK_CUSTOMER_ROLE">
+            <End Role="ROLE" EntitySet="ROLE" />
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERDETAIL_ORDER" Association="Self.FK_ORDERDETAIL_ORDER">
+            <End Role="ORDER" EntitySet="ORDER" />
+            <End Role="ORDERDETAIL" EntitySet="ORDERDETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERDETAIL_PRODUCT" Association="Self.FK_ORDERDETAIL_PRODUCT">
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+            <End Role="ORDERDETAIL" EntitySet="ORDERDETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_CATEGORY" Association="Self.FK_PRODUCT_CATEGORY">
+            <End Role="CATEGORY" EntitySet="CATEGORY" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_ChinhChinhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BILL">
+          <Key>
+            <PropertyRef Name="IDBILL" />
+          </Key>
+          <Property Name="IDBILL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DATEBILL" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BILLDETAIL_BILL" FromRole="BILL" ToRole="BILLDETAIL" />
+        </EntityType>
+        <EntityType Name="BILLDETAIL">
+          <Key>
+            <PropertyRef Name="IDBILLDETAIL" />
+          </Key>
+          <Property Name="IDBILLDETAIL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IDBILL" Type="Int32" />
+          <Property Name="IDPRO" Type="Int32" />
+          <Property Name="QUANTITY" Type="Int16" />
+          <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BILL" Relationship="Self.FK_BILLDETAIL_BILL" FromRole="BILLDETAIL" ToRole="BILL" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_BILLDETAIL_PRODUCT" FromRole="BILLDETAIL" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="CART">
+          <Key>
+            <PropertyRef Name="IDCART" />
+          </Key>
+          <Property Name="IDCART" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IDPRO" Type="Int32" />
+          <Property Name="QUANTITY" Type="Byte" />
+          <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_CART_CUSTOMER" FromRole="CART" ToRole="CUSTOMER" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_CART_PRODUCT" FromRole="CART" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="IDCATE" />
+          </Key>
+          <Property Name="IDCATE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TENCATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PRODUCTs" Relationship="Self.FK_PRODUCT_CATEGORY" FromRole="CATEGORY" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="COMMENT">
+          <Key>
+            <PropertyRef Name="IDCMT" />
+          </Key>
+          <Property Name="IDCMT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DATECMT" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_COMMENT_CUSTOMER" FromRole="COMMENT" ToRole="CUSTOMER" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="EMAILCUS" />
+          </Key>
+          <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MATKHAU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CUSNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MAROLE" Type="Int32" />
+          <NavigationProperty Name="CARTs" Relationship="Self.FK_CART_CUSTOMER" FromRole="CUSTOMER" ToRole="CART" />
+          <NavigationProperty Name="COMMENTs" Relationship="Self.FK_COMMENT_CUSTOMER" FromRole="CUSTOMER" ToRole="COMMENT" />
+          <NavigationProperty Name="ROLE" Relationship="Self.FK_CUSTOMER_ROLE" FromRole="CUSTOMER" ToRole="ROLE" />
+        </EntityType>
+        <EntityType Name="ORDER">
+          <Key>
+            <PropertyRef Name="IDORDER" />
+          </Key>
+          <Property Name="IDORDER" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DATEORDER" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="ORDERDETAILs" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDER" ToRole="ORDERDETAIL" />
+        </EntityType>
+        <EntityType Name="ORDERDETAIL">
+          <Key>
+            <PropertyRef Name="IDORDERDETAIL" />
+          </Key>
+          <Property Name="IDORDERDETAIL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IDORDER" Type="Int32" />
+          <Property Name="IDPRO" Type="Int32" />
+          <Property Name="QUANTITY" Type="Int16" />
+          <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="STATUS" Type="Boolean" />
+          <NavigationProperty Name="ORDER" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDERDETAIL" ToRole="ORDER" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_ORDERDETAIL_PRODUCT" FromRole="ORDERDETAIL" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="IDPRO" />
+          </Key>
+          <Property Name="IDPRO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDCATE" Type="Int32" />
+          <Property Name="NAMEPRO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTIONPRO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PRICE" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IMAGEPRO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="QUANTITY" Type="Byte" />
+          <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BILLDETAIL_PRODUCT" FromRole="PRODUCT" ToRole="BILLDETAIL" />
+          <NavigationProperty Name="CARTs" Relationship="Self.FK_CART_PRODUCT" FromRole="PRODUCT" ToRole="CART" />
+          <NavigationProperty Name="CATEGORY" Relationship="Self.FK_PRODUCT_CATEGORY" FromRole="PRODUCT" ToRole="CATEGORY" />
+          <NavigationProperty Name="ORDERDETAILs" Relationship="Self.FK_ORDERDETAIL_PRODUCT" FromRole="PRODUCT" ToRole="ORDERDETAIL" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="MAROLE" />
+          </Key>
+          <Property Name="MAROLE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TENROLE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CHIETKHAU" Type="Single" />
+          <NavigationProperty Name="CUSTOMERs" Relationship="Self.FK_CUSTOMER_ROLE" FromRole="ROLE" ToRole="CUSTOMER" />
+        </EntityType>
+        <Association Name="FK_BILLDETAIL_BILL">
+          <End Role="BILL" Type="Self.BILL" Multiplicity="0..1" />
+          <End Role="BILLDETAIL" Type="Self.BILLDETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BILL">
+              <PropertyRef Name="IDBILL" />
+            </Principal>
+            <Dependent Role="BILLDETAIL">
+              <PropertyRef Name="IDBILL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BILLDETAIL_PRODUCT">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+          <End Role="BILLDETAIL" Type="Self.BILLDETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="IDPRO" />
+            </Principal>
+            <Dependent Role="BILLDETAIL">
+              <PropertyRef Name="IDPRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CART_CUSTOMER">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
+          <End Role="CART" Type="Self.CART" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="EMAILCUS" />
+            </Principal>
+            <Dependent Role="CART">
+              <PropertyRef Name="EMAILCUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CART_PRODUCT">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+          <End Role="CART" Type="Self.CART" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="IDPRO" />
+            </Principal>
+            <Dependent Role="CART">
+              <PropertyRef Name="IDPRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_CATEGORY">
+          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY">
+              <PropertyRef Name="IDCATE" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="IDCATE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COMMENT_CUSTOMER">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
+          <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="EMAILCUS" />
+            </Principal>
+            <Dependent Role="COMMENT">
+              <PropertyRef Name="EMAILCUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CUSTOMER_ROLE">
+          <End Role="ROLE" Type="Self.ROLE" Multiplicity="0..1" />
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE">
+              <PropertyRef Name="MAROLE" />
+            </Principal>
+            <Dependent Role="CUSTOMER">
+              <PropertyRef Name="MAROLE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERDETAIL_ORDER">
+          <End Role="ORDER" Type="Self.ORDER" Multiplicity="0..1" />
+          <End Role="ORDERDETAIL" Type="Self.ORDERDETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDER">
+              <PropertyRef Name="IDORDER" />
+            </Principal>
+            <Dependent Role="ORDERDETAIL">
+              <PropertyRef Name="IDORDER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERDETAIL_PRODUCT">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+          <End Role="ORDERDETAIL" Type="Self.ORDERDETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="IDPRO" />
+            </Principal>
+            <Dependent Role="ORDERDETAIL">
+              <PropertyRef Name="IDPRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_ChinhChinhEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BILLs" EntityType="Self.BILL" />
+          <EntitySet Name="BILLDETAILs" EntityType="Self.BILLDETAIL" />
+          <EntitySet Name="CARTs" EntityType="Self.CART" />
+          <EntitySet Name="CATEGORies" EntityType="Self.CATEGORY" />
+          <EntitySet Name="COMMENTs" EntityType="Self.COMMENT" />
+          <EntitySet Name="CUSTOMERs" EntityType="Self.CUSTOMER" />
+          <EntitySet Name="ORDERs" EntityType="Self.ORDER" />
+          <EntitySet Name="ORDERDETAILs" EntityType="Self.ORDERDETAIL" />
+          <EntitySet Name="PRODUCTs" EntityType="Self.PRODUCT" />
+          <EntitySet Name="ROLEs" EntityType="Self.ROLE" />
+          <AssociationSet Name="FK_BILLDETAIL_BILL" Association="Self.FK_BILLDETAIL_BILL">
+            <End Role="BILL" EntitySet="BILLs" />
+            <End Role="BILLDETAIL" EntitySet="BILLDETAILs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BILLDETAIL_PRODUCT" Association="Self.FK_BILLDETAIL_PRODUCT">
+            <End Role="PRODUCT" EntitySet="PRODUCTs" />
+            <End Role="BILLDETAIL" EntitySet="BILLDETAILs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CART_CUSTOMER" Association="Self.FK_CART_CUSTOMER">
+            <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+            <End Role="CART" EntitySet="CARTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CART_PRODUCT" Association="Self.FK_CART_PRODUCT">
+            <End Role="PRODUCT" EntitySet="PRODUCTs" />
+            <End Role="CART" EntitySet="CARTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_CATEGORY" Association="Self.FK_PRODUCT_CATEGORY">
+            <End Role="CATEGORY" EntitySet="CATEGORies" />
+            <End Role="PRODUCT" EntitySet="PRODUCTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COMMENT_CUSTOMER" Association="Self.FK_COMMENT_CUSTOMER">
+            <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+            <End Role="COMMENT" EntitySet="COMMENTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CUSTOMER_ROLE" Association="Self.FK_CUSTOMER_ROLE">
+            <End Role="ROLE" EntitySet="ROLEs" />
+            <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERDETAIL_ORDER" Association="Self.FK_ORDERDETAIL_ORDER">
+            <End Role="ORDER" EntitySet="ORDERs" />
+            <End Role="ORDERDETAIL" EntitySet="ORDERDETAILs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERDETAIL_PRODUCT" Association="Self.FK_ORDERDETAIL_PRODUCT">
+            <End Role="PRODUCT" EntitySet="PRODUCTs" />
+            <End Role="ORDERDETAIL" EntitySet="ORDERDETAILs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_ChinhChinhModelStoreContainer" CdmEntityContainer="DB_ChinhChinhEntities">
+          <EntitySetMapping Name="BILLs">
+            <EntityTypeMapping TypeName="DB_ChinhChinhModel.BILL">
+              <MappingFragment StoreEntitySet="BILL">
+                <ScalarProperty Name="IDBILL" ColumnName="IDBILL" />
+                <ScalarProperty Name="DATEBILL" ColumnName="DATEBILL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BILLDETAILs">
+            <EntityTypeMapping TypeName="DB_ChinhChinhModel.BILLDETAIL">
+              <MappingFragment StoreEntitySet="BILLDETAIL">
+                <ScalarProperty Name="IDBILLDETAIL" ColumnName="IDBILLDETAIL" />
+                <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+                <ScalarProperty Name="IDBILL" ColumnName="IDBILL" />
+                <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CARTs">
+            <EntityTypeMapping TypeName="DB_ChinhChinhModel.CART">
+              <MappingFragment StoreEntitySet="CART">
+                <ScalarProperty Name="IDCART" ColumnName="IDCART" />
+                <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+                <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORies">
+            <EntityTypeMapping TypeName="DB_ChinhChinhModel.CATEGORY">
+              <MappingFragment StoreEntitySet="CATEGORY">
+                <ScalarProperty Name="IDCATE" ColumnName="IDCATE" />
+                <ScalarProperty Name="TENCATE" ColumnName="TENCATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="COMMENTs">
+            <EntityTypeMapping TypeName="DB_ChinhChinhModel.COMMENT">
+              <MappingFragment StoreEntitySet="COMMENT">
+                <ScalarProperty Name="IDCMT" ColumnName="IDCMT" />
+                <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+                <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+                <ScalarProperty Name="DATECMT" ColumnName="DATECMT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMERs">
+            <EntityTypeMapping TypeName="DB_ChinhChinhModel.CUSTOMER">
+              <MappingFragment StoreEntitySet="CUSTOMER">
+                <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+                <ScalarProperty Name="MATKHAU" ColumnName="MATKHAU" />
+                <ScalarProperty Name="CUSNAME" ColumnName="CUSNAME" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="MAROLE" ColumnName="MAROLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERs">
+            <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDER">
+              <MappingFragment StoreEntitySet="ORDER">
+                <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
+                <ScalarProperty Name="DATEORDER" ColumnName="DATEORDER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERDETAILs">
+            <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDERDETAIL">
+              <MappingFragment StoreEntitySet="ORDERDETAIL">
+                <ScalarProperty Name="IDORDERDETAIL" ColumnName="IDORDERDETAIL" />
+                <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+                <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
+                <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTs">
+            <EntityTypeMapping TypeName="DB_ChinhChinhModel.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCT">
+                <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
+                <ScalarProperty Name="IDCATE" ColumnName="IDCATE" />
+                <ScalarProperty Name="NAMEPRO" ColumnName="NAMEPRO" />
+                <ScalarProperty Name="DESCRIPTIONPRO" ColumnName="DESCRIPTIONPRO" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="IMAGEPRO" ColumnName="IMAGEPRO" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLEs">
+            <EntityTypeMapping TypeName="DB_ChinhChinhModel.ROLE">
+              <MappingFragment StoreEntitySet="ROLE">
+                <ScalarProperty Name="MAROLE" ColumnName="MAROLE" />
+                <ScalarProperty Name="TENROLE" ColumnName="TENROLE" />
+                <ScalarProperty Name="CHIETKHAU" ColumnName="CHIETKHAU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

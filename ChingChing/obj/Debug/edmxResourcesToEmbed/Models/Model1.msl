@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DB_ChinhChinhModelStoreContainer" CdmEntityContainer="DB_ChinhChinhEntities">
+    <EntitySetMapping Name="BILLs">
+      <EntityTypeMapping TypeName="DB_ChinhChinhModel.BILL">
+        <MappingFragment StoreEntitySet="BILL">
+          <ScalarProperty Name="IDBILL" ColumnName="IDBILL" />
+          <ScalarProperty Name="DATEBILL" ColumnName="DATEBILL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BILLDETAILs">
+      <EntityTypeMapping TypeName="DB_ChinhChinhModel.BILLDETAIL">
+        <MappingFragment StoreEntitySet="BILLDETAIL">
+          <ScalarProperty Name="IDBILLDETAIL" ColumnName="IDBILLDETAIL" />
+          <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+          <ScalarProperty Name="IDBILL" ColumnName="IDBILL" />
+          <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CARTs">
+      <EntityTypeMapping TypeName="DB_ChinhChinhModel.CART">
+        <MappingFragment StoreEntitySet="CART">
+          <ScalarProperty Name="IDCART" ColumnName="IDCART" />
+          <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+          <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CATEGORies">
+      <EntityTypeMapping TypeName="DB_ChinhChinhModel.CATEGORY">
+        <MappingFragment StoreEntitySet="CATEGORY">
+          <ScalarProperty Name="IDCATE" ColumnName="IDCATE" />
+          <ScalarProperty Name="TENCATE" ColumnName="TENCATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COMMENTs">
+      <EntityTypeMapping TypeName="DB_ChinhChinhModel.COMMENT">
+        <MappingFragment StoreEntitySet="COMMENT">
+          <ScalarProperty Name="IDCMT" ColumnName="IDCMT" />
+          <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+          <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+          <ScalarProperty Name="DATECMT" ColumnName="DATECMT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CUSTOMERs">
+      <EntityTypeMapping TypeName="DB_ChinhChinhModel.CUSTOMER">
+        <MappingFragment StoreEntitySet="CUSTOMER">
+          <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+          <ScalarProperty Name="MATKHAU" ColumnName="MATKHAU" />
+          <ScalarProperty Name="CUSNAME" ColumnName="CUSNAME" />
+          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+          <ScalarProperty Name="MAROLE" ColumnName="MAROLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORDERs">
+      <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDER">
+        <MappingFragment StoreEntitySet="ORDER">
+          <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
+          <ScalarProperty Name="DATEORDER" ColumnName="DATEORDER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORDERDETAILs">
+      <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDERDETAIL">
+        <MappingFragment StoreEntitySet="ORDERDETAIL">
+          <ScalarProperty Name="IDORDERDETAIL" ColumnName="IDORDERDETAIL" />
+          <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+          <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
+          <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRODUCTs">
+      <EntityTypeMapping TypeName="DB_ChinhChinhModel.PRODUCT">
+        <MappingFragment StoreEntitySet="PRODUCT">
+          <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
+          <ScalarProperty Name="IDCATE" ColumnName="IDCATE" />
+          <ScalarProperty Name="NAMEPRO" ColumnName="NAMEPRO" />
+          <ScalarProperty Name="DESCRIPTIONPRO" ColumnName="DESCRIPTIONPRO" />
+          <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+          <ScalarProperty Name="IMAGEPRO" ColumnName="IMAGEPRO" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ROLEs">
+      <EntityTypeMapping TypeName="DB_ChinhChinhModel.ROLE">
+        <MappingFragment StoreEntitySet="ROLE">
+          <ScalarProperty Name="MAROLE" ColumnName="MAROLE" />
+          <ScalarProperty Name="TENROLE" ColumnName="TENROLE" />
+          <ScalarProperty Name="CHIETKHAU" ColumnName="CHIETKHAU" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

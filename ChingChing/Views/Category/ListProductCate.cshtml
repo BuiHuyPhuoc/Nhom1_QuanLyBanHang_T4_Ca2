@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ChingChing.Models.PRODUCT>
+@{
+    ViewBag.Title = "ListProductCate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var vndMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var user = Session["Email"] as ChingChing.Models.CUSTOMER;
+}
+
+
+<div class="container category">
+    <div class="row">
+        <div class="col-lg-2">
+            <h3>Danh mục</h3>
+
+            @{Html.RenderAction("PartialCate", "CategoryPartial");}
+
+        </div>
+        <div class="col-lg-10 product-list-cate">
+            <h3>Tất cả sản phẩm @ViewBag.Category</h3>
+
+
+            @foreach (var item in Model)
+            {
+                <!-- product -->
+                <div class="product-item-category">
+                    <div class="card" style="width: 18rem;">
+                        <a href="@Url.Action("Index/"+item.IDPRO,"ProductDetail", new { })" class="card-title">
+                            <img class="card-img-top" src="~/Images/@item.IMAGEPRO" alt="Card image cap">
+                        </a>
+                        <div class="card-body">
+                            <a href="@Url.Action("Index/"+item.IDPRO,"ProductDetail")" class="card-title"><h5>@item.NAMEPRO</h5></a>
+                            <h6 style="color:darkred">@String.Format(vndMoney, "{0:c0}", item.PRICE)</h6>
+
+
+                            <p class="card-text rating-item">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </p>
+                            @if (user != null)
+                            {
+                                <a href="@Url.Action("AddToCart", "Cart", new { idProduct = item.IDPRO})" class="btn quick-add-to-cart">
+                                    <i class="bi bi-cart-plus"> </i> Thêm vào giỏ hàng
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Login", "Users")" class="btn quick-add-to-cart"><i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- end-product -->
+
+            }
+
+
+        </div>
+
+
+    </div>
+</div>
+
+
+

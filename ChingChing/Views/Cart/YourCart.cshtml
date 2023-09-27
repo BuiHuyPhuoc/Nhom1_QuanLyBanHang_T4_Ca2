@@ -1,0 +1,122 @@
+﻿@model IEnumerable<ChingChing.Models.CART>
+@{
+    ViewBag.Title = "YourCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var money = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<style>
+    .updateQuantity{
+        margin: auto 10px;
+        font-size: 25px;
+    }
+</style>
+<!-- cart -->
+<div class="cart-body">
+    <div class="container">
+        <h3> <i class="bi bi-cart3"></i> Giỏ hàng của bạn</h3>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <table class="table list-prod">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Đơn giá</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        @foreach (var item in Model)
+                        {
+                            if (item.PRODUCT.QUANTITY == 0)
+                            {
+                                <tr style="display: none">
+                                    <td style="padding-top: 10px;">
+                                        <img src="~/Images/@item.PRODUCT.IMAGEPRO" alt="" style="width:100px;height:105px">
+                                        <span style="font-weight: bold;">@item.PRODUCT.NAMEPRO</span> <br />
+
+                                        <span>Số lượng còn lại: Đã hết hàng</span>
+                                        <small class="text-danger" style="margin: 10px auto">@ViewBag.OutOfQuantity</small>
+                                    </td>
+                                    <td>
+                                        <form style="display: flex;">
+                                            <a href="" class="updateQuantity"><i class="bi bi-dash-circle-fill"></i></a>
+                                            <input readonly type="text" id="@item.IDPRO" name="Quantity" style="width: 55px; text-align: center; margin: 0px;" value="0" class="form-control">
+                                            <input type="hidden" name="ProductID" value="@item.IDPRO" />
+                                            <a href="@Url.Action("IncreaseData", "Cart", new { idProduct = item.IDPRO})" class="updateQuantity"><i class="bi bi-plus-circle-fill"></i></a>
+                                        </form>
+                                    </td>
+                                    <td><h5>@String.Format(money, "{0:c0}", item.QUANTITY * item.PRODUCT.PRICE)</h5></td>
+                                    <td>
+                                        <a href="@Url.Action("DeleteData", "Cart", new { idProduct = item.IDPRO})" class="delete-prod"><i class="bi bi-x-circle-fill"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td style="padding-top: 10px;">
+                                    <img src="~/Images/@item.PRODUCT.IMAGEPRO" alt="" style="width:100px;height:105px">
+                                    <span style="font-weight: bold;">@item.PRODUCT.NAMEPRO</span> <br />
+
+                                    <span>Số lượng còn lại: @item.PRODUCT.QUANTITY</span>
+                                    <small class="text-danger" style="margin: 10px auto">@ViewBag.OutOfQuantity</small>
+                                </td>
+                                <td>
+                                    <form style="display: flex;">
+                                        <a href="@Url.Action("DecreaseData", "Cart", new { idProduct = item.IDPRO})" class="updateQuantity"><i class="bi bi-dash-circle-fill"></i></a>
+                                        <input readonly type="text" id="@item.IDPRO" name="Quantity" style="width: 55px; text-align: center; margin: 0px;" value="@item.QUANTITY" class="form-control">
+                                        <input type="hidden" name="ProductID" value="@item.IDPRO" />
+                                        <a href="@Url.Action("IncreaseData", "Cart", new { idProduct = item.IDPRO})" class="updateQuantity"><i class="bi bi-plus-circle-fill"></i></a>
+                                    </form>
+                                </td>
+                                <td><h5>@String.Format(money, "{0:c0}", item.QUANTITY * item.PRODUCT.PRICE)</h5></td>
+                                <td><a href="@Url.Action("DeleteData", "Cart", new { idProduct = item.IDPRO})" class="delete-prod"><i class="bi bi-x-circle-fill"></i></a></td>
+                            </tr>
+                        }
+
+
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-lg-4 cart-right-element">
+                <div class="cart-payment">
+                    <span>Số lượng sản phẩm : </span> <span>@ViewBag.TotalQuantity</span> <br /><br />
+                    <span>Tổng tiền: </span> <span class="total">@String.Format(money, "{0:c0}", ViewBag.TotalPrice)</span> <br /> <br />
+
+                    @using (Html.BeginForm("InsertOrder", "Cart", FormMethod.Post))
+                    {
+                        <textarea name="address" style="width:100%;margin-bottom: 5px; outline: none;" placeholder="Nhập địa chỉ giao hàng" required></textarea> <br />
+                        <button type="submit" class="payment-btn"> <i class="bi bi-check-lg"></i> Đặt hàng ngay ngay</button>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<script>
+    function increaseQuantity(idProduct) {
+        
+        // Sử dụng AJAX để gửi dữ liệu đến mã C# để xử lý
+        $.ajax({
+            type: "POST",
+            url: "/Cart/IncreaseData/?idProduct=" + idProduct, // Điều này phụ thuộc vào địa chỉ URL của bạn
+            success: function (result) {
+                // Cập nhật giá trị của thẻ input với kết quả từ mã C#
+                $("#" + idProduct).val(result);
+                },
+            error: function () {
+                    alert("Đã xảy ra lỗi trong quá trình xử lý yêu cầu.");
+                }
+            });
+    }
+
+   
+</script>*@
+
+<!-- end cart -->

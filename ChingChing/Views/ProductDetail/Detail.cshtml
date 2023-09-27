@@ -1,0 +1,92 @@
+﻿@model ChingChing.Models.PRODUCT
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var vndMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var user = Session["Email"] as ChingChing.Models.CUSTOMER;
+
+
+    ;
+
+}
+
+
+
+<div class="main-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 img-prod">
+                <img src="~/Images/@Model.IMAGEPRO" alt="">
+            </div>
+
+            <div class="col-lg-7" style="padding: 10px 55px;">
+                <h2>@Model.NAMEPRO</h2>
+
+                <div class="price-detail"> Giá: <h3>@String.Format(vndMoney, "{0:c0}", Model.PRICE)</h3></div>
+
+                <div class="rating-area">
+                    <h5>Đánh giá trung bình</h5>
+                    <p class="card-text rating-item">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </p>
+                </div>
+
+                <div class="describe">
+                    <span>Mô tả : </span> @Model.DESCRIPTIONPRO
+                </div>
+                <div class="status-prod">
+                    @if (Model.QUANTITY > 0)
+                    {<span style="color:green ;">Tình trạng: <i class="bi bi-check-circle-fill"></i> Còn hàng</span> }
+                    else
+                    { <span style="color:green ;">Tình trạng: <i class="bi bi-check-circle-fill"></i> Hết hàng</span>}
+                </div>
+                @if (user != null)
+                {
+                    <div class="add-to-card-form">
+                        <a href="@Url.Action("AddToCart","Cart", new { idProduct = Model.IDPRO})" class="btn add-to-card-btn" style="color:#fff"> <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="add-to-card-form">
+                        <a href="@Url.Action("Login","Users")" class="btn add-to-card-btn" style="color:#fff"> <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng</a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="container page-body">
+            <a @*href="@Url.Action("Index","Category")"*@ class="see-more-prod"><h3>Xem thêm</h3></a>
+            <div class=" row product-list">
+                @foreach (var pro in ViewBag.ProdList)
+                {
+                    <!-- product -->
+                    <div class="col-lg-3 product-pro">
+                        <div class="card" style="width: 18rem;">
+                            <a href="@Url.Action("Detail","ProductDetail", new { id = pro.IDPRO })" class="card-title"> <img class="card-img-top" src="~/Images/@pro.IMAGEPRO" alt="Card image cap"> </a>
+                            <div class="card-body">
+                                <a href="@Url.Action("Index/"+pro.IDPRO,"ProductDetail")" class="card-title"><h5>@pro.NAMEPRO</h5></a>
+                                <h6 style="color:darkred">@String.Format(vndMoney, "{0:c0}", pro.PRICE)</h6>
+                                <p class="card-text rating-pro">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </p>
+                                <a href="@Url.Action("AddToCart","Cart", new { idProduct = pro.IDPRO})" class="btn quick-add-to-cart"><i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end-product -->
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

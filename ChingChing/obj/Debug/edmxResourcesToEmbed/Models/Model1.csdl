@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_ChinhChinhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BILL">
+    <Key>
+      <PropertyRef Name="IDBILL" />
+    </Key>
+    <Property Name="IDBILL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATEBILL" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BILLDETAIL_BILL" FromRole="BILL" ToRole="BILLDETAIL" />
+  </EntityType>
+  <EntityType Name="BILLDETAIL">
+    <Key>
+      <PropertyRef Name="IDBILLDETAIL" />
+    </Key>
+    <Property Name="IDBILLDETAIL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IDBILL" Type="Int32" />
+    <Property Name="IDPRO" Type="Int32" />
+    <Property Name="QUANTITY" Type="Int16" />
+    <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BILL" Relationship="Self.FK_BILLDETAIL_BILL" FromRole="BILLDETAIL" ToRole="BILL" />
+    <NavigationProperty Name="PRODUCT" Relationship="Self.FK_BILLDETAIL_PRODUCT" FromRole="BILLDETAIL" ToRole="PRODUCT" />
+  </EntityType>
+  <EntityType Name="CART">
+    <Key>
+      <PropertyRef Name="IDCART" />
+    </Key>
+    <Property Name="IDCART" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IDPRO" Type="Int32" />
+    <Property Name="QUANTITY" Type="Byte" />
+    <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_CART_CUSTOMER" FromRole="CART" ToRole="CUSTOMER" />
+    <NavigationProperty Name="PRODUCT" Relationship="Self.FK_CART_PRODUCT" FromRole="CART" ToRole="PRODUCT" />
+  </EntityType>
+  <EntityType Name="CATEGORY">
+    <Key>
+      <PropertyRef Name="IDCATE" />
+    </Key>
+    <Property Name="IDCATE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TENCATE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PRODUCTs" Relationship="Self.FK_PRODUCT_CATEGORY" FromRole="CATEGORY" ToRole="PRODUCT" />
+  </EntityType>
+  <EntityType Name="COMMENT">
+    <Key>
+      <PropertyRef Name="IDCMT" />
+    </Key>
+    <Property Name="IDCMT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DATECMT" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_COMMENT_CUSTOMER" FromRole="COMMENT" ToRole="CUSTOMER" />
+  </EntityType>
+  <EntityType Name="CUSTOMER">
+    <Key>
+      <PropertyRef Name="EMAILCUS" />
+    </Key>
+    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MATKHAU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CUSNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MAROLE" Type="Int32" />
+    <NavigationProperty Name="CARTs" Relationship="Self.FK_CART_CUSTOMER" FromRole="CUSTOMER" ToRole="CART" />
+    <NavigationProperty Name="COMMENTs" Relationship="Self.FK_COMMENT_CUSTOMER" FromRole="CUSTOMER" ToRole="COMMENT" />
+    <NavigationProperty Name="ROLE" Relationship="Self.FK_CUSTOMER_ROLE" FromRole="CUSTOMER" ToRole="ROLE" />
+  </EntityType>
+  <EntityType Name="ORDER">
+    <Key>
+      <PropertyRef Name="IDORDER" />
+    </Key>
+    <Property Name="IDORDER" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATEORDER" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="ORDERDETAILs" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDER" ToRole="ORDERDETAIL" />
+  </EntityType>
+  <EntityType Name="ORDERDETAIL">
+    <Key>
+      <PropertyRef Name="IDORDERDETAIL" />
+    </Key>
+    <Property Name="IDORDERDETAIL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IDORDER" Type="Int32" />
+    <Property Name="IDPRO" Type="Int32" />
+    <Property Name="QUANTITY" Type="Int16" />
+    <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="STATUS" Type="Boolean" />
+    <NavigationProperty Name="ORDER" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDERDETAIL" ToRole="ORDER" />
+    <NavigationProperty Name="PRODUCT" Relationship="Self.FK_ORDERDETAIL_PRODUCT" FromRole="ORDERDETAIL" ToRole="PRODUCT" />
+  </EntityType>
+  <EntityType Name="PRODUCT">
+    <Key>
+      <PropertyRef Name="IDPRO" />
+    </Key>
+    <Property Name="IDPRO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDCATE" Type="Int32" />
+    <Property Name="NAMEPRO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DESCRIPTIONPRO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PRICE" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="IMAGEPRO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="QUANTITY" Type="Byte" />
+    <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BILLDETAIL_PRODUCT" FromRole="PRODUCT" ToRole="BILLDETAIL" />
+    <NavigationProperty Name="CARTs" Relationship="Self.FK_CART_PRODUCT" FromRole="PRODUCT" ToRole="CART" />
+    <NavigationProperty Name="CATEGORY" Relationship="Self.FK_PRODUCT_CATEGORY" FromRole="PRODUCT" ToRole="CATEGORY" />
+    <NavigationProperty Name="ORDERDETAILs" Relationship="Self.FK_ORDERDETAIL_PRODUCT" FromRole="PRODUCT" ToRole="ORDERDETAIL" />
+  </EntityType>
+  <EntityType Name="ROLE">
+    <Key>
+      <PropertyRef Name="MAROLE" />
+    </Key>
+    <Property Name="MAROLE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TENROLE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CHIETKHAU" Type="Single" />
+    <NavigationProperty Name="CUSTOMERs" Relationship="Self.FK_CUSTOMER_ROLE" FromRole="ROLE" ToRole="CUSTOMER" />
+  </EntityType>
+  <Association Name="FK_BILLDETAIL_BILL">
+    <End Role="BILL" Type="Self.BILL" Multiplicity="0..1" />
+    <End Role="BILLDETAIL" Type="Self.BILLDETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BILL">
+        <PropertyRef Name="IDBILL" />
+      </Principal>
+      <Dependent Role="BILLDETAIL">
+        <PropertyRef Name="IDBILL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BILLDETAIL_PRODUCT">
+    <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+    <End Role="BILLDETAIL" Type="Self.BILLDETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRODUCT">
+        <PropertyRef Name="IDPRO" />
+      </Principal>
+      <Dependent Role="BILLDETAIL">
+        <PropertyRef Name="IDPRO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CART_CUSTOMER">
+    <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
+    <End Role="CART" Type="Self.CART" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="EMAILCUS" />
+      </Principal>
+      <Dependent Role="CART">
+        <PropertyRef Name="EMAILCUS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CART_PRODUCT">
+    <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+    <End Role="CART" Type="Self.CART" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRODUCT">
+        <PropertyRef Name="IDPRO" />
+      </Principal>
+      <Dependent Role="CART">
+        <PropertyRef Name="IDPRO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUCT_CATEGORY">
+    <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="0..1" />
+    <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CATEGORY">
+        <PropertyRef Name="IDCATE" />
+      </Principal>
+      <Dependent Role="PRODUCT">
+        <PropertyRef Name="IDCATE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COMMENT_CUSTOMER">
+    <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
+    <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="EMAILCUS" />
+      </Principal>
+      <Dependent Role="COMMENT">
+        <PropertyRef Name="EMAILCUS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CUSTOMER_ROLE">
+    <End Role="ROLE" Type="Self.ROLE" Multiplicity="0..1" />
+    <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ROLE">
+        <PropertyRef Name="MAROLE" />
+      </Principal>
+      <Dependent Role="CUSTOMER">
+        <PropertyRef Name="MAROLE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDERDETAIL_ORDER">
+    <End Role="ORDER" Type="Self.ORDER" Multiplicity="0..1" />
+    <End Role="ORDERDETAIL" Type="Self.ORDERDETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ORDER">
+        <PropertyRef Name="IDORDER" />
+      </Principal>
+      <Dependent Role="ORDERDETAIL">
+        <PropertyRef Name="IDORDER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDERDETAIL_PRODUCT">
+    <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+    <End Role="ORDERDETAIL" Type="Self.ORDERDETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRODUCT">
+        <PropertyRef Name="IDPRO" />
+      </Principal>
+      <Dependent Role="ORDERDETAIL">
+        <PropertyRef Name="IDPRO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_ChinhChinhEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BILLs" EntityType="Self.BILL" />
+    <EntitySet Name="BILLDETAILs" EntityType="Self.BILLDETAIL" />
+    <EntitySet Name="CARTs" EntityType="Self.CART" />
+    <EntitySet Name="CATEGORies" EntityType="Self.CATEGORY" />
+    <EntitySet Name="COMMENTs" EntityType="Self.COMMENT" />
+    <EntitySet Name="CUSTOMERs" EntityType="Self.CUSTOMER" />
+    <EntitySet Name="ORDERs" EntityType="Self.ORDER" />
+    <EntitySet Name="ORDERDETAILs" EntityType="Self.ORDERDETAIL" />
+    <EntitySet Name="PRODUCTs" EntityType="Self.PRODUCT" />
+    <EntitySet Name="ROLEs" EntityType="Self.ROLE" />
+    <AssociationSet Name="FK_BILLDETAIL_BILL" Association="Self.FK_BILLDETAIL_BILL">
+      <End Role="BILL" EntitySet="BILLs" />
+      <End Role="BILLDETAIL" EntitySet="BILLDETAILs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BILLDETAIL_PRODUCT" Association="Self.FK_BILLDETAIL_PRODUCT">
+      <End Role="PRODUCT" EntitySet="PRODUCTs" />
+      <End Role="BILLDETAIL" EntitySet="BILLDETAILs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CART_CUSTOMER" Association="Self.FK_CART_CUSTOMER">
+      <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+      <End Role="CART" EntitySet="CARTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CART_PRODUCT" Association="Self.FK_CART_PRODUCT">
+      <End Role="PRODUCT" EntitySet="PRODUCTs" />
+      <End Role="CART" EntitySet="CARTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUCT_CATEGORY" Association="Self.FK_PRODUCT_CATEGORY">
+      <End Role="CATEGORY" EntitySet="CATEGORies" />
+      <End Role="PRODUCT" EntitySet="PRODUCTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COMMENT_CUSTOMER" Association="Self.FK_COMMENT_CUSTOMER">
+      <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+      <End Role="COMMENT" EntitySet="COMMENTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CUSTOMER_ROLE" Association="Self.FK_CUSTOMER_ROLE">
+      <End Role="ROLE" EntitySet="ROLEs" />
+      <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDERDETAIL_ORDER" Association="Self.FK_ORDERDETAIL_ORDER">
+      <End Role="ORDER" EntitySet="ORDERs" />
+      <End Role="ORDERDETAIL" EntitySet="ORDERDETAILs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDERDETAIL_PRODUCT" Association="Self.FK_ORDERDETAIL_PRODUCT">
+      <End Role="PRODUCT" EntitySet="PRODUCTs" />
+      <End Role="ORDERDETAIL" EntitySet="ORDERDETAILs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

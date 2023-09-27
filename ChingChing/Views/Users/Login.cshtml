@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string email = TempData["Email"] as string;
+    string password = TempData["Password"] as string;
+}
+
+<div class="login-modal">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <img src="~/Images/logo.jpg" alt="" style="width:100%">
+            </div>
+
+            <div class="col-lg-6 login-right">
+                <div class="login-box">
+                    <h3 style="color: gray;">Hãy đăng nhập để sử dụng các dịch vụ của chúng tôi</h3>
+
+                    @using (Html.BeginForm("Login", "Users"))
+                    {
+                        <div class="form-group">
+                            <input type="email" class="form-control" name="EMAILCUS" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email của bạn" value="@email" required>
+
+                        </div>
+                        <div class="form-group">
+
+                            <input type="password" class="form-control" name="MATKHAU" id="exampleInputPassword1" placeholder="Mật khẩu" value="@password" required>
+                        </div>
+                        <small class="text-danger" style="margin: 10px auto">@ViewBag.ThongBao</small>
+                        <button type="submit" class="btn" style="background-color: rgb(248, 117, 139) ; color:#fff; width: 100%;">Đăng nhập</button>
+                    }
+                    <div style="margin: 12px auto;">
+                        <span>Bạn chưa có tài khoản ?</span> <a href="@Url.Action("SignUp","Users")">Đăng ký ngay</a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

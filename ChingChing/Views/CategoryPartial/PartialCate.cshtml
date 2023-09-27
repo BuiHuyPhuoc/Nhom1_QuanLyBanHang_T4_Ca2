@@ -1,0 +1,13 @@
+﻿@model IEnumerable<ChingChing.Models.CATEGORY>
+@{ var vndMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN"); }
+@{ var user = Session["Email"] as ChingChing.Models.CUSTOMER;}
+<div class="list-group">
+    <a href="@Url.Action("Index","Category")" class="list-group-item list-group-item-action">Tất cả sản phẩm</a>
+
+    @foreach (var item in Model)
+    {
+        <a href="@Url.Action("ListProductCate", "Category", new { id = item.IDCATE})" class="list-group-item list-group-item-action">@item.TENCATE</a>
+
+    }
+
+</div>
