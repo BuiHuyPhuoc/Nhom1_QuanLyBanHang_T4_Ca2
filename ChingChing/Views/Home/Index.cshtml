@@ -3,7 +3,7 @@
 @{ var user = Session["Email"] as ChingChing.Models.CUSTOMER;}
 
 
-@* Demo Branch 1 *@
+@* Demo Branch 1 23 *@
 <div class="container-fluid ">
     <div id="carouselExampleControls" class="carousel slide slider" data-ride="carousel">
         <div class="carousel-inner">
@@ -33,7 +33,7 @@
 
         @foreach (var item in Model)
         {
-            <!-- product -->
+            <!-- product --> 
             <div class="col-lg-3 product-item">  
                 <div class="card" style="width: 18rem;">
                     <a href="@Url.Action("Detail/"+item.IDPRO, "ProductDetail")" class="card-title"> <img class="card-img-top" src="~/Images/@item.IMAGEPRO" alt="Card image cap"> </a>
