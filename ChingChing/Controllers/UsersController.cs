@@ -31,7 +31,7 @@ namespace ChingChing.Controllers
                     {
                         if (checkEmail.MAROLE == 1)
                         {
-                            return RedirectToAction("Index", "Admin/Orders");
+                            return RedirectToAction("QLDonHang", "Admin", new { area = "Admin"});
                         } else
                         {
                             //Get email customer into Session
