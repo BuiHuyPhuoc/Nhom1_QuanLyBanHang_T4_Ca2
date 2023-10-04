@@ -21,6 +21,9 @@ namespace ChingChing.Models
         public Nullable<short> QUANTITY { get; set; }
         public string ADDRESS { get; set; }
         public Nullable<bool> STATUS { get; set; }
+        public Nullable<System.DateTime> DATEORDER { get; set; }
+        public Nullable<System.DateTime> DATEACCEPT { get; set; }
+        public Nullable<System.DateTime> DATESHIPPING { get; set; }
     
         public virtual ORDER ORDER { get; set; }
         public virtual PRODUCT PRODUCT { get; set; }

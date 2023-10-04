@@ -42,6 +42,7 @@
     <EntitySetMapping Name="COMMENTs">
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.COMMENT">
         <MappingFragment StoreEntitySet="COMMENT">
+          <ScalarProperty Name="GRADES" ColumnName="GRADES" />
           <ScalarProperty Name="IDCMT" ColumnName="IDCMT" />
           <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
           <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
@@ -71,6 +72,9 @@
     <EntitySetMapping Name="ORDERDETAILs">
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDERDETAIL">
         <MappingFragment StoreEntitySet="ORDERDETAIL">
+          <ScalarProperty Name="DATESHIPPING" ColumnName="DATESHIPPING" />
+          <ScalarProperty Name="DATEACCEPT" ColumnName="DATEACCEPT" />
+          <ScalarProperty Name="DATEORDER" ColumnName="DATEORDER" />
           <ScalarProperty Name="IDORDERDETAIL" ColumnName="IDORDERDETAIL" />
           <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
           <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />

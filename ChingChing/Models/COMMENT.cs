@@ -18,6 +18,7 @@ namespace ChingChing.Models
         public string EMAILCUS { get; set; }
         public string CONTENT { get; set; }
         public Nullable<System.DateTime> DATECMT { get; set; }
+        public Nullable<byte> GRADES { get; set; }
     
         public virtual CUSTOMER CUSTOMER { get; set; }
     }

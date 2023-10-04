@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DB_ChinhChinhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DB_ChinhChinhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BILL">
           <Key>
             <PropertyRef Name="IDBILL" />
@@ -45,6 +45,7 @@
           </Key>
           <Property Name="IDCMT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+          <Property Name="GRADES" Type="tinyint" />
           <Property Name="CONTENT" Type="varchar(max)" />
           <Property Name="DATECMT" Type="date" />
         </EntityType>
@@ -76,6 +77,9 @@
           <Property Name="QUANTITY" Type="smallint" />
           <Property Name="ADDRESS" Type="nvarchar(max)" />
           <Property Name="STATUS" Type="bit" />
+          <Property Name="DATEORDER" Type="date" />
+          <Property Name="DATEACCEPT" Type="date" />
+          <Property Name="DATESHIPPING" Type="date" />
         </EntityType>
         <EntityType Name="PRODUCT">
           <Key>
@@ -253,8 +257,7 @@
             <End Role="PRODUCT" EntitySet="PRODUCT" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB_ChinhChinhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -307,6 +310,7 @@
           <Property Name="CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DATECMT" Type="DateTime" Precision="0" />
           <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_COMMENT_CUSTOMER" FromRole="COMMENT" ToRole="CUSTOMER" />
+          <Property Name="GRADES" Type="Byte" />
         </EntityType>
         <EntityType Name="CUSTOMER">
           <Key>
@@ -342,6 +346,9 @@
           <Property Name="STATUS" Type="Boolean" />
           <NavigationProperty Name="ORDER" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDERDETAIL" ToRole="ORDER" />
           <NavigationProperty Name="PRODUCT" Relationship="Self.FK_ORDERDETAIL_PRODUCT" FromRole="ORDERDETAIL" ToRole="PRODUCT" />
+          <Property Name="DATEORDER" Type="DateTime" Precision="0" />
+          <Property Name="DATEACCEPT" Type="DateTime" Precision="0" />
+          <Property Name="DATESHIPPING" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="PRODUCT">
           <Key>
@@ -571,6 +578,7 @@
           <EntitySetMapping Name="COMMENTs">
             <EntityTypeMapping TypeName="DB_ChinhChinhModel.COMMENT">
               <MappingFragment StoreEntitySet="COMMENT">
+                <ScalarProperty Name="GRADES" ColumnName="GRADES" />
                 <ScalarProperty Name="IDCMT" ColumnName="IDCMT" />
                 <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
                 <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
@@ -600,6 +608,9 @@
           <EntitySetMapping Name="ORDERDETAILs">
             <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDERDETAIL">
               <MappingFragment StoreEntitySet="ORDERDETAIL">
+                <ScalarProperty Name="DATESHIPPING" ColumnName="DATESHIPPING" />
+                <ScalarProperty Name="DATEACCEPT" ColumnName="DATEACCEPT" />
+                <ScalarProperty Name="DATEORDER" ColumnName="DATEORDER" />
                 <ScalarProperty Name="IDORDERDETAIL" ColumnName="IDORDERDETAIL" />
                 <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
                 <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
