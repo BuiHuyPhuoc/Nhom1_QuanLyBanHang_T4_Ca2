@@ -40,6 +40,7 @@
     </Key>
     <Property Name="IDCMT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+    <Property Name="GRADES" Type="tinyint" />
     <Property Name="CONTENT" Type="varchar(max)" />
     <Property Name="DATECMT" Type="date" />
   </EntityType>
@@ -71,6 +72,9 @@
     <Property Name="QUANTITY" Type="smallint" />
     <Property Name="ADDRESS" Type="nvarchar(max)" />
     <Property Name="STATUS" Type="bit" />
+    <Property Name="DATEORDER" Type="date" />
+    <Property Name="DATEACCEPT" Type="date" />
+    <Property Name="DATESHIPPING" Type="date" />
   </EntityType>
   <EntityType Name="PRODUCT">
     <Key>

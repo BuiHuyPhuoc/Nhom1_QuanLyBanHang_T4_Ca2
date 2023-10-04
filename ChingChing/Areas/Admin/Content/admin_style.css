@@ -25,10 +25,10 @@ a {
             width: fit-content;
         }
 
-            .admin_container .navbar .category_container .menu_category.checked {
+            /*.admin_container .navbar .category_container .menu_category.checked {
                 background-color: #CBE4DE;
                 color: #2C3333;
-            }
+            }*/
 
             .admin_container .navbar .category_container .menu_category {
                 padding: 20px 100px 20px 30px;

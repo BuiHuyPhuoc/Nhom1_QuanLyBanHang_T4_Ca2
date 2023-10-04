@@ -1,31 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "QLTaiKhoan";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminMasterLayout.cshtml";
 }
 
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="~/Areas/Admin/Content/admin_style.css">
-</head>
-<body>
-    <div class="admin_container">
-        <div class="navbar">
-            <div class="category_container">
-                <a id="qldonhang" href="@Url.Action("QLDonHang", "Admin")" class="menu_category">Đơn hàng</a>
-                <a id="qltaikhoan" href="@Url.Action("QLTaiKhoan", "Admin")" class="menu_category checked">Tài khoản</a>
-                <a id="qlhoadon" href="@Url.Action("QLHoaDon", "Admin")" class="menu_category">Hóa đơn</a>
-                <a id="qlsanpham" href="@Url.Action("QLSanPham", "Admin")" class="menu_category">Sản phẩm</a>
-                <a id="qlloaisanpham" href="@Url.Action("QLLoaiSanPham", "Admin")" class="menu_category">Loại sản phẩm</a>
-                <a class="menu_category" href="/Home/Index">Thoát</a>
-            </div>
-        </div>
-        <div class="content">
-            <h2>QLTaiKhoan</h2>
-        </div>
-    </div>
-</body>
-</html>
+<h2>QLTaiKhoan</h2>

@@ -49,6 +49,7 @@
     <Property Name="CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="DATECMT" Type="DateTime" Precision="0" />
     <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_COMMENT_CUSTOMER" FromRole="COMMENT" ToRole="CUSTOMER" />
+    <Property Name="GRADES" Type="Byte" />
   </EntityType>
   <EntityType Name="CUSTOMER">
     <Key>
@@ -84,6 +85,9 @@
     <Property Name="STATUS" Type="Boolean" />
     <NavigationProperty Name="ORDER" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDERDETAIL" ToRole="ORDER" />
     <NavigationProperty Name="PRODUCT" Relationship="Self.FK_ORDERDETAIL_PRODUCT" FromRole="ORDERDETAIL" ToRole="PRODUCT" />
+    <Property Name="DATEORDER" Type="DateTime" Precision="0" />
+    <Property Name="DATEACCEPT" Type="DateTime" Precision="0" />
+    <Property Name="DATESHIPPING" Type="DateTime" Precision="0" />
   </EntityType>
   <EntityType Name="PRODUCT">
     <Key>
