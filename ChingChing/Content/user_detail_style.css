@@ -1,0 +1,35 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+body {
+    margin: 0;
+    width: 100%;
+    background-color: #CBE4DE;
+}
+.container {
+    
+}
+.cart_item {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+}
+.card_header {
+    color: #2C3333;
+    font-size: 26px;
+    font-weight: bold;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+    .input-group-text {
+        min-width: 100px
+    }
+.type_order {
+    flex-grow: 1;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px 0px;
+    background-color: #0E8388;
+    color: #CBE4DE;
+    border: 2px solid #CBE4DE;
+    box-sizing: border-box;
+}
+

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ChingChing.Models;
+using Microsoft.Ajax.Utilities;
+
 namespace ChingChing.Controllers
 {
     public class UsersController : Controller
@@ -36,10 +40,6 @@ namespace ChingChing.Controllers
                         {
                             //Get email customer into Session
                             Session["Email"] = checkEmail;
-                            //Get full-name customer
-                            string[] fullnamecus = checkEmail.CUSNAME.Split(' ');
-                            //Get name from full-name to show in View
-                            Session["Account"] = fullnamecus[fullnamecus.Length - 1];
                             return RedirectToAction("Index", "Home");
                         }
                     } else
@@ -58,7 +58,6 @@ namespace ChingChing.Controllers
         public ActionResult Logout()
         {
             Session["Email"] = null;
-            Session["Account"] = null;
             return RedirectToAction("Index", "Home");
         }
         public ActionResult SignUp()
@@ -100,5 +99,27 @@ namespace ChingChing.Controllers
             }
 
         }
+
+        public ActionResult UserDetail()
+        {
+            
+            return View();
+        }
+        public ActionResult resetPage()
+        {
+            return RedirectToAction("UserDetail", "Users");
+        }
+        public JsonResult updateCustomer(string email, string name, string address)
+        {
+            CUSTOMER getCustomer = db.CUSTOMERs.Where(x => x.EMAILCUS == email).FirstOrDefault();
+            getCustomer.CUSNAME = name;
+            getCustomer.ADDRESS = address;
+            db.SaveChanges();
+            Session["email"] = db.CUSTOMERs.Where(x => x.EMAILCUS == getCustomer.EMAILCUS).FirstOrDefault();
+            var data = new { Check = true, Email = email, Name = name, Address = address };
+            return Json(data);
+
+        }
+
     }
 }

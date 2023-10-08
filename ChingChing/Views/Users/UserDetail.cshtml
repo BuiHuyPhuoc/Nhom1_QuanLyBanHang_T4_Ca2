@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "UserDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var getAccount = Session["Email"] as ChingChing.Models.CUSTOMER; 
+
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="~/Content/user_detail_style.css" rel="stylesheet" />
+</head>
+<body>
+    <br />
+    <div class="container">
+        <div class="cart_item">
+            <p class="card_header">Quyền lợi của khách hàng</p>
+
+            <p>- Dễ dàng theo dỗi tiến độ giao hàng.</p>
+            <p>- Lưu những đơn hàng yêu thích vào giỏ hàng</p>
+            <p>- Cập nhật những thông tin mới nhất từ ChinhChinh Shop</p>
+        </div>
+        <br />
+
+        <div class="user_profile cart_item">
+            <p class="card_header">Thông tin của khách hàng</p>
+            <div class="container bootstrap snippet">
+                <div class="row">
+                    <div class="col-3">
+                        <!--left col-->
+                        <div class="text-center">
+                            <img style="border-radius:50%" src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1696744324~exp=1696744924~hmac=63e373e75588d96cb306dd6a12558972ce7ebcb2bb73747ca62bb6117b7bffca" class="avatar img-circle img-thumbnail" alt="avatar">
+
+                        </div>
+                        <br>
+                    </div>
+                    <div class="col-9">
+
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Email: </label>
+                            <div class="col-sm-10">
+                                <input onkeyup="changeButtonStatus()" type="text" readonly class="form-control-plaintext edit_text" id="inputEmail" value="@getAccount.EMAILCUS">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Tên: </label>
+                            <div class="col-sm-10">
+                                <input onkeyup="changeButtonStatus()" type="text" required class="form-control-plaintext edit_text" id="inputName" value="@getAccount.CUSNAME">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Địa chỉ: </label>
+                            <div class="col-sm-10">
+                                <input onkeyup="changeButtonStatus()" type="text" required class="form-control-plaintext edit_text" id="inputAddress" value="@getAccount.ADDRESS">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Quyền hạn: </label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext" id="" value="@getAccount.ROLE.TENROLE">
+                            </div>
+                        </div>
+                        <button id="btnUpdateInfoCustomer" class="btn btn-success" disabled>Cập nhật</button>
+
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div class="cart_item">
+                <p class="card_header">Quản lý đơn hàng</p>
+                <div class="d-flex p-2">
+                    <a href="" class="type_order">Đang chờ xác nhận</a>
+                    <a href="" class="type_order">Đã xác nhận</a>
+                    <a href="" class="type_order">Đang giao</a>
+                    <a href="" class="type_order">Đã giao</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        @*function changeButtonStatus() {
+                var getInputTags = document.getElementsByClassName('edit_text');
+                var getButton = document.getElementById('btnUpdateInfoCustomer');
+                if (getInputTags[0].value.trim() == "@getAccount.EMAILCUS"
+                    && getInputTags[1].value.trim() == "@getAccount.CUSNAME"
+                    && getInputTags[2].value.trim() == "@getAccount.ADDRESS") {
+                    getButton.setAttribute("disabled", "true");
+                } else {
+                    getButton.removeAttribute("disabled");
+                }
+            }*@
+        function decodeHtmlEntities(input) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = input;
+            return txt.value;
+        }
+
+        function changeButtonStatus() {
+            var getInputTags = document.getElementsByClassName('edit_text');
+            var getButton = document.getElementById('btnUpdateInfoCustomer');
+            var inputValue = getInputTags[1].value.trim();
+
+            //var originalString = "Trương Tr&#226;n";
+            var expectedValue = "@getAccount.CUSNAME";
+            var convertedString = expectedValue.replace(/&#(\d+);/g, function (match, dec) {
+                return String.fromCharCode(dec);
+            });
+             
+            if (getInputTags[0].value.trim() == "@getAccount.EMAILCUS"
+                && inputValue == convertedString
+                && getInputTags[2].value.trim() == "@getAccount.ADDRESS") {
+                getButton.setAttribute("disabled", "true");
+            } else {
+                getButton.removeAttribute("disabled");
+            }
+        }
+        $(document).ready(function () {
+            // Đặt mã AJAX ở đây
+            $("#btnUpdateInfoCustomer").click(function () {
+                var getEmailInputTag = document.getElementById('inputEmail');
+                var getNameInputTag = document.getElementById('inputName');
+                var getAddressInputTag = document.getElementById('inputAddress');
+
+                $.ajax({
+                    url: "/Users/updateCustomer", // Đường dẫn đến phương thức kiểm tra tồn tại
+                    type: "POST",
+                    data: JSON.stringify({ "email": getEmailInputTag.value, "name": getNameInputTag.value, "address": getAddressInputTag.value }), // Gửi dữ liệu dưới dạng JSON
+                    contentType: "application/json; charset=utf-8", // Định dạng dữ liệu
+                    dataType: "json", // Đặt kiểu dữ liệu mà bạn mong đợi từ phản hồi
+
+                    success: function (response) {
+                        if (response.Check == true) {
+                            alert("Đổi thông tin khách hàng thành công");
+                            window.location.reload();
+                        }
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Lỗi khi gửi yêu cầu: " + status + " - " + error);
+                    }
+                });
+            });
+        });
+
+
+
+    </script>
+</body>
+</html>
+
