@@ -1,9 +1,74 @@
-﻿
+﻿@model List<ChingChing.Models.ORDER>
 @{
     ViewBag.Title = "QLDonHang";
     Layout = "~/Areas/Admin/Views/Shared/_AdminMasterLayout.cshtml";
+    //Get Date
+  
 }
+<br />
+<div class="container-fluid">
+    <div class="text-header">DANH SÁCH ĐƠN ĐẶT</div>
+    <BR />
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Mã đơn</th>
+                <th scope="col">Email</th>
+                <th scope="col">Địa chỉ</th>
+                <th scope="col">Ngày đặt</th>
+                <th scope="col">Ngày xác nhận</th>
+                <th scope="col">Ngày giao</th>
+                <th scope="col">Ngày nhận</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.IDORDER</th>
+                    <td>@item.EMAILCUS</td>
+                    <td>@item.ADDRESS</td>
 
-<h2>QLDonHang</h2>
- 
-
+                    @if (item.DATEORDER.ToString() != "")
+                    {
+                        <td> @DateTime.Parse(item.DATEORDER.ToString()).Date.ToString("dd/MM/yyyy")</td>
+                    }
+                    else
+                    {
+                        <td>ĐÃ HỦY</td>
+                    }
+                    @if (item.DATEACCEPT.ToString() != "")
+                    {
+                        <td> @DateTime.Parse(item.DATEACCEPT.ToString()).Date.ToString("dd/MM/yyyy")</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    @if (item.DATESHIPPING.ToString() != "")
+                    {
+                        <td> @DateTime.Parse(item.DATESHIPPING.ToString()).Date.ToString("dd/MM/yyyy")</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    @if (item.DATERECEIVE.ToString() != "")
+                    {
+                        <td> @DateTime.Parse(item.DATERECEIVE.ToString()).Date.ToString("dd/MM/yyyy")</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>
+                        <a href="@Url.Action("ChiTietDonHang", "QLDonHang", new { idorder = item.IDORDER})">
+                            Chi tiết
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

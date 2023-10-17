@@ -1,0 +1,97 @@
+﻿@model  List<ChingChing.Models.ORDERDETAIL>
+@{
+    ViewBag.Title = "QLDonHang";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminMasterLayout.cshtml";
+    int checkStatus = 0;
+    if (Model[0].ORDER.DATERECEIVE != null)
+    {
+        checkStatus = 4;
+    }
+    else if (Model[0].ORDER.DATESHIPPING != null)
+    {
+        checkStatus = 3;
+    }
+    else if (Model[0].ORDER.DATEACCEPT != null)
+    {
+        checkStatus = 2;
+    }
+    else if (Model[0].ORDER.DATEORDER != null)
+    {
+        checkStatus = 1;
+    }
+    else
+    {
+        checkStatus = 5;
+    }
+}
+
+<br />
+<div class="container">
+    <h2 style="padding-left: 10px; border-left: 10px solid #212529">Mã đơn hàng: @Model[0].IDORDER</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Sản phẩm</th>
+                <th scope="col">SL/Kho</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.IDORDERDETAIL</th>
+                    <td>@item.PRODUCT.NAMEPRO</td>
+                    <td>@item.QUANTITY/@item.PRODUCT.QUANTITY</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <form action="@Url.Action("ChangeStatus", "QLDonHang")" method="post">
+        <input style="display: none" type="text" name="idorder" value="@Model[0].IDORDER" />
+        <select name="status" id="statusOrder" class="custom-select custom-select-lg mb-3">
+            <option id="1" value="1">Chờ xác nhận</option>
+            <option id="2" value="2">Đã xác nhận</option>
+            <option id="3" value="3">Đang giao</option>
+            <option id="4" value="4">Đã nhận</option>
+            <option id="5" value="5" disabled>Đã hủy</option>
+        </select>
+        <button id="btnSave" class="btn btn-success" type="submit" disabled>SAVE</button>
+    </form>
+
+    <div class="line"></div>
+</div>
+<script type="text/javascript">
+    var getSelectTag = document.getElementById('statusOrder');
+    getSelectTag.value = @checkStatus;
+    for (var i = 4; i > @checkStatus + 1; i--) {
+        var item = document.getElementById(i);
+        item.setAttribute("disabled", true);
+    }
+    if (@checkStatus == 3) {
+        $("#4").prop("disabled", false);
+    } else if (@checkStatus == 4) {
+        for (var i = 1; i <= 4; i++) {
+            var item = document.getElementById(i);
+            item.setAttribute("disabled", true);
+        }
+    }
+    $("#statusOrder").on("change", function () {
+        $("#btnSave").prop("disabled", false)
+    });
+
+</script>
+@*@if (Model[0].ORDER.DATERECEIVE != null)
+{
+    //Khi đã nhận thì disable các lựa chọn
+    <script type="text/javascript">
+        $("#1").prop("disabled", true)
+        $("#2").prop("disabled", true)
+        $("#3").prop("disabled", true)
+        $("#4").prop("disabled", true)
+        $("#5").prop("disabled", true)
+    </script>
+}*@
+
+

@@ -11,17 +11,17 @@
           </Key>
           <Property Name="IDBILL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DATEBILL" Type="date" />
+          <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+          <Property Name="ADDRESS" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="BILLDETAIL">
           <Key>
             <PropertyRef Name="IDBILLDETAIL" />
           </Key>
           <Property Name="IDBILLDETAIL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
           <Property Name="IDBILL" Type="int" />
           <Property Name="IDPRO" Type="int" />
           <Property Name="QUANTITY" Type="smallint" />
-          <Property Name="ADDRESS" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="CART">
           <Key>
@@ -57,6 +57,7 @@
           <Property Name="MATKHAU" Type="varchar(max)" />
           <Property Name="CUSNAME" Type="nvarchar(max)" />
           <Property Name="ADDRESS" Type="nvarchar(max)" />
+          <Property Name="PHONE" Type="varchar" MaxLength="11" />
           <Property Name="MAROLE" Type="int" />
         </EntityType>
         <EntityType Name="ORDER">
@@ -64,22 +65,22 @@
             <PropertyRef Name="IDORDER" />
           </Key>
           <Property Name="IDORDER" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+          <Property Name="ADDRESS" Type="nvarchar(max)" />
           <Property Name="DATEORDER" Type="date" />
+          <Property Name="DATEACCEPT" Type="date" />
+          <Property Name="DATESHIPPING" Type="date" />
+          <Property Name="DATERECEIVE" Type="date" />
         </EntityType>
         <EntityType Name="ORDERDETAIL">
           <Key>
             <PropertyRef Name="IDORDERDETAIL" />
           </Key>
           <Property Name="IDORDERDETAIL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
           <Property Name="IDORDER" Type="int" />
           <Property Name="IDPRO" Type="int" />
           <Property Name="QUANTITY" Type="smallint" />
-          <Property Name="ADDRESS" Type="nvarchar(max)" />
-          <Property Name="STATUS" Type="bit" />
-          <Property Name="DATEORDER" Type="date" />
-          <Property Name="DATEACCEPT" Type="date" />
-          <Property Name="DATESHIPPING" Type="date" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="PRODUCT">
           <Key>
@@ -100,6 +101,14 @@
           <Property Name="MAROLE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TENROLE" Type="nvarchar" MaxLength="20" />
           <Property Name="CHIETKHAU" Type="real" />
+        </EntityType>
+        <EntityType Name="VERIFYCODE">
+          <Key>
+            <PropertyRef Name="IDVERIFY" />
+          </Key>
+          <Property Name="IDVERIFY" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+          <Property Name="CODE" Type="int" />
         </EntityType>
         <Association Name="FK_BILLDETAIL_BILL">
           <End Role="BILL" Type="Self.BILL" Multiplicity="0..1" />
@@ -220,6 +229,7 @@
           <EntitySet Name="ORDERDETAIL" EntityType="Self.ORDERDETAIL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUCT" EntityType="Self.PRODUCT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ROLE" EntityType="Self.ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VERIFYCODE" EntityType="Self.VERIFYCODE" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BILLDETAIL_BILL" Association="Self.FK_BILLDETAIL_BILL">
             <End Role="BILL" EntitySet="BILL" />
             <End Role="BILLDETAIL" EntitySet="BILLDETAIL" />
@@ -267,18 +277,18 @@
           </Key>
           <Property Name="IDBILL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DATEBILL" Type="DateTime" Precision="0" />
+          <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BILLDETAIL_BILL" FromRole="BILL" ToRole="BILLDETAIL" />
+          <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="BILLDETAIL">
           <Key>
             <PropertyRef Name="IDBILLDETAIL" />
           </Key>
           <Property Name="IDBILLDETAIL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IDBILL" Type="Int32" />
           <Property Name="IDPRO" Type="Int32" />
           <Property Name="QUANTITY" Type="Int16" />
-          <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BILL" Relationship="Self.FK_BILLDETAIL_BILL" FromRole="BILLDETAIL" ToRole="BILL" />
           <NavigationProperty Name="PRODUCT" Relationship="Self.FK_BILLDETAIL_PRODUCT" FromRole="BILLDETAIL" ToRole="PRODUCT" />
         </EntityType>
@@ -307,10 +317,10 @@
           </Key>
           <Property Name="IDCMT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GRADES" Type="Byte" />
           <Property Name="CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DATECMT" Type="DateTime" Precision="0" />
           <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_COMMENT_CUSTOMER" FromRole="COMMENT" ToRole="CUSTOMER" />
-          <Property Name="GRADES" Type="Byte" />
         </EntityType>
         <EntityType Name="CUSTOMER">
           <Key>
@@ -324,6 +334,7 @@
           <NavigationProperty Name="CARTs" Relationship="Self.FK_CART_CUSTOMER" FromRole="CUSTOMER" ToRole="CART" />
           <NavigationProperty Name="COMMENTs" Relationship="Self.FK_COMMENT_CUSTOMER" FromRole="CUSTOMER" ToRole="COMMENT" />
           <NavigationProperty Name="ROLE" Relationship="Self.FK_CUSTOMER_ROLE" FromRole="CUSTOMER" ToRole="ROLE" />
+          <Property Name="PHONE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ORDER">
           <Key>
@@ -331,24 +342,24 @@
           </Key>
           <Property Name="IDORDER" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DATEORDER" Type="DateTime" Precision="0" />
+          <Property Name="DATEACCEPT" Type="DateTime" Precision="0" />
+          <Property Name="DATESHIPPING" Type="DateTime" Precision="0" />
+          <Property Name="DATERECEIVE" Type="DateTime" Precision="0" />
           <NavigationProperty Name="ORDERDETAILs" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDER" ToRole="ORDERDETAIL" />
+          <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ORDERDETAIL">
           <Key>
             <PropertyRef Name="IDORDERDETAIL" />
           </Key>
           <Property Name="IDORDERDETAIL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IDORDER" Type="Int32" />
           <Property Name="IDPRO" Type="Int32" />
           <Property Name="QUANTITY" Type="Int16" />
-          <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="STATUS" Type="Boolean" />
+          <Property Name="STATUS" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ORDER" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDERDETAIL" ToRole="ORDER" />
           <NavigationProperty Name="PRODUCT" Relationship="Self.FK_ORDERDETAIL_PRODUCT" FromRole="ORDERDETAIL" ToRole="PRODUCT" />
-          <Property Name="DATEORDER" Type="DateTime" Precision="0" />
-          <Property Name="DATEACCEPT" Type="DateTime" Precision="0" />
-          <Property Name="DATESHIPPING" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="PRODUCT">
           <Key>
@@ -374,6 +385,14 @@
           <Property Name="TENROLE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CHIETKHAU" Type="Single" />
           <NavigationProperty Name="CUSTOMERs" Relationship="Self.FK_CUSTOMER_ROLE" FromRole="ROLE" ToRole="CUSTOMER" />
+        </EntityType>
+        <EntityType Name="VERIFYCODE">
+          <Key>
+            <PropertyRef Name="IDVERIFY" />
+          </Key>
+          <Property Name="IDVERIFY" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CODE" Type="Int32" />
         </EntityType>
         <Association Name="FK_BILLDETAIL_BILL">
           <End Role="BILL" Type="Self.BILL" Multiplicity="0..1" />
@@ -494,6 +513,7 @@
           <EntitySet Name="ORDERDETAILs" EntityType="Self.ORDERDETAIL" />
           <EntitySet Name="PRODUCTs" EntityType="Self.PRODUCT" />
           <EntitySet Name="ROLEs" EntityType="Self.ROLE" />
+          <EntitySet Name="VERIFYCODEs" EntityType="Self.VERIFYCODE" />
           <AssociationSet Name="FK_BILLDETAIL_BILL" Association="Self.FK_BILLDETAIL_BILL">
             <End Role="BILL" EntitySet="BILLs" />
             <End Role="BILLDETAIL" EntitySet="BILLDETAILs" />
@@ -540,8 +560,10 @@
           <EntitySetMapping Name="BILLs">
             <EntityTypeMapping TypeName="DB_ChinhChinhModel.BILL">
               <MappingFragment StoreEntitySet="BILL">
+                <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
                 <ScalarProperty Name="IDBILL" ColumnName="IDBILL" />
                 <ScalarProperty Name="DATEBILL" ColumnName="DATEBILL" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -549,11 +571,9 @@
             <EntityTypeMapping TypeName="DB_ChinhChinhModel.BILLDETAIL">
               <MappingFragment StoreEntitySet="BILLDETAIL">
                 <ScalarProperty Name="IDBILLDETAIL" ColumnName="IDBILLDETAIL" />
-                <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
                 <ScalarProperty Name="IDBILL" ColumnName="IDBILL" />
                 <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
                 <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
-                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -578,9 +598,9 @@
           <EntitySetMapping Name="COMMENTs">
             <EntityTypeMapping TypeName="DB_ChinhChinhModel.COMMENT">
               <MappingFragment StoreEntitySet="COMMENT">
-                <ScalarProperty Name="GRADES" ColumnName="GRADES" />
                 <ScalarProperty Name="IDCMT" ColumnName="IDCMT" />
                 <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+                <ScalarProperty Name="GRADES" ColumnName="GRADES" />
                 <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
                 <ScalarProperty Name="DATECMT" ColumnName="DATECMT" />
               </MappingFragment>
@@ -589,6 +609,7 @@
           <EntitySetMapping Name="CUSTOMERs">
             <EntityTypeMapping TypeName="DB_ChinhChinhModel.CUSTOMER">
               <MappingFragment StoreEntitySet="CUSTOMER">
+                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
                 <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
                 <ScalarProperty Name="MATKHAU" ColumnName="MATKHAU" />
                 <ScalarProperty Name="CUSNAME" ColumnName="CUSNAME" />
@@ -600,23 +621,23 @@
           <EntitySetMapping Name="ORDERs">
             <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDER">
               <MappingFragment StoreEntitySet="ORDER">
+                <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
                 <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
                 <ScalarProperty Name="DATEORDER" ColumnName="DATEORDER" />
+                <ScalarProperty Name="DATEACCEPT" ColumnName="DATEACCEPT" />
+                <ScalarProperty Name="DATESHIPPING" ColumnName="DATESHIPPING" />
+                <ScalarProperty Name="DATERECEIVE" ColumnName="DATERECEIVE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ORDERDETAILs">
             <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDERDETAIL">
               <MappingFragment StoreEntitySet="ORDERDETAIL">
-                <ScalarProperty Name="DATESHIPPING" ColumnName="DATESHIPPING" />
-                <ScalarProperty Name="DATEACCEPT" ColumnName="DATEACCEPT" />
-                <ScalarProperty Name="DATEORDER" ColumnName="DATEORDER" />
                 <ScalarProperty Name="IDORDERDETAIL" ColumnName="IDORDERDETAIL" />
-                <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
                 <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
                 <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
                 <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
-                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
                 <ScalarProperty Name="STATUS" ColumnName="STATUS" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -640,6 +661,15 @@
                 <ScalarProperty Name="MAROLE" ColumnName="MAROLE" />
                 <ScalarProperty Name="TENROLE" ColumnName="TENROLE" />
                 <ScalarProperty Name="CHIETKHAU" ColumnName="CHIETKHAU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VERIFYCODEs">
+            <EntityTypeMapping TypeName="DB_ChinhChinhModel.VERIFYCODE">
+              <MappingFragment StoreEntitySet="VERIFYCODE">
+                <ScalarProperty Name="IDVERIFY" ColumnName="IDVERIFY" />
+                <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

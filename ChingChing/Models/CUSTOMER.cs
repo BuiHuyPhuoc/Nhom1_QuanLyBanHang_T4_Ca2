@@ -26,6 +26,7 @@ namespace ChingChing.Models
         public string CUSNAME { get; set; }
         public string ADDRESS { get; set; }
         public Nullable<int> MAROLE { get; set; }
+        public string PHONE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CART> CARTs { get; set; }

@@ -6,18 +6,18 @@
     </Key>
     <Property Name="IDBILL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DATEBILL" Type="DateTime" Precision="0" />
+    <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BILLDETAIL_BILL" FromRole="BILL" ToRole="BILLDETAIL" />
+    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="BILLDETAIL">
     <Key>
       <PropertyRef Name="IDBILLDETAIL" />
     </Key>
     <Property Name="IDBILLDETAIL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="IDBILL" Type="Int32" />
     <Property Name="IDPRO" Type="Int32" />
     <Property Name="QUANTITY" Type="Int16" />
-    <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="BILL" Relationship="Self.FK_BILLDETAIL_BILL" FromRole="BILLDETAIL" ToRole="BILL" />
     <NavigationProperty Name="PRODUCT" Relationship="Self.FK_BILLDETAIL_PRODUCT" FromRole="BILLDETAIL" ToRole="PRODUCT" />
   </EntityType>
@@ -46,10 +46,10 @@
     </Key>
     <Property Name="IDCMT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="GRADES" Type="Byte" />
     <Property Name="CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="DATECMT" Type="DateTime" Precision="0" />
     <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_COMMENT_CUSTOMER" FromRole="COMMENT" ToRole="CUSTOMER" />
-    <Property Name="GRADES" Type="Byte" />
   </EntityType>
   <EntityType Name="CUSTOMER">
     <Key>
@@ -63,6 +63,7 @@
     <NavigationProperty Name="CARTs" Relationship="Self.FK_CART_CUSTOMER" FromRole="CUSTOMER" ToRole="CART" />
     <NavigationProperty Name="COMMENTs" Relationship="Self.FK_COMMENT_CUSTOMER" FromRole="CUSTOMER" ToRole="COMMENT" />
     <NavigationProperty Name="ROLE" Relationship="Self.FK_CUSTOMER_ROLE" FromRole="CUSTOMER" ToRole="ROLE" />
+    <Property Name="PHONE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="ORDER">
     <Key>
@@ -70,24 +71,24 @@
     </Key>
     <Property Name="IDORDER" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DATEORDER" Type="DateTime" Precision="0" />
+    <Property Name="DATEACCEPT" Type="DateTime" Precision="0" />
+    <Property Name="DATESHIPPING" Type="DateTime" Precision="0" />
+    <Property Name="DATERECEIVE" Type="DateTime" Precision="0" />
     <NavigationProperty Name="ORDERDETAILs" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDER" ToRole="ORDERDETAIL" />
+    <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="ORDERDETAIL">
     <Key>
       <PropertyRef Name="IDORDERDETAIL" />
     </Key>
     <Property Name="IDORDERDETAIL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="IDORDER" Type="Int32" />
     <Property Name="IDPRO" Type="Int32" />
     <Property Name="QUANTITY" Type="Int16" />
-    <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="STATUS" Type="Boolean" />
+    <Property Name="STATUS" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ORDER" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDERDETAIL" ToRole="ORDER" />
     <NavigationProperty Name="PRODUCT" Relationship="Self.FK_ORDERDETAIL_PRODUCT" FromRole="ORDERDETAIL" ToRole="PRODUCT" />
-    <Property Name="DATEORDER" Type="DateTime" Precision="0" />
-    <Property Name="DATEACCEPT" Type="DateTime" Precision="0" />
-    <Property Name="DATESHIPPING" Type="DateTime" Precision="0" />
   </EntityType>
   <EntityType Name="PRODUCT">
     <Key>
@@ -113,6 +114,14 @@
     <Property Name="TENROLE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="CHIETKHAU" Type="Single" />
     <NavigationProperty Name="CUSTOMERs" Relationship="Self.FK_CUSTOMER_ROLE" FromRole="ROLE" ToRole="CUSTOMER" />
+  </EntityType>
+  <EntityType Name="VERIFYCODE">
+    <Key>
+      <PropertyRef Name="IDVERIFY" />
+    </Key>
+    <Property Name="IDVERIFY" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CODE" Type="Int32" />
   </EntityType>
   <Association Name="FK_BILLDETAIL_BILL">
     <End Role="BILL" Type="Self.BILL" Multiplicity="0..1" />
@@ -233,6 +242,7 @@
     <EntitySet Name="ORDERDETAILs" EntityType="Self.ORDERDETAIL" />
     <EntitySet Name="PRODUCTs" EntityType="Self.PRODUCT" />
     <EntitySet Name="ROLEs" EntityType="Self.ROLE" />
+    <EntitySet Name="VERIFYCODEs" EntityType="Self.VERIFYCODE" />
     <AssociationSet Name="FK_BILLDETAIL_BILL" Association="Self.FK_BILLDETAIL_BILL">
       <End Role="BILL" EntitySet="BILLs" />
       <End Role="BILLDETAIL" EntitySet="BILLDETAILs" />

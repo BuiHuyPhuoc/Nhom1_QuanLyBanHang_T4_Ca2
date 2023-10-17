@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using ChingChing.Models;
 namespace ChingChing.Areas.Admin.Controllers
 {
     public class AdminController : Controller
     {
         // GET: Admin/Admin
+        DB_ChinhChinhEntities db = new DB_ChinhChinhEntities();
         public ActionResult QLDonHang()
         {
-            return View();
+            List<ORDER> getListOrder = db.ORDERs.OrderBy(x => x.DATEORDER).ToList();
+            return View(getListOrder);
         }
         public ActionResult QLTaiKhoan()
         {
-            return View();
+            List<CUSTOMER> getListCustomer = db.CUSTOMERs.ToList();
+            ViewBag.ListRole = db.ROLEs.ToList();
+            return View(getListCustomer);
         }
         public ActionResult QLHoaDon()
         {
