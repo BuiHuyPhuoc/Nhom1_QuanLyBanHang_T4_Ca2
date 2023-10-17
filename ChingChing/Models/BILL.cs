@@ -22,6 +22,8 @@ namespace ChingChing.Models
     
         public int IDBILL { get; set; }
         public Nullable<System.DateTime> DATEBILL { get; set; }
+        public string ADDRESS { get; set; }
+        public string EMAILCUS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BILLDETAIL> BILLDETAILs { get; set; }

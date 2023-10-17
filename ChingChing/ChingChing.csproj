@@ -131,6 +131,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QLDonHangController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QLTaiKhoanController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CategoryPartialController.cs" />
@@ -185,9 +187,175 @@
     <Compile Include="Models\ROLE.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VERIFYCODE.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\assets\css\docs.css" />
+    <Content Include="Areas\Admin\assets\css\theme.min.css" />
+    <Content Include="Areas\Admin\assets\css\vendor.min.css" />
+    <Content Include="Areas\Admin\assets\img\160x160\img1.jpg" />
+    <Content Include="Areas\Admin\assets\img\160x160\img10.jpg" />
+    <Content Include="Areas\Admin\assets\img\160x160\img2.jpg" />
+    <Content Include="Areas\Admin\assets\img\160x160\img3.jpg" />
+    <Content Include="Areas\Admin\assets\img\160x160\img4.jpg" />
+    <Content Include="Areas\Admin\assets\img\160x160\img5.jpg" />
+    <Content Include="Areas\Admin\assets\img\160x160\img6.jpg" />
+    <Content Include="Areas\Admin\assets\img\160x160\img7.jpg" />
+    <Content Include="Areas\Admin\assets\img\160x160\img8.jpg" />
+    <Content Include="Areas\Admin\assets\img\160x160\img9.jpg" />
+    <Content Include="Areas\Admin\assets\img\1920x400\img1.jpg" />
+    <Content Include="Areas\Admin\assets\img\1920x400\img2.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img10.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img11.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img12.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img13.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img14.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img15.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img16.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img17.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img18.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img19.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img2.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img20.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img21.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img22.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img23.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img24.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img25.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img26.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img3.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img4.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img5.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img6.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img7.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img8.jpg" />
+    <Content Include="Areas\Admin\assets\img\400x400\img9.jpg" />
+    <Content Include="Areas\Admin\assets\img\600x200\img2.jpg" />
+    <Content Include="Areas\Admin\assets\img\900x400\img1.jpg" />
+    <Content Include="Areas\Admin\assets\img\documentation\img1.jpg" />
+    <Content Include="Areas\Admin\assets\img\documentation\img2.jpg" />
+    <Content Include="Areas\Admin\assets\img\documentation\img3.jpg" />
+    <Content Include="Areas\Admin\assets\js\demo.js" />
+    <Content Include="Areas\Admin\assets\js\hs.chartjs-matrix.js" />
+    <Content Include="Areas\Admin\assets\js\theme.min.js" />
+    <Content Include="Areas\Admin\assets\js\vendor.min.js" />
+    <Content Include="Areas\Admin\assets\svg\brands\atlassian.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\bank-of-america.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\bookingcom.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\capsule.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\chrome.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\digitalocean.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\excel.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\figma.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\fitbit-gray.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\flow-xo-gray.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\frontapp.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\gitlab-gray.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\gmail.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\google-docs.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\google-sheets.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\google-slides.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\google-webdev.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\google.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\guideline.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\htmlstream.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\jira.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\layar-gray.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\mailchimp.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\mastercard.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\paypal-icon.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\pdf.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\prosperops.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\slack.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\spec.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\spotify.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\visa.svg" />
+    <Content Include="Areas\Admin\assets\svg\brands\word.svg" />
+    <Content Include="Areas\Admin\assets\svg\components\abstract-bg-4.svg" />
+    <Content Include="Areas\Admin\assets\svg\components\placeholder-csv-format.svg" />
+    <Content Include="Areas\Admin\assets\svg\components\placeholder-img-format.svg" />
+    <Content Include="Areas\Admin\assets\svg\components\placeholder-lg.svg" />
+    <Content Include="Areas\Admin\assets\svg\components\popover-bottom.svg" />
+    <Content Include="Areas\Admin\assets\svg\components\popover-left.svg" />
+    <Content Include="Areas\Admin\assets\svg\components\popover-right.svg" />
+    <Content Include="Areas\Admin\assets\svg\components\popover-top.svg" />
+    <Content Include="Areas\Admin\assets\svg\components\star-half.svg" />
+    <Content Include="Areas\Admin\assets\svg\components\star-muted.svg" />
+    <Content Include="Areas\Admin\assets\svg\components\star.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\at-line.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\book.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\browse.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\card-1.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\card-2.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\card-3.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\card-4.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\card-5.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\chat.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\choice.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\click.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\copy.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\create.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\credit-card.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\graphs.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\hi-five.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\phone-line.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\presenting.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\print.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\review-5-star.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\review-rating-shield.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\sorry.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\think.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\unlock.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\world-line.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\yelling-reverse.svg" />
+    <Content Include="Areas\Admin\assets\svg\illustrations\yelling.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\content-combinations-container-overlay.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\content-combinations-content-centered.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\content-combinations-overlay.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\demo-layouts-default-classic.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\footer-default-container.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\footer-default-fluid.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\header-default-container.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\header-default-fluid.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\header-double-line-container.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\header-double-line-fluid.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\layouts-sidebar-dark.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\layouts-sidebar-default.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\layouts-sidebar-light.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\sidebar-combinations-mini-plus-one-cols.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\sidebar-combinations-two-cols-between.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\sidebar-combinations-two-cols.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\sidebar-combinations-two-plus-mini-cols.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\sidebar-compact.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\sidebar-default-classic.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\sidebar-detached-container.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\sidebar-detached-fluid.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\sidebar-detached-overlay-container.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\sidebar-detached-overlay-fluid.svg" />
+    <Content Include="Areas\Admin\assets\svg\layouts\sidebar-mini.svg" />
+    <Content Include="Areas\Admin\assets\svg\logos\logo-short-white.svg" />
+    <Content Include="Areas\Admin\assets\svg\logos\logo-short.svg" />
+    <Content Include="Areas\Admin\assets\svg\logos\logo-white.svg" />
+    <Content Include="Areas\Admin\assets\svg\logos\logo.svg" />
+    <Content Include="Areas\Admin\assets\vendor\chart.js.extensions\chartjs-extensions.js" />
+    <Content Include="Areas\Admin\assets\vendor\chart.js\dist\Chart.min.js" />
+    <Content Include="Areas\Admin\assets\vendor\chartjs-chart-matrix\dist\chartjs-chart-matrix.min.js" />
+    <Content Include="Areas\Admin\assets\vendor\chartjs-plugin-datalabels\dist\chartjs-plugin-datalabels.min.js" />
+    <Content Include="Areas\Admin\assets\vendor\flag-icon-css\flags\1x1\ca.svg" />
+    <Content Include="Areas\Admin\assets\vendor\flag-icon-css\flags\1x1\cn.svg" />
+    <Content Include="Areas\Admin\assets\vendor\flag-icon-css\flags\1x1\de.svg" />
+    <Content Include="Areas\Admin\assets\vendor\flag-icon-css\flags\1x1\dk.svg" />
+    <Content Include="Areas\Admin\assets\vendor\flag-icon-css\flags\1x1\fr.svg" />
+    <Content Include="Areas\Admin\assets\vendor\flag-icon-css\flags\1x1\gb.svg" />
+    <Content Include="Areas\Admin\assets\vendor\flag-icon-css\flags\1x1\in.svg" />
+    <Content Include="Areas\Admin\assets\vendor\flag-icon-css\flags\1x1\it.svg" />
+    <Content Include="Areas\Admin\assets\vendor\flag-icon-css\flags\1x1\us.svg" />
+    <Content Include="Areas\Admin\assets\vendor\hs-navbar-vertical-aside\hs-navbar-vertical-aside-mini-cache.js" />
+    <Content Include="Areas\Admin\assets\vendor\icon-set\fonts\The-Icon-of.svg" />
+    <Content Include="Areas\Admin\assets\vendor\icon-set\style.css" />
     <Content Include="Areas\Admin\Content\admin_style.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -195,6 +363,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\user_detail_style.css" />
+    <Content Include="Content\verifypage_style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -243,13 +412,6 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_AdminMasterLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\QLDonHang.cshtml" />
@@ -257,6 +419,17 @@
     <Content Include="Areas\Admin\Views\Admin\QLHoaDon.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\QLSanPham.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\QLLoaiSanPham.cshtml" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\QLDonHang\ChiTietDonHang.cshtml" />
+    <Content Include="Areas\Admin\assets\vendor\icon-set\fonts\The-Icon-of.bin" />
+    <Content Include="Areas\Admin\assets\vendor\icon-set\fonts\The-Icon-of.eot" />
+    <Content Include="Areas\Admin\assets\vendor\icon-set\fonts\The-Icon-of.woff" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -288,10 +461,13 @@
     <Content Include="Views\Category\ListProductCate.cshtml" />
     <Content Include="Views\Users\SignUp.cshtml" />
     <Content Include="Views\Users\UserDetail.cshtml" />
+    <Content Include="Views\Users\VerificationPage.cshtml" />
+    <Content Include="Views\Cart\ThanksPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\QLTaiKhoan\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

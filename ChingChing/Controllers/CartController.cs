@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using ChingChing.Models;
 namespace ChingChing.Controllers
@@ -71,43 +72,7 @@ namespace ChingChing.Controllers
             }
             return RedirectToAction("YourCart", "Cart"); // Trả về dữ liệu đã được cập nhật
         }
-        public ActionResult DecreaseData(int idProduct)
-        {
-
-            CUSTOMER getCustomer = Session["Email"] as CUSTOMER;
-            // Thực hiện cập nhật dữ liệu vào cơ sở dữ liệu ở đây (ví dụ: lưu vào biến data)
-            var itemCart = db.CARTs.Where(x => x.IDPRO == idProduct && x.EMAILCUS == getCustomer.EMAILCUS).FirstOrDefault();
-            int newData = Convert.ToByte(itemCart.QUANTITY - 1);
-            if (newData < 1)
-            {
-                ViewBag.OutOfQuantity = "*Quá số lượng tồn kho";
-            }
-            else
-            {
-                itemCart.QUANTITY = Convert.ToByte(itemCart.QUANTITY - 1);
-                db.Entry(itemCart).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            return RedirectToAction("YourCart", "Cart"); // Trả về dữ liệu đã được cập nhật
-        }
-        public ActionResult IncreaseData(int idProduct)
-        {
-            
-            CUSTOMER getCustomer = Session["Email"] as CUSTOMER;
-            // Thực hiện cập nhật dữ liệu vào cơ sở dữ liệu ở đây (ví dụ: lưu vào biến data)
-            var itemCart = db.CARTs.Where(x => x.IDPRO == idProduct && x.EMAILCUS == getCustomer.EMAILCUS).FirstOrDefault();
-            int newData = Convert.ToByte(itemCart.QUANTITY + 1);
-            if ( newData > itemCart.PRODUCT.QUANTITY)
-            {
-                ViewBag.OutOfQuantity = "*Quá số lượng tồn kho";
-            } else
-            {
-                itemCart.QUANTITY = Convert.ToByte(itemCart.QUANTITY + 1);
-                db.Entry(itemCart).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            return RedirectToAction("YourCart", "Cart"); // Trả về dữ liệu đã được cập nhật
-        }
+        
 
         public decimal GetTotalPrice()
         {
@@ -126,6 +91,7 @@ namespace ChingChing.Controllers
             }
             return totalPrice;
         }
+
         public int GetTotalQuantity()
         {
             CUSTOMER getCustomer = Session["Email"] as CUSTOMER;
@@ -142,6 +108,81 @@ namespace ChingChing.Controllers
                
             }
             return totalQuan;
+        }
+
+        [HttpPost]
+        public ActionResult Pay(string address)
+        {
+            CUSTOMER getCustomer = Session["Email"] as CUSTOMER;
+            if (getCustomer != null)
+            {
+                ORDER order = new ORDER
+                {
+                    DATEORDER = DateTime.Now,
+                    ADDRESS = address,
+                    EMAILCUS = getCustomer.EMAILCUS,
+                };
+                db.ORDERs.Add(order);
+                List<CART> getCartFromCustomer = db.CARTs.Where(x => x.EMAILCUS == getCustomer.EMAILCUS).ToList();
+                foreach (var item in getCartFromCustomer)
+                {
+                    ORDERDETAIL orderdetail = new ORDERDETAIL
+                    {
+                        IDORDER = order.IDORDER,
+                        IDPRO = item.IDPRO,
+                        QUANTITY = item.QUANTITY,
+                        STATUS = "CHỜ XÁC NHẬN",
+                    };
+                    db.ORDERDETAILs.Add(orderdetail);
+                }
+                db.SaveChanges();
+
+                //Xóa giỏ hàng
+                foreach(var item in getCartFromCustomer)
+                {
+                    db.CARTs.Remove(item);
+                }
+                db.SaveChanges();
+                return RedirectToAction("ThanksPage", "Cart");
+            } else
+            {
+                return RedirectToAction("YourCart", "Cart");
+            }
+        }
+        public ActionResult ThanksPage()
+        {
+            return View();
+        }
+
+        public JsonResult ChangeQuantity(string value, string idpro)
+        {
+            var getCustomer = Session["Email"] as CUSTOMER;
+            int convertToInt = int.Parse(idpro);
+            var getCart = db.CARTs.Where(x => x.IDPRO == convertToInt && x.EMAILCUS == getCustomer.EMAILCUS).FirstOrDefault();
+            bool result = true;
+            if (value  == "UP")
+            {
+                if (getCart.QUANTITY + 1 > getCart.PRODUCT.QUANTITY)
+                {
+                    result = false;
+                } else
+                {
+                    getCart.QUANTITY += 1;
+                }
+            } else
+            {
+                if (getCart.QUANTITY - 1 <= 0)
+                {
+                    result = false;
+                }
+                else
+                {
+                    getCart.QUANTITY -= 1;
+                }
+            }
+            db.SaveChanges();
+            var data = new { result = result, value =  getCart.QUANTITY, idpro = idpro };
+            return Json(data);
         }
     }
 }

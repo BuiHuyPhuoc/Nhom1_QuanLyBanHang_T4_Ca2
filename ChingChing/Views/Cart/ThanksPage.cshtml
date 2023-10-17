@@ -1,0 +1,30 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Thanks for using</title>
+    <link href="~/Areas/Admin/assets/css/theme.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/assets/css/vendor.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="content container-fluid">
+        <div class="row justify-content-sm-center text-center py-10">
+            <div class="col-sm-7 col-md-5">
+                <img class="img-fluid mb-5" src="~/Images/logo.jpg" alt="Image Description" style="max-width: 21rem;">
+
+                <h1>Hello, and thank you very muchh !</h1>
+                <p>You are now more beautiful than ever before. Enjoy!</p>
+
+                <a class="btn btn-primary" href="@Url.Action("Index", "Home")">CONTINUE SHOPPING</a>
+            </div>
+        </div>
+        <!-- End Row -->
+    </div>
+</body>
+</html>

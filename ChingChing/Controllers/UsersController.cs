@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using ChingChing.Models;
@@ -26,6 +29,7 @@ namespace ChingChing.Controllers
         [HttpPost]
         public ActionResult Login(CUSTOMER cus)
         {
+            Console.OutputEncoding = Encoding.UTF8;
             if (ModelState.IsValid)
             {
                 var checkEmail = db.CUSTOMERs.FirstOrDefault(x => x.EMAILCUS == cus.EMAILCUS);
@@ -71,9 +75,12 @@ namespace ChingChing.Controllers
             string rePass = account["Repass"].ToString();
             string emailCus = account["EmailCus"].ToString();
             string nameCus = account["NameCus"].ToString();
+            string phoneCus = account["PhoneCus"].ToString();
             if (pass != rePass)
             {
                 ViewBag.Notif = "Mật khẩu và nhập lại mật khẩu không khớp";
+                ViewBag.EmailCus = emailCus;
+                ViewBag.nameCus = nameCus;
                 return View();
             }
 
@@ -82,20 +89,22 @@ namespace ChingChing.Controllers
             {
                 ViewBag.Warning = "Đã có người đăng ký bằng email này";
                 return View();
-
             }
             else
             {
-                CUSTOMER customer = new CUSTOMER();
-                customer.CUSNAME = nameCus;
-                customer.EMAILCUS = emailCus;
-                customer.MATKHAU = pass;
-                customer.MAROLE = 2;
-                db.CUSTOMERs.Add(customer);
-                db.SaveChanges();
-                TempData["Email"] = emailCus;
-                TempData["Password"] = pass;
-                return RedirectToAction("Login", "Users");
+                //CUSTOMER customer = new CUSTOMER();
+                //customer.CUSNAME = nameCus;
+                //customer.EMAILCUS = emailCus;
+                //customer.MATKHAU = pass;
+                //customer.MAROLE = 2;
+                //db.CUSTOMERs.Add(customer);
+                //db.SaveChanges();
+                //TempData["Email"] = emailCus;
+                //TempData["Password"] = pass;
+                //return RedirectToAction("Login", "Users");
+
+                //Chuyển hướng đến trang VerifyPage
+                return RedirectToAction("VerificationPage", "Users", new { name = nameCus, email = emailCus, matkhau = pass, phone = phoneCus });
             }
 
         }
@@ -119,6 +128,97 @@ namespace ChingChing.Controllers
             var data = new { Check = true, Email = email, Name = name, Address = address };
             return Json(data);
 
+        }
+
+        public ActionResult VerificationPage(string name, string email, string matkhau, string phone)
+        {
+            //Kiểm tra trong table đã có xuất hiện gmail đó chưa
+            //Nếu chưa thì tạo mã mới và lưu vào bảng
+            //Rồi thì cập nhật mã mới
+            //Thực hiện lấy random dãy số từ 100000 đến 999999
+            Random random = new Random();
+            int getRandomNumber = random.Next(100000, 999999);
+
+            //Tìm kiếm email đã được gửi mã chưa
+            var item = db.VERIFYCODEs.Where(x => x.EMAILCUS == email).FirstOrDefault();
+            if (item == null)
+            {
+                
+                //Thực hiện lưu mã xác thực vào bảng
+                VERIFYCODE newCode = new VERIFYCODE();
+                newCode.EMAILCUS = email;
+                newCode.CODE = getRandomNumber;
+                db.VERIFYCODEs.Add(newCode);
+                
+            } else
+            {
+                //Cập nhật dữ liệu mới
+                item.CODE = getRandomNumber;
+            }
+            //Lưu
+            db.SaveChanges();
+
+            //Thực hiện gửi mã code qua gmail cho khách hàng
+            SendEmail(getRandomNumber, email);
+
+            ViewBag.Email = email;
+            ViewBag.Pass = matkhau;
+            ViewBag.Name = name;
+            ViewBag.Phone = phone;
+            return View();
+        }
+        [HttpPost]
+        public JsonResult checkVerifyCode(string code, string email, string pass, string name, string phone)
+        {
+            var checkFromDatabase = db.VERIFYCODEs.Where(x => x.EMAILCUS == email).FirstOrDefault();
+            if (checkFromDatabase != null && checkFromDatabase.CODE == int.Parse(code))
+            {
+                CUSTOMER customer = new CUSTOMER();
+                customer.CUSNAME = name;
+                customer.EMAILCUS = email;
+                customer.MATKHAU = pass;
+                customer.MAROLE = 2;
+                customer.PHONE = phone;
+                db.CUSTOMERs.Add(customer);
+                db.SaveChanges();
+
+
+                TempData["Email"] = email;
+                TempData["Password"] = pass;
+
+                return Json(true);
+            } else
+            {
+                return Json(false);
+            }
+        }
+
+        public void SendEmail(int getRandomNumber, string getGmail)
+        {
+            //bpuh fkkn nhyf kmnv
+            string _fromGmail = "phuoctestsender@gmail.com";
+            string _fromPassword = "bpuhfkknnhyfkmnv";
+            string htmlString =
+                "<html>" +
+                "   <body>" +
+                $"       Mã xác thực của bạn là <b>{getRandomNumber}</b>" +
+                "   </body>" +
+                "</html>";
+            MailMessage message = new MailMessage();
+            message.From = new MailAddress(_fromGmail);
+            message.Subject = "Gửi mã xác thực từ web ChinhChinh Store";
+            message.To.Add(new MailAddress(getGmail.Trim()));
+            message.Body = htmlString;
+            message.IsBodyHtml = true;
+
+            var smtp = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential(_fromGmail, _fromPassword),
+                EnableSsl = true,
+            };
+
+            smtp.Send(message);
         }
 
     }

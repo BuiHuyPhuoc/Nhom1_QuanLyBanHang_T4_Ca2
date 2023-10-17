@@ -4,8 +4,10 @@
     <EntitySetMapping Name="BILLs">
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.BILL">
         <MappingFragment StoreEntitySet="BILL">
+          <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
           <ScalarProperty Name="IDBILL" ColumnName="IDBILL" />
           <ScalarProperty Name="DATEBILL" ColumnName="DATEBILL" />
+          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -13,11 +15,9 @@
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.BILLDETAIL">
         <MappingFragment StoreEntitySet="BILLDETAIL">
           <ScalarProperty Name="IDBILLDETAIL" ColumnName="IDBILLDETAIL" />
-          <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
           <ScalarProperty Name="IDBILL" ColumnName="IDBILL" />
           <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
           <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
-          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -42,9 +42,9 @@
     <EntitySetMapping Name="COMMENTs">
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.COMMENT">
         <MappingFragment StoreEntitySet="COMMENT">
-          <ScalarProperty Name="GRADES" ColumnName="GRADES" />
           <ScalarProperty Name="IDCMT" ColumnName="IDCMT" />
           <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+          <ScalarProperty Name="GRADES" ColumnName="GRADES" />
           <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
           <ScalarProperty Name="DATECMT" ColumnName="DATECMT" />
         </MappingFragment>
@@ -53,6 +53,7 @@
     <EntitySetMapping Name="CUSTOMERs">
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.CUSTOMER">
         <MappingFragment StoreEntitySet="CUSTOMER">
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
           <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
           <ScalarProperty Name="MATKHAU" ColumnName="MATKHAU" />
           <ScalarProperty Name="CUSNAME" ColumnName="CUSNAME" />
@@ -64,23 +65,23 @@
     <EntitySetMapping Name="ORDERs">
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDER">
         <MappingFragment StoreEntitySet="ORDER">
+          <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
           <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
           <ScalarProperty Name="DATEORDER" ColumnName="DATEORDER" />
+          <ScalarProperty Name="DATEACCEPT" ColumnName="DATEACCEPT" />
+          <ScalarProperty Name="DATESHIPPING" ColumnName="DATESHIPPING" />
+          <ScalarProperty Name="DATERECEIVE" ColumnName="DATERECEIVE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ORDERDETAILs">
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDERDETAIL">
         <MappingFragment StoreEntitySet="ORDERDETAIL">
-          <ScalarProperty Name="DATESHIPPING" ColumnName="DATESHIPPING" />
-          <ScalarProperty Name="DATEACCEPT" ColumnName="DATEACCEPT" />
-          <ScalarProperty Name="DATEORDER" ColumnName="DATEORDER" />
           <ScalarProperty Name="IDORDERDETAIL" ColumnName="IDORDERDETAIL" />
-          <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
           <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
           <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
           <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
-          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
           <ScalarProperty Name="STATUS" ColumnName="STATUS" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -104,6 +105,15 @@
           <ScalarProperty Name="MAROLE" ColumnName="MAROLE" />
           <ScalarProperty Name="TENROLE" ColumnName="TENROLE" />
           <ScalarProperty Name="CHIETKHAU" ColumnName="CHIETKHAU" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VERIFYCODEs">
+      <EntityTypeMapping TypeName="DB_ChinhChinhModel.VERIFYCODE">
+        <MappingFragment StoreEntitySet="VERIFYCODE">
+          <ScalarProperty Name="IDVERIFY" ColumnName="IDVERIFY" />
+          <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

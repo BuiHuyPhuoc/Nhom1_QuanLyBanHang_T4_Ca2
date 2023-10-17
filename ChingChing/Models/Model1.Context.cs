@@ -35,5 +35,6 @@ namespace ChingChing.Models
         public virtual DbSet<ORDERDETAIL> ORDERDETAILs { get; set; }
         public virtual DbSet<PRODUCT> PRODUCTs { get; set; }
         public virtual DbSet<ROLE> ROLEs { get; set; }
+        public virtual DbSet<VERIFYCODE> VERIFYCODEs { get; set; }
     }
 }

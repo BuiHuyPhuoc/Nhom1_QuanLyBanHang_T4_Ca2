@@ -10,24 +10,64 @@
         <div class="col-lg-6 right-signup">
             <h3>Đăng ký tài khoản</h3>
             <small style="color:red">@ViewBag.Warning</small>
-            @using (Html.BeginForm("SignUp", "Users", FormMethod.Post))
-            {
+            <form action="@Url.Action("SignUp", "Users")" method="post" id="registerForm">
                 @Html.ValidationSummary(true)
-                if (ViewBag.Notif != null)
-                {
-                    <small class="text-danger">@ViewBag.Notif</small> <br />
-                }
-
-                <input type="text" name="NameCus" placeholder="Họ tên của bạn" class="form-control" required>
-                <input type="email" name="EmailCus" placeholder="Email" class="form-control" required>
-                <input type="password" name="PassCus" placeholder="Mật khẩu" class="form-control" required>
-                <input type="password" name="Repass" placeholder="Nhập lại mật khẩu" class="form-control" required>
+                <small class="text-danger">@ViewBag.Notif</small> <br />
+                <input type="text" name="NameCus" placeholder="Họ tên của bạn" class="form-control" value="@ViewBag.nameCus" required>
+                <input type="email" name="EmailCus" placeholder="Email" class="form-control" value="@ViewBag.EmailCus" required>
+                <input id="inputPhone" type="tel" name="PhoneCus" placeholder="Số điện thoại" class="form-control" value="" required>
+                <input id="inputPassword" type="password" name="PassCus" placeholder="Mật khẩu" class="form-control" required>
+                <input id="reinputPassword" type="password" name="Repass" placeholder="Nhập lại mật khẩu" class="form-control" required>
 
                 <button type="submit" class="btn" style="background-color: rgb(248, 117, 139) ; color:#fff;">Đăng ký ngay</button>
-            }
+            </form>
+          
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    document.getElementById("inputPhone").onkeyup = function () {
+        // Lấy giá trị của trường input
+        var input = this.value;
+
+        // Loại bỏ tất cả các ký tự không phải là số
+        var sanitizedInput = input.replace(/\D/g, "");
+
+        // Cập nhật giá trị của trường input thành chuỗi đã được loại bỏ ký tự không phải là số
+        this.value = sanitizedInput;
+    };
+
+
+    document.getElementById("registerForm").onsubmit = function (event) {
+        
+        var noti = "";
+        var check = true;
+
+        var Password = document.getElementById("inputPassword").value;
+        if (Password.length < 6) {
+            noti += "Mật khẩu phải từ 6 chữ số trở lên.\n";
+            check = false;
+        }
+
+        var phoneNumber = document.getElementById("inputPhone").value;
+        if (phoneNumber.length < 10 || phoneNumber.length > 11) {
+            noti += "Số điện thoại phải có từ 10 đến 11 chữ số.\n";
+            check = false;
+        }
+
+        var reinputPassword = document.getElementById('reinputPassword').value;
+        if (Password != reinputPassword) {
+            noti += "Mật khẩu và nhập lại mật khẩu không khớp.\n";
+            check = false;
+        }
+
+        if (check == false) {
+            alert(noti);
+            event.preventDefault();
+        }
+    };
+</script>
 
 
 

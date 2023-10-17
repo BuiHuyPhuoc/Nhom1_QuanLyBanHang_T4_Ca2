@@ -1,7 +1,319 @@
-﻿
+﻿@model List<ChingChing.Models.CUSTOMER>
 @{
     ViewBag.Title = "QLTaiKhoan";
     Layout = "~/Areas/Admin/Views/Shared/_AdminMasterLayout.cshtml";
 }
 
-<h2>QLTaiKhoan</h2>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="~/Areas/Admin/Content/admin_style.css">
+
+    <link href="~/Areas/Admin/assets/css/vendor.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/assets/vendor/icon-set/style.css" rel="stylesheet" />
+
+
+    <!-- CSS Front Template -->
+    <link href="~/Areas/Admin/assets/css/theme.min.css?v=1.0" rel="stylesheet" />
+    <style>
+        .input-group-text {
+            min-width: 80px
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="@Url.Action("UpdateAccount", "QLTaiKhoan")" method="post">
+                    <div class="modal-body">
+
+                        @* Thoong tin here *@
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Email:</span>
+                            </div>
+                            <input id="popupEmail" name="email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Tên:</span>
+                            </div>
+                            <input onkeyup="changeButtonStatus()" id="popupName" name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Địa chỉ:</span>
+                            </div>
+                            <input onkeyup="changeButtonStatus()" id="popupAdrress" name="address" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btnSaveChanges" type="submit" class="btn btn-success" disabled>Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br />
+
+
+
+    <div class="container">
+        <h3 class="text-header">DANH SÁCH TÀI KHOẢN</h3>
+        <br />
+        <p class="text-danger">@TempData["Notification"]</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mật khẩu</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Địa chỉ</th>
+                    <th scope="col">Quyền hạn</th>
+                    <th scope="col">Tùy chọn</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+
+                        <th scope="row">@item.EMAILCUS</th>
+                        <td>@item.MATKHAU</td>
+                        <td>@item.CUSNAME</td>
+                        <td>@item.ADDRESS</td>
+                        <td>@item.ROLE.TENROLE</td>
+                        <td>
+                            <a style="font-weight: bolder; color: white" class="btn btn-secondary" onclick="openPopup('@item.EMAILCUS', '@item.CUSNAME', '@item.ADDRESS')" data-toggle="modal" data-target="#exampleModal"> UDPATE</a>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+        <div class="line"></div>
+        <br />
+    </div>
+
+    <div class="content container">
+        <h3 class="text-header">TẠO TÀI KHOẢN</h3>
+        <!-- Step Form -->
+        <form class="js-step-form py-md-5" action="@Url.Action("AdminCreateAccount", "QLTaiKhoan")" id="createAccountForm" method="post">
+            <div class="row justify-content-lg-center">
+                <div class="col-lg-8">
+                    <!-- Content Step Form -->
+                    <div id="addUserStepFormContent">
+
+                        <!-- Card -->
+                        <div id="addUserStepProfile" class="card card-lg active">
+                            <!-- Body -->
+                            <div class="card-body">
+
+
+                                <!-- Form Group -->
+                                <div class="row form-group">
+                                    <label for="emailLabel" class="col-sm-3 col-form-label input-label">Tên</label>
+                                    <div class="col-sm-9">
+                                        <input id="createName" type="text" class="form-control" name="name" placeholder="Nguyễn Văn An" required>
+                                    </div>
+                                </div>
+                                <!-- End Form Group -->
+                                <!-- Form Group -->
+                                <div class="row form-group">
+                                    <label for="createPass" class="col-sm-3 col-form-label input-label">Mật khẩu</label>
+                                    <div class="col-sm-9">
+                                        <input id="createPass" type="password" class="form-control" name="pass" placeholder="*********" required>
+                                    </div>
+                                </div>
+                                <!-- End Form Group -->
+                                <!-- Form Group -->
+                                <p class="text-danger" id="textcheckmail"></p>
+                                <div class="row form-group">
+                                    <label for="emailLabel" class="col-sm-3 col-form-label input-label">Email</label>
+                                    <div class="col-sm-9">
+                                        <input id="createEmail" type="email" class="form-control" name="email" placeholder="clarice@example.com" aria-label="clarice@example.com" required>
+                                    </div>
+                                </div>
+                                <!-- End Form Group -->
+                                <!-- Form Group -->
+                                <div class="js-add-field row form-group">
+                                    <label for="phoneLabel" class="col-sm-3 col-form-label input-label">Phone</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group input-group-sm-down-break align-items-center">
+                                            <input maxlength="11" minlength="10" id="createPhone" type="tel" class="js-masked-input form-control" name="phone" placeholder="1231231231" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Form Group -->
+                                <!-- Add Phone Input Field -->
+                                <div class="js-add-field row form-group">
+                                    <label for="phoneLabel" class="col-sm-3 col-form-label input-label">Address</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group input-group-sm-down-break align-items-center">
+                                            <input id="createAddress" type="text" class="js-masked-input form-control" name="address" placeholder="Quận 12 TPHCM" required />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="js-add-field row form-group">
+                                    <label for="phoneLabel" class="col-sm-3 col-form-label input-label">Quyền hạn</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group input-group-sm-down-break align-items-center">
+                                            <select class="custom-select custom-select-lg mb-3" name="role">
+                                                @foreach (var item in ViewBag.ListRole)
+                                                {
+                                                    <option value="@item.MAROLE">@item.TENROLE</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- End Add Phone Input Field -->
+                                <div class="js-add-field row form-group">
+                                    <div class="col-sm-9">
+                                        @*<button id="checkEmailBtn" type="button" class="btn btn-primary">KIỂM TRA</button>*@
+                                        <button id="submitBtn" type="submit" class="btn btn-success" disabled>TẠO MỚI</button>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <!-- End Card -->
+                    </div>
+                </div>
+            </div>
+            <!-- End Row -->
+        </form>
+        <!-- End Step Form -->
+    </div>
+
+
+
+ 
+    <script type="text/javascript" defer>
+
+        var getEmailTag = document.getElementById('popupEmail');
+        var getNameTag = document.getElementById('popupName');
+        var getAddressTag = document.getElementById('popupAdrress');
+        var getBtnSaveChanges = document.getElementById('btnSaveChanges');
+
+        function openPopup(email, name, address) {
+            getEmailTag.value = email;
+            getNameTag.value = name;
+            getAddressTag.value = address;
+        }
+        // Đặt mã AJAX ở đây
+        function changeButtonStatus() {
+            var _Name = getNameTag.value;
+            var _Email = getEmailTag.value;
+            var _Address = getAddressTag.value;
+            $.ajax({
+                url: "@Url.Action("changeButtonStatus", "QLTaiKhoan")", // Đường dẫn đến phương thức kiểm tra tồn tại
+                type: "POST",
+                data: JSON.stringify({ "email": _Email, "name": _Name, "address": _Address }), // Gửi dữ liệu dưới dạng JSON
+                contentType: "application/json; charset=utf-8", // Định dạng dữ liệu
+                dataType: "json", // Đặt kiểu dữ liệu mà bạn mong đợi từ phản hồi
+
+                success: function (response) {
+                    if (response == true) {
+                        getBtnSaveChanges.setAttribute("disabled", "true");
+                    } else {
+                        getBtnSaveChanges.removeAttribute("disabled");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Lỗi khi gửi yêu cầu: " + status + " - " + error);
+                }
+            });
+        }
+
+
+        $("#createEmail").on("keyup", function () {
+            var _Email = $("#createEmail").val();
+            var textcheckmail = document.getElementById('textcheckmail');
+            $.ajax({
+                url: "@Url.Action("checkEmail", "QLTaiKhoan")",
+                type: "POST",
+                data: JSON.stringify({ "email": _Email }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response === true) {
+                        $("#submitBtn").prop("disabled", false);
+                        textcheckmail.innerHTML = 'Email hợp lệ';
+                    } else {
+
+                        $("#submitBtn").prop("disabled", true);
+                        textcheckmail.innerHTML = 'Email không hợp lệ hoặc đã được sử dụng';
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Lỗi khi gửi yêu cầu: " + status + " - " + error);
+                }
+            });
+        });
+
+        //$("#createEmail").on("keyup", function () {
+        //    $("#submitBtn").css("display", "none");
+        //    $("#checkEmailBtn").css("display", "inline-block");
+        //});
+
+        document.getElementById("createPhone").onkeyup = function () {
+            // Lấy giá trị của trường input
+            var input = this.value;
+
+            // Loại bỏ tất cả các ký tự không phải là số
+            var sanitizedInput = input.replace(/\D/g, "");
+
+            // Cập nhật giá trị của trường input thành chuỗi đã được loại bỏ ký tự không phải là số
+            this.value = sanitizedInput;
+        };
+
+
+        document.getElementById("createAccountForm").onsubmit = function (event) {
+            var Password = document.getElementById("createPass").value;
+            if (Password.length < 6 ) {
+                alert("Mật khẩu phải từ 6 chữ số trở lên.");
+                event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu nếu độ dài không hợp lệ.
+            }
+
+            var phoneNumber = document.getElementById("createPhone").value;
+
+            if (phoneNumber.length < 10 || phoneNumber.length > 11) {
+                alert("Số điện thoại phải có từ 10 đến 11 chữ số.");
+                event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu nếu độ dài không hợp lệ.
+            }
+            
+        };
+
+    </script>
+    @if (TempData["NotificationCreate"] != null )
+    {
+        <script type="text/javascript">
+            alert('Tạo tài khoản thành công');
+        </script>
+    }
+
+</body> 
+</html>

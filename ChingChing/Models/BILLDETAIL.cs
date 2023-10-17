@@ -15,11 +15,9 @@ namespace ChingChing.Models
     public partial class BILLDETAIL
     {
         public int IDBILLDETAIL { get; set; }
-        public string EMAILCUS { get; set; }
         public Nullable<int> IDBILL { get; set; }
         public Nullable<int> IDPRO { get; set; }
         public Nullable<short> QUANTITY { get; set; }
-        public string ADDRESS { get; set; }
     
         public virtual BILL BILL { get; set; }
         public virtual PRODUCT PRODUCT { get; set; }

@@ -6,17 +6,17 @@
     </Key>
     <Property Name="IDBILL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DATEBILL" Type="date" />
+    <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+    <Property Name="ADDRESS" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="BILLDETAIL">
     <Key>
       <PropertyRef Name="IDBILLDETAIL" />
     </Key>
     <Property Name="IDBILLDETAIL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
     <Property Name="IDBILL" Type="int" />
     <Property Name="IDPRO" Type="int" />
     <Property Name="QUANTITY" Type="smallint" />
-    <Property Name="ADDRESS" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="CART">
     <Key>
@@ -52,6 +52,7 @@
     <Property Name="MATKHAU" Type="varchar(max)" />
     <Property Name="CUSNAME" Type="nvarchar(max)" />
     <Property Name="ADDRESS" Type="nvarchar(max)" />
+    <Property Name="PHONE" Type="varchar" MaxLength="11" />
     <Property Name="MAROLE" Type="int" />
   </EntityType>
   <EntityType Name="ORDER">
@@ -59,22 +60,22 @@
       <PropertyRef Name="IDORDER" />
     </Key>
     <Property Name="IDORDER" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+    <Property Name="ADDRESS" Type="nvarchar(max)" />
     <Property Name="DATEORDER" Type="date" />
+    <Property Name="DATEACCEPT" Type="date" />
+    <Property Name="DATESHIPPING" Type="date" />
+    <Property Name="DATERECEIVE" Type="date" />
   </EntityType>
   <EntityType Name="ORDERDETAIL">
     <Key>
       <PropertyRef Name="IDORDERDETAIL" />
     </Key>
     <Property Name="IDORDERDETAIL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
     <Property Name="IDORDER" Type="int" />
     <Property Name="IDPRO" Type="int" />
     <Property Name="QUANTITY" Type="smallint" />
-    <Property Name="ADDRESS" Type="nvarchar(max)" />
-    <Property Name="STATUS" Type="bit" />
-    <Property Name="DATEORDER" Type="date" />
-    <Property Name="DATEACCEPT" Type="date" />
-    <Property Name="DATESHIPPING" Type="date" />
+    <Property Name="STATUS" Type="nvarchar" MaxLength="30" />
   </EntityType>
   <EntityType Name="PRODUCT">
     <Key>
@@ -95,6 +96,14 @@
     <Property Name="MAROLE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TENROLE" Type="nvarchar" MaxLength="20" />
     <Property Name="CHIETKHAU" Type="real" />
+  </EntityType>
+  <EntityType Name="VERIFYCODE">
+    <Key>
+      <PropertyRef Name="IDVERIFY" />
+    </Key>
+    <Property Name="IDVERIFY" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+    <Property Name="CODE" Type="int" />
   </EntityType>
   <Association Name="FK_BILLDETAIL_BILL">
     <End Role="BILL" Type="Self.BILL" Multiplicity="0..1" />
@@ -215,6 +224,7 @@
     <EntitySet Name="ORDERDETAIL" EntityType="Self.ORDERDETAIL" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PRODUCT" EntityType="Self.PRODUCT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ROLE" EntityType="Self.ROLE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VERIFYCODE" EntityType="Self.VERIFYCODE" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_BILLDETAIL_BILL" Association="Self.FK_BILLDETAIL_BILL">
       <End Role="BILL" EntitySet="BILL" />
       <End Role="BILLDETAIL" EntitySet="BILLDETAIL" />

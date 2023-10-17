@@ -80,19 +80,8 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script type="text/javascript">
-        @*function changeButtonStatus() {
-                var getInputTags = document.getElementsByClassName('edit_text');
-                var getButton = document.getElementById('btnUpdateInfoCustomer');
-                if (getInputTags[0].value.trim() == "@getAccount.EMAILCUS"
-                    && getInputTags[1].value.trim() == "@getAccount.CUSNAME"
-                    && getInputTags[2].value.trim() == "@getAccount.ADDRESS") {
-                    getButton.setAttribute("disabled", "true");
-                } else {
-                    getButton.removeAttribute("disabled");
-                }
-            }*@
         function decodeHtmlEntities(input) {
             var txt = document.createElement("textarea");
             txt.innerHTML = input;
@@ -104,7 +93,6 @@
             var getButton = document.getElementById('btnUpdateInfoCustomer');
             var inputValue = getInputTags[1].value.trim();
 
-            //var originalString = "Trương Tr&#226;n";
             var expectedValue = "@getAccount.CUSNAME";
             var convertedString = expectedValue.replace(/&#(\d+);/g, function (match, dec) {
                 return String.fromCharCode(dec);
