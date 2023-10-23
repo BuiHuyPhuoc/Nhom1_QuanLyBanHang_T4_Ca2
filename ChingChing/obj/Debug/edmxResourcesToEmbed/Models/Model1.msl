@@ -4,9 +4,9 @@
     <EntitySetMapping Name="BILLs">
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.BILL">
         <MappingFragment StoreEntitySet="BILL">
-          <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
           <ScalarProperty Name="IDBILL" ColumnName="IDBILL" />
           <ScalarProperty Name="DATEBILL" ColumnName="DATEBILL" />
+          <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
           <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -53,11 +53,11 @@
     <EntitySetMapping Name="CUSTOMERs">
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.CUSTOMER">
         <MappingFragment StoreEntitySet="CUSTOMER">
-          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
           <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
           <ScalarProperty Name="MATKHAU" ColumnName="MATKHAU" />
           <ScalarProperty Name="CUSNAME" ColumnName="CUSNAME" />
           <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
           <ScalarProperty Name="MAROLE" ColumnName="MAROLE" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -65,9 +65,9 @@
     <EntitySetMapping Name="ORDERs">
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDER">
         <MappingFragment StoreEntitySet="ORDER">
+          <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
           <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
           <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
-          <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
           <ScalarProperty Name="DATEORDER" ColumnName="DATEORDER" />
           <ScalarProperty Name="DATEACCEPT" ColumnName="DATEACCEPT" />
           <ScalarProperty Name="DATESHIPPING" ColumnName="DATESHIPPING" />
@@ -82,7 +82,6 @@
           <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
           <ScalarProperty Name="IDPRO" ColumnName="IDPRO" />
           <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
-          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

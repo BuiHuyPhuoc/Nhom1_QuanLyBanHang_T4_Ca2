@@ -86,8 +86,8 @@
 
             <div class="col-lg-4 cart-right-element">
                 <div class="cart-payment">
-                    <span>Số lượng sản phẩm : </span> <span>@ViewBag.TotalQuantity</span> <br /><br />
-                    <span>Tổng tiền: </span> <span class="total">@String.Format(money, "{0:c0}", ViewBag.TotalPrice)</span> <br /> <br />
+                    <span>Số lượng sản phẩm : </span> <span id="outputQuant">@ViewBag.TotalQuantity</span> <br /><br />
+                    <span>Tổng tiền: </span> <span class="total" id="outputPrice">@String.Format(money, "{0:c0}", ViewBag.TotalPrice)</span> <br /> <br />
 
                     @using (Html.BeginForm("Pay", "Cart", FormMethod.Post))
                     {
@@ -110,7 +110,9 @@
     </script>
             }
 <script type="text/javascript">
- 
+    function format2(n, currency) {
+        return n.toFixed(0).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + currency;
+    }
     function changeQuantity(Value, idPro) {
         $.ajax({
             url: "@Url.Action("ChangeQuantity", "Cart")",
@@ -123,6 +125,10 @@
                 if (response.result == true) {
                     var getProQuantityTag = document.getElementById(response.idpro);
                     getProQuantityTag.value = response.value;
+                    var getQuant = document.getElementById('outputQuant');
+                    getQuant.innerHTML = response.totalQuant.toString();
+                    var getPrice = document.getElementById('outputPrice');
+                    getPrice.innerHTML = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(response.totalPrice) /*.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })*/;
                 } else {
                     var getProQuantityTag = document.getElementById(response.idpro);
                     getProQuantityTag.value = response.value;

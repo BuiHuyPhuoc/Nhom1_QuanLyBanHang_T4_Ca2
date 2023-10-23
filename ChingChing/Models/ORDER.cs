@@ -21,12 +21,12 @@ namespace ChingChing.Models
         }
     
         public int IDORDER { get; set; }
+        public string EMAILCUS { get; set; }
+        public string ADDRESS { get; set; }
         public Nullable<System.DateTime> DATEORDER { get; set; }
         public Nullable<System.DateTime> DATEACCEPT { get; set; }
         public Nullable<System.DateTime> DATESHIPPING { get; set; }
         public Nullable<System.DateTime> DATERECEIVE { get; set; }
-        public string ADDRESS { get; set; }
-        public string EMAILCUS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDERDETAIL> ORDERDETAILs { get; set; }

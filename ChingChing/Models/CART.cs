@@ -17,7 +17,7 @@ namespace ChingChing.Models
         public int IDCART { get; set; }
         public string EMAILCUS { get; set; }
         public Nullable<int> IDPRO { get; set; }
-        public Nullable<byte> QUANTITY { get; set; }
+        public Nullable<short> QUANTITY { get; set; }
     
         public virtual CUSTOMER CUSTOMER { get; set; }
         public virtual PRODUCT PRODUCT { get; set; }

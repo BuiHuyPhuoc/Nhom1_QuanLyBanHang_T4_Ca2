@@ -6,9 +6,9 @@
     </Key>
     <Property Name="IDBILL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DATEBILL" Type="DateTime" Precision="0" />
+    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BILLDETAIL_BILL" FromRole="BILL" ToRole="BILLDETAIL" />
-    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="BILLDETAIL">
     <Key>
@@ -28,7 +28,7 @@
     <Property Name="IDCART" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="IDPRO" Type="Int32" />
-    <Property Name="QUANTITY" Type="Byte" />
+    <Property Name="QUANTITY" Type="Int16" />
     <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_CART_CUSTOMER" FromRole="CART" ToRole="CUSTOMER" />
     <NavigationProperty Name="PRODUCT" Relationship="Self.FK_CART_PRODUCT" FromRole="CART" ToRole="PRODUCT" />
   </EntityType>
@@ -59,24 +59,24 @@
     <Property Name="MATKHAU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="CUSNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PHONE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
     <Property Name="MAROLE" Type="Int32" />
     <NavigationProperty Name="CARTs" Relationship="Self.FK_CART_CUSTOMER" FromRole="CUSTOMER" ToRole="CART" />
     <NavigationProperty Name="COMMENTs" Relationship="Self.FK_COMMENT_CUSTOMER" FromRole="CUSTOMER" ToRole="COMMENT" />
     <NavigationProperty Name="ROLE" Relationship="Self.FK_CUSTOMER_ROLE" FromRole="CUSTOMER" ToRole="ROLE" />
-    <Property Name="PHONE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="ORDER">
     <Key>
       <PropertyRef Name="IDORDER" />
     </Key>
     <Property Name="IDORDER" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="DATEORDER" Type="DateTime" Precision="0" />
     <Property Name="DATEACCEPT" Type="DateTime" Precision="0" />
     <Property Name="DATESHIPPING" Type="DateTime" Precision="0" />
     <Property Name="DATERECEIVE" Type="DateTime" Precision="0" />
     <NavigationProperty Name="ORDERDETAILs" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDER" ToRole="ORDERDETAIL" />
-    <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="ORDERDETAIL">
     <Key>
@@ -86,7 +86,6 @@
     <Property Name="IDORDER" Type="Int32" />
     <Property Name="IDPRO" Type="Int32" />
     <Property Name="QUANTITY" Type="Int16" />
-    <Property Name="STATUS" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ORDER" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDERDETAIL" ToRole="ORDER" />
     <NavigationProperty Name="PRODUCT" Relationship="Self.FK_ORDERDETAIL_PRODUCT" FromRole="ORDERDETAIL" ToRole="PRODUCT" />
   </EntityType>
@@ -100,7 +99,7 @@
     <Property Name="DESCRIPTIONPRO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="PRICE" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="IMAGEPRO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="QUANTITY" Type="Byte" />
+    <Property Name="QUANTITY" Type="Int16" />
     <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BILLDETAIL_PRODUCT" FromRole="PRODUCT" ToRole="BILLDETAIL" />
     <NavigationProperty Name="CARTs" Relationship="Self.FK_CART_PRODUCT" FromRole="PRODUCT" ToRole="CART" />
     <NavigationProperty Name="CATEGORY" Relationship="Self.FK_PRODUCT_CATEGORY" FromRole="PRODUCT" ToRole="CATEGORY" />
