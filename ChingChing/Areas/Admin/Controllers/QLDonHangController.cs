@@ -33,6 +33,15 @@ namespace ChingChing.Areas.Admin.Controllers
                 } else if (getStatus == "Đang giao")
                 {
                     getItem.DATESHIPPING = DateTime.Now;
+                    //Khi đơn hàng đang giao, thì sẽ trừ vô kho
+                    int convertToInt = int.Parse(idorder);
+                    var getOrderDetails = db.ORDERDETAILs.Where(x => x.IDORDER == convertToInt).ToList();
+                    foreach (var item in getOrderDetails)
+                    {
+                        PRODUCT product = db.PRODUCTs.Where(x => x.IDPRO == item.IDPRO).FirstOrDefault();
+                        product.QUANTITY = Convert.ToInt16(product.QUANTITY - item.QUANTITY);
+                    }
+                    db.SaveChanges();
                 } else if (getStatus == "Đã nhận")
                 {
                     getItem.DATERECEIVE = DateTime.Now;
@@ -42,13 +51,15 @@ namespace ChingChing.Areas.Admin.Controllers
                         ADDRESS = getItem.ADDRESS
                     };
                     db.BILLs.Add(bill);
+                    db.SaveChanges();
                     int convertToInt = int.Parse(idorder);
                     var getOrderDetails = db.ORDERDETAILs.Where(x => x.IDORDER == convertToInt).ToList();
                     foreach(var item in getOrderDetails)
                     {
                         BILLDETAIL billdetail = new BILLDETAIL() {
-                            
-                            
+                            IDBILL = bill.IDBILL,
+                            IDPRO = item.IDPRO,
+                            QUANTITY = item.QUANTITY
                         };
                     }
                 }

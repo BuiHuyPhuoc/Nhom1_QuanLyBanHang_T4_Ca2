@@ -123,6 +123,7 @@ namespace ChingChing.Controllers
                     EMAILCUS = getCustomer.EMAILCUS,
                 };
                 db.ORDERs.Add(order);
+                db.SaveChanges();
                 List<CART> getCartFromCustomer = db.CARTs.Where(x => x.EMAILCUS == getCustomer.EMAILCUS).ToList();
                 foreach (var item in getCartFromCustomer)
                 {
@@ -130,8 +131,7 @@ namespace ChingChing.Controllers
                     {
                         IDORDER = order.IDORDER,
                         IDPRO = item.IDPRO,
-                        QUANTITY = item.QUANTITY,
-                        STATUS = "CHỜ XÁC NHẬN",
+                        QUANTITY = item.QUANTITY
                     };
                     db.ORDERDETAILs.Add(orderdetail);
                 }
@@ -181,7 +181,13 @@ namespace ChingChing.Controllers
                 }
             }
             db.SaveChanges();
-            var data = new { result = result, value =  getCart.QUANTITY, idpro = idpro };
+            int totalQuantity = GetTotalQuantity();
+            decimal getTotalPrice = GetTotalPrice();
+            var data = new {    result = result, 
+                                value =  getCart.QUANTITY, 
+                                idpro = idpro, 
+                                totalQuant = totalQuantity, 
+                                totalPrice = getTotalPrice  };
             return Json(data);
         }
     }

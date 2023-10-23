@@ -25,7 +25,7 @@
     <Property Name="IDCART" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
     <Property Name="IDPRO" Type="int" />
-    <Property Name="QUANTITY" Type="tinyint" />
+    <Property Name="QUANTITY" Type="smallint" />
   </EntityType>
   <EntityType Name="CATEGORY">
     <Key>
@@ -75,7 +75,6 @@
     <Property Name="IDORDER" Type="int" />
     <Property Name="IDPRO" Type="int" />
     <Property Name="QUANTITY" Type="smallint" />
-    <Property Name="STATUS" Type="nvarchar" MaxLength="30" />
   </EntityType>
   <EntityType Name="PRODUCT">
     <Key>
@@ -87,7 +86,7 @@
     <Property Name="DESCRIPTIONPRO" Type="nvarchar(max)" />
     <Property Name="PRICE" Type="money" />
     <Property Name="IMAGEPRO" Type="varchar(max)" />
-    <Property Name="QUANTITY" Type="tinyint" />
+    <Property Name="QUANTITY" Type="smallint" />
   </EntityType>
   <EntityType Name="ROLE">
     <Key>

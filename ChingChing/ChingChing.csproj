@@ -419,6 +419,10 @@
     <Content Include="Areas\Admin\Views\Admin\QLHoaDon.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\QLSanPham.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\QLLoaiSanPham.cshtml" />
+    <Content Include="Areas\Admin\Views\QLDonHang\ChiTietDonHang.cshtml" />
+    <Content Include="Areas\Admin\assets\vendor\icon-set\fonts\The-Icon-of.bin" />
+    <Content Include="Areas\Admin\assets\vendor\icon-set\fonts\The-Icon-of.eot" />
+    <Content Include="Areas\Admin\assets\vendor\icon-set\fonts\The-Icon-of.woff" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -426,10 +430,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\QLDonHang\ChiTietDonHang.cshtml" />
-    <Content Include="Areas\Admin\assets\vendor\icon-set\fonts\The-Icon-of.bin" />
-    <Content Include="Areas\Admin\assets\vendor\icon-set\fonts\The-Icon-of.eot" />
-    <Content Include="Areas\Admin\assets\vendor\icon-set\fonts\The-Icon-of.woff" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -18,7 +18,6 @@ namespace ChingChing.Models
         public Nullable<int> IDORDER { get; set; }
         public Nullable<int> IDPRO { get; set; }
         public Nullable<short> QUANTITY { get; set; }
-        public string STATUS { get; set; }
     
         public virtual ORDER ORDER { get; set; }
         public virtual PRODUCT PRODUCT { get; set; }
