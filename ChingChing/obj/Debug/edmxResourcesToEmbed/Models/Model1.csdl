@@ -9,6 +9,7 @@
     <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BILLDETAIL_BILL" FromRole="BILL" ToRole="BILLDETAIL" />
+    <Property Name="TOTAL_PRICE" Type="Decimal" Precision="19" Scale="4" />
   </EntityType>
   <EntityType Name="BILLDETAIL">
     <Key>
@@ -77,6 +78,7 @@
     <Property Name="DATESHIPPING" Type="DateTime" Precision="0" />
     <Property Name="DATERECEIVE" Type="DateTime" Precision="0" />
     <NavigationProperty Name="ORDERDETAILs" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDER" ToRole="ORDERDETAIL" />
+    <Property Name="TOTAL_PRICE" Type="Decimal" Precision="19" Scale="4" />
   </EntityType>
   <EntityType Name="ORDERDETAIL">
     <Key>
@@ -278,5 +280,17 @@
       <End Role="PRODUCT" EntitySet="PRODUCTs" />
       <End Role="ORDERDETAIL" EntitySet="ORDERDETAILs" />
     </AssociationSet>
+    <EntitySet Name="CONTACTs" EntityType="DB_ChinhChinhModel.CONTACT" />
   </EntityContainer>
+  <EntityType Name="CONTACT">
+    <Key>
+      <PropertyRef Name="ID_CONTACT" />
+    </Key>
+    <Property Name="ID_CONTACT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="MESSAGE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DATE_SEND" Type="DateTime" Precision="0" />
+    <Property Name="STATUS" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

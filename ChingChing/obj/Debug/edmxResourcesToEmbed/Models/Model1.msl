@@ -4,6 +4,7 @@
     <EntitySetMapping Name="BILLs">
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.BILL">
         <MappingFragment StoreEntitySet="BILL">
+          <ScalarProperty Name="TOTAL_PRICE" ColumnName="TOTAL_PRICE" />
           <ScalarProperty Name="IDBILL" ColumnName="IDBILL" />
           <ScalarProperty Name="DATEBILL" ColumnName="DATEBILL" />
           <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
@@ -65,6 +66,7 @@
     <EntitySetMapping Name="ORDERs">
       <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDER">
         <MappingFragment StoreEntitySet="ORDER">
+          <ScalarProperty Name="TOTAL_PRICE" ColumnName="TOTAL_PRICE" />
           <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
           <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
           <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
@@ -113,6 +115,18 @@
           <ScalarProperty Name="IDVERIFY" ColumnName="IDVERIFY" />
           <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
           <ScalarProperty Name="CODE" ColumnName="CODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTACTs">
+      <EntityTypeMapping TypeName="DB_ChinhChinhModel.CONTACT">
+        <MappingFragment StoreEntitySet="CONTACT">
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="DATE_SEND" ColumnName="DATE_SEND" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="MESSAGE" ColumnName="MESSAGE" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="ID_CONTACT" ColumnName="ID_CONTACT" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

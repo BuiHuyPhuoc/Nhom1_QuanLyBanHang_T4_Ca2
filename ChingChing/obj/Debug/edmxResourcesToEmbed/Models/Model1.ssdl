@@ -7,6 +7,7 @@
     <Property Name="IDBILL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DATEBILL" Type="date" />
     <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+    <Property Name="TOTAL_PRICE" Type="money" />
     <Property Name="ADDRESS" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="BILLDETAIL">
@@ -44,6 +45,17 @@
     <Property Name="CONTENT" Type="varchar(max)" />
     <Property Name="DATECMT" Type="date" />
   </EntityType>
+  <EntityType Name="CONTACT">
+    <Key>
+      <PropertyRef Name="ID_CONTACT" />
+    </Key>
+    <Property Name="ID_CONTACT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMAIL" Type="varchar(max)" />
+    <Property Name="MESSAGE" Type="nvarchar(max)" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="100" />
+    <Property Name="DATE_SEND" Type="date" />
+    <Property Name="STATUS" Type="nvarchar" MaxLength="20" />
+  </EntityType>
   <EntityType Name="CUSTOMER">
     <Key>
       <PropertyRef Name="EMAILCUS" />
@@ -66,6 +78,7 @@
     <Property Name="DATEACCEPT" Type="date" />
     <Property Name="DATESHIPPING" Type="date" />
     <Property Name="DATERECEIVE" Type="date" />
+    <Property Name="TOTAL_PRICE" Type="money" />
   </EntityType>
   <EntityType Name="ORDERDETAIL">
     <Key>
@@ -218,6 +231,7 @@
     <EntitySet Name="CART" EntityType="Self.CART" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CATEGORY" EntityType="Self.CATEGORY" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="COMMENT" EntityType="Self.COMMENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CONTACT" EntityType="Self.CONTACT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ORDER" EntityType="Self.ORDER" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ORDERDETAIL" EntityType="Self.ORDERDETAIL" Schema="dbo" store:Type="Tables" />

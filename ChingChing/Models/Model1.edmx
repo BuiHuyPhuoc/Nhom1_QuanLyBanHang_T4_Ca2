@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DB_ChinhChinhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DB_ChinhChinhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BILL">
           <Key>
             <PropertyRef Name="IDBILL" />
@@ -12,6 +12,7 @@
           <Property Name="IDBILL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DATEBILL" Type="date" />
           <Property Name="EMAILCUS" Type="varchar" MaxLength="100" />
+          <Property Name="TOTAL_PRICE" Type="money" />
           <Property Name="ADDRESS" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="BILLDETAIL">
@@ -49,6 +50,17 @@
           <Property Name="CONTENT" Type="varchar(max)" />
           <Property Name="DATECMT" Type="date" />
         </EntityType>
+        <EntityType Name="CONTACT">
+          <Key>
+            <PropertyRef Name="ID_CONTACT" />
+          </Key>
+          <Property Name="ID_CONTACT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar(max)" />
+          <Property Name="MESSAGE" Type="nvarchar(max)" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="DATE_SEND" Type="date" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="CUSTOMER">
           <Key>
             <PropertyRef Name="EMAILCUS" />
@@ -71,6 +83,7 @@
           <Property Name="DATEACCEPT" Type="date" />
           <Property Name="DATESHIPPING" Type="date" />
           <Property Name="DATERECEIVE" Type="date" />
+          <Property Name="TOTAL_PRICE" Type="money" />
         </EntityType>
         <EntityType Name="ORDERDETAIL">
           <Key>
@@ -223,6 +236,7 @@
           <EntitySet Name="CART" EntityType="Self.CART" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORY" EntityType="Self.CATEGORY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COMMENT" EntityType="Self.COMMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CONTACT" EntityType="Self.CONTACT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ORDER" EntityType="Self.ORDER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ORDERDETAIL" EntityType="Self.ORDERDETAIL" Schema="dbo" store:Type="Tables" />
@@ -266,8 +280,7 @@
             <End Role="PRODUCT" EntitySet="PRODUCT" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB_ChinhChinhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -280,6 +293,7 @@
           <Property Name="EMAILCUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BILLDETAIL_BILL" FromRole="BILL" ToRole="BILLDETAIL" />
+          <Property Name="TOTAL_PRICE" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="BILLDETAIL">
           <Key>
@@ -348,6 +362,7 @@
           <Property Name="DATESHIPPING" Type="DateTime" Precision="0" />
           <Property Name="DATERECEIVE" Type="DateTime" Precision="0" />
           <NavigationProperty Name="ORDERDETAILs" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="ORDER" ToRole="ORDERDETAIL" />
+          <Property Name="TOTAL_PRICE" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="ORDERDETAIL">
           <Key>
@@ -549,7 +564,19 @@
             <End Role="PRODUCT" EntitySet="PRODUCTs" />
             <End Role="ORDERDETAIL" EntitySet="ORDERDETAILs" />
           </AssociationSet>
+          <EntitySet Name="CONTACTs" EntityType="DB_ChinhChinhModel.CONTACT" />
         </EntityContainer>
+        <EntityType Name="CONTACT">
+          <Key>
+            <PropertyRef Name="ID_CONTACT" />
+          </Key>
+          <Property Name="ID_CONTACT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MESSAGE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DATE_SEND" Type="DateTime" Precision="0" />
+          <Property Name="STATUS" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -559,6 +586,7 @@
           <EntitySetMapping Name="BILLs">
             <EntityTypeMapping TypeName="DB_ChinhChinhModel.BILL">
               <MappingFragment StoreEntitySet="BILL">
+                <ScalarProperty Name="TOTAL_PRICE" ColumnName="TOTAL_PRICE" />
                 <ScalarProperty Name="IDBILL" ColumnName="IDBILL" />
                 <ScalarProperty Name="DATEBILL" ColumnName="DATEBILL" />
                 <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
@@ -620,6 +648,7 @@
           <EntitySetMapping Name="ORDERs">
             <EntityTypeMapping TypeName="DB_ChinhChinhModel.ORDER">
               <MappingFragment StoreEntitySet="ORDER">
+                <ScalarProperty Name="TOTAL_PRICE" ColumnName="TOTAL_PRICE" />
                 <ScalarProperty Name="IDORDER" ColumnName="IDORDER" />
                 <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
                 <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
@@ -668,6 +697,18 @@
                 <ScalarProperty Name="IDVERIFY" ColumnName="IDVERIFY" />
                 <ScalarProperty Name="EMAILCUS" ColumnName="EMAILCUS" />
                 <ScalarProperty Name="CODE" ColumnName="CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CONTACTs">
+            <EntityTypeMapping TypeName="DB_ChinhChinhModel.CONTACT">
+              <MappingFragment StoreEntitySet="CONTACT">
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="DATE_SEND" ColumnName="DATE_SEND" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="MESSAGE" ColumnName="MESSAGE" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="ID_CONTACT" ColumnName="ID_CONTACT" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
