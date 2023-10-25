@@ -157,6 +157,9 @@
     <Compile Include="Models\COMMENT.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CONTACT.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CUSTOMER.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -430,6 +433,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\contact_style.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -463,6 +467,7 @@
     <Content Include="Views\Users\UserDetail.cshtml" />
     <Content Include="Views\Users\VerificationPage.cshtml" />
     <Content Include="Views\Cart\ThanksPage.cshtml" />
+    <Content Include="Views\Users\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

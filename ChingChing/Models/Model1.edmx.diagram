@@ -25,6 +25,7 @@
         <AssociationConnector Association="DB_ChinhChinhModel.FK_CUSTOMER_ROLE" ManuallyRouted="false" />
         <AssociationConnector Association="DB_ChinhChinhModel.FK_ORDERDETAIL_ORDER" ManuallyRouted="false" />
         <AssociationConnector Association="DB_ChinhChinhModel.FK_ORDERDETAIL_PRODUCT" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DB_ChinhChinhModel.CONTACT" Width="1.5" PointX="7.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

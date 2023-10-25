@@ -221,5 +221,24 @@ namespace ChingChing.Controllers
             smtp.Send(message);
         }
 
+        public ActionResult Contact()
+        {
+            return View();
+        }
+        public ActionResult SendMessage(string message, string email, string name)
+        {
+            CONTACT newContact = new CONTACT();
+            newContact.MESSAGE = message;
+            newContact.EMAIL = email;
+            newContact.NAME = name;
+            newContact.DATE_SEND = DateTime.Now;
+            db.CONTACTs.Add(newContact);
+            db.SaveChanges();
+            string mess = $"Tin nhắn của bạn đã được gửi đi với địa chỉ email là {email}. Chúng tôi sẽ phản hồi" +
+                " trong thời gian sớm nhất";
+            TempData["Noti"] = mess;
+            return RedirectToAction("Contact", "Users");
+        }
+
     }
 }

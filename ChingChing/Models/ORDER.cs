@@ -27,6 +27,7 @@ namespace ChingChing.Models
         public Nullable<System.DateTime> DATEACCEPT { get; set; }
         public Nullable<System.DateTime> DATESHIPPING { get; set; }
         public Nullable<System.DateTime> DATERECEIVE { get; set; }
+        public Nullable<decimal> TOTAL_PRICE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDERDETAIL> ORDERDETAILs { get; set; }
