@@ -1,8 +1,8 @@
 # Đề tài: XÂY DỰNG HỆ THỐNG QUẢN LÝ WEBSITE BÁN QUẦN ÁO THEO TIẾN TRÌNH SCRUM
 # Mô tả sơ lược
-Công ty ChinhChinh là một công ty kinh doanh trong lĩnh vực thời trang và quần áo . Hiện tai cửa hàng đã có một lượng khách nhất định . Để mở rộng hoạt động kinh doanh của mình, cửa hàng muốn xây dựng một hệ thống thương mại điện tử Internet 
+Công ty ChinhChinh là một công ty kinh doanh trong lĩnh vực thời trang và quần áo . Hiện tai cửa hàng đã có một lượng khách nhất định. Để mở rộng hoạt động kinh doanh của mình, cửa hàng muốn xây dựng một hệ thống thương mại điện tử trên Internet.
 
-Với thương hiệu của mình là ChinhChinh - Chinh phục và Chinh chiến, đây là một mục tiêu quan trọng trong kinh doanh, nên cửa hàng sẽ xây dựng nên cho mình một cửa hàng có thể chinh phục khách hàng và chinh chiến với các thương hiệu khác trên lĩnh vực thương mại điện tử 
+Với thương hiệu của mình là ChinhChinh - Chinh phục và Chinh chiến, đây là một mục tiêu quan trọng trong kinh doanh, nên cửa hàng sẽ xây dựng nên cho mình một cửa hàng có thể chinh phục khách hàng và chinh chiến với các thương hiệu khác trên lĩnh vực thương mại điện tử.
 
 Website của cửa hàng đảm bảo cho khách hàng sử dụng dễ dàng, linh hoạt trong những sự lựa chọn, thao tác mua hàng và thanh toán đơn giản. Cùng với đó, khách hàng có thể dễ dàng nhận được những ưu đãi của cửa hàng thông qua thực hiện đăng nhập trên trang web. 
 
