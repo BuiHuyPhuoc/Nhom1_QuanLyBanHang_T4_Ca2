@@ -1,4 +1,5 @@
 # Đề tài: XÂY DỰNG HỆ THỐNG QUẢN LÝ WEBSITE BÁN QUẦN ÁO THEO TIẾN TRÌNH SCRUM
+![Chinh](https://github.com/BuiHuyPhuoc/Nhom1_QuanLyBanHang_T4_Ca2/assets/145195884/12157fdb-2fb9-481a-acfd-634f98c14051)
 # Mô tả sơ lược
 Công ty ChinhChinh là một công ty kinh doanh trong lĩnh vực thời trang và quần áo . Hiện tai cửa hàng đã có một lượng khách nhất định. Để mở rộng hoạt động kinh doanh của mình, cửa hàng muốn xây dựng một hệ thống thương mại điện tử trên Internet.
 
