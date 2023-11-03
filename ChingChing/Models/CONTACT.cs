@@ -18,7 +18,7 @@ namespace ChingChing.Models
         public string EMAIL { get; set; }
         public string MESSAGE { get; set; }
         public string NAME { get; set; }
-        public Nullable<System.DateTime> DATE_SEND { get; set; }
+        public System.DateTime DATE_SEND { get; set; }
         public string STATUS { get; set; }
     }
 }
