@@ -1,0 +1,138 @@
+﻿@model List<ChingChing.Models.CONTACT>
+@using System.Globalization;
+@{
+    ViewBag.Title = "QLLienHe";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminMasterLayout.cshtml";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="~/Areas/Admin/assets/css/vendor.min.css">
+    <link rel="stylesheet" href="~/Areas/Admin/assets/vendor/icon-set/style.css">
+
+
+
+    <!-- CSS Front Template -->
+    <link rel="stylesheet" href="~/Areas/Admin/assets/css/theme.min.css?v=1.0">
+</head>
+<body>
+    <BR />
+    <div class="page-header container">
+        <div class="row align-items-end">
+            <div class="col-sm mb-2 mb-sm-0">
+                <h1 class="page-header-title">CUSTOMER'S CONTACT</h1>
+            </div>
+        </div>
+        <!-- End Row -->
+    </div>
+    <div class="card container">
+        <!-- Header -->
+        <div class="card-header">
+            <div class="row justify-content-between align-items-center flex-grow-1">
+                <div class="col-sm-6 col-md-4 mb-3 mb-sm-0">
+                    <form action="@Url.Action("QLLienHe", "Admin")" method="post">
+                        <!-- Search -->
+                        <div class="input-group input-group-merge input-group-flush">
+                           
+                            <input id="datatableSearch" name="name" type="search" class="form-control" placeholder="Search users" aria-label="Search users">
+                            <button class="btn btn-outline-info">
+                               Search
+                            </button>
+                        </div>
+                        <!-- End Search -->
+                    </form>
+                </div>
+            </div>
+            <!-- End Row -->
+        </div>
+        <!-- End Header -->
+        <!-- Table -->
+        <div class="table-responsive datatable-custom">
+            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">         
+                <table id="datatable" class="table table-lg table-borderless table-thead-bordered table-nowrap table-align-middle card-table dataTable no-footer" role="grid" aria-describedby="datatable_info">
+                    <thead class="thead-light">
+                        <tr role="row">
+                            <th class="table-column-pl-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 301.594px; padding-left: 21px!important">Name-Email</th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 196.469px;">Date Contact</th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 147.109px;">Status</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 107.719px;"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            if (i % 2 == 0)
+                            {
+                                <tr role="row" class="even">
+
+                                    <td class="table-column-pl-0">
+                                        <a class="d-flex align-items-center" href="">
+                                            <div class="ml-3">
+                                                <span class="d-block h5 text-hover-primary mb-0">@Model.ElementAt(i).NAME</span>
+                                                <span class="d-block font-size-sm text-body">@Model.ElementAt(i).EMAIL</span>
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="legend-indicator bg-success"></span>@Model.ElementAt(i).DATE_SEND.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                                    </td>
+                                    <td>@Model.ElementAt(i).STATUS</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-white" href="@Url.Action("ShowContact", "QLLienHe", new { idContact = Model.ElementAt(i).ID_CONTACT})">
+                                            <i class="tio-edit"></i> Reply
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr role="row" class="odd">
+
+                                    <td class="table-column-pl-0">
+                                        <a class="d-flex align-items-center" href="">
+                                            <div class="ml-3">
+                                                <span class="d-block h5 text-hover-primary mb-0">@Model.ElementAt(i).NAME</span>
+                                                <span class="d-block font-size-sm text-body">@Model.ElementAt(i).EMAIL</span>
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="legend-indicator bg-success"></span>@Model.ElementAt(i).DATE_SEND.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                                    </td>
+                                    <td>@Model.ElementAt(i).STATUS</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-white" href="@Url.Action("ShowContact", "QLLienHe", new { idContact = Model.ElementAt(i).ID_CONTACT})">
+                                            <i class="tio-edit"></i> Reply
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @if (TempData["SendReply_Noti"] != null)
+    {
+        <script>
+            var expectedValue = "@TempData["SendReply_Noti"]";
+            var convertedString = expectedValue.replace(/&#(\d+);/g, function (match, dec) {
+                return String.fromCharCode(dec);
+            });
+            alert(convertedString);
+        </script>
+    }
+</body>
+</html>
+

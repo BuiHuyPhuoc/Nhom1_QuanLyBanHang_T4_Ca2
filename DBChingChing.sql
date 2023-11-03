@@ -203,5 +203,7 @@ SELECT* FROM COMMENT
 SELECT* FROM CART
 SELECT* FROM VERIFYCODE
 SELECT* FROM CONTACT
---DELETE CUSTOMER
---WHERE EMAILCUS = 'chinhchi123nh@gmail.com'
+
+insert into CONTACT values ('ajsdja@ngnas', 'asdasdas', 'phuouc', GETDATE(), 'Not reply yet')
+insert into CONTACT values ('ajsdja@ngnas', 'asdasdas', 'phuouc', GETDATE(), 'Not reply yet')
+insert into CONTACT values ('ajsdja@ngnas', 'asdasdas', 'phuouc', GETDATE(), 'Not reply yet')

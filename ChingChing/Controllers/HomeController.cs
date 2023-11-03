@@ -14,5 +14,9 @@ namespace ChingChing.Controllers
             var prod = db.PRODUCTs.ToList().Take(8);
             return View(prod);
         }
+        public ActionResult ErrorPage()
+        {
+            return View();
+        }
     }
 }

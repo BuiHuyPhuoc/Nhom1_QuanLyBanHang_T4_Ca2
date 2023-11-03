@@ -12,6 +12,11 @@
 }
 
 <link href="~/Content/contact_style.scss" rel="stylesheet" />
+<style>
+    .form-control-lg{
+        font-size: 16px;
+                     }
+</style>
 <div class="container d-flex justify-content-center align-items-center">
 
     <!-- // SVG
@@ -321,9 +326,9 @@
     -------------------------------------------------------------
     ------------------------------------------------------------>
 
-    <form style="width: 50%;" action="@Url.Action("SendMessage", "Users")">
+    <form style="width: 60%;" action="@Url.Action("SendMessage", "Users")">
         <h1 class="title text-center mb-4">Talk to Us</h1>
-
+        <div class="container"><span class="small">*Chúng tôi sẽ phản hồi yêu cầu của bạn thông qua email bạn đã cung cấp.</span></div>
         <!-- Name -->
         <div class="form-group position-relative">
             <label for="formName" class="d-block">
@@ -331,7 +336,7 @@
             </label>
             @if (getName != "")
             {
-                <input disabled name="name" value="@getName" type="text" id="formName" class="form-control form-control-lg thick" placeholder="Name">
+                <input readonly name="name" value="@getName" type="text" id="formName" class="form-control form-control-lg thick" placeholder="Name">
             }
             else
             {
@@ -345,7 +350,7 @@
             </label>
             @if (getCustomer != null)
             {
-                <input disabled name="email" value="@getCustomer.EMAILCUS" type="email" id="formEmail" class="form-control form-control-lg thick" placeholder="Your mail">
+                <input readonly name="email" value="@getCustomer.EMAILCUS" type="email" id="formEmail" class="form-control form-control-lg thick" placeholder="Your mail">
             }
             else
             {
@@ -368,6 +373,8 @@
 @if (TempData["Noti"] != null)
 {
     <script type="text/javascript">
-       alert("@TempData["Noti"]");
+        alert("@Html.Raw(HttpUtility.HtmlDecode(TempData["Noti"].ToString()))");
     </script>
 }
+
+<hr />

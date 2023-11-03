@@ -132,6 +132,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\QLDonHangController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QLLienHeController.cs" />
     <Compile Include="Areas\Admin\Controllers\QLTaiKhoanController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
@@ -197,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\assets\css\docs.css" />
+    <Content Include="Areas\Admin\assets\css\ShowContact_Style.css" />
     <Content Include="Areas\Admin\assets\css\theme.min.css" />
     <Content Include="Areas\Admin\assets\css\vendor.min.css" />
     <Content Include="Areas\Admin\assets\img\160x160\img1.jpg" />
@@ -364,6 +366,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\errorpage_style.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\user_detail_style.css" />
     <Content Include="Content\verifypage_style.css" />
@@ -434,6 +437,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <Content Include="Content\contact_style.scss" />
+    <Content Include="Areas\Admin\Views\Admin\QLLienHe.cshtml" />
+    <Content Include="Areas\Admin\Views\QLLienHe\ShowContact.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -468,6 +473,7 @@
     <Content Include="Views\Users\VerificationPage.cshtml" />
     <Content Include="Views\Cart\ThanksPage.cshtml" />
     <Content Include="Views\Users\Contact.cshtml" />
+    <Content Include="Views\Home\ErrorPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

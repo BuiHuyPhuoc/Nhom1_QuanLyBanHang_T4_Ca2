@@ -33,5 +33,16 @@ namespace ChingChing.Areas.Admin.Controllers
         {
             return View();
         }
+        public ActionResult QLLienHe()
+        {
+            List<CONTACT> listContact = db.CONTACTs.ToList();
+            return View(listContact);
+        }
+        [HttpPost]
+        public ActionResult QLLienHe(string name)
+        {
+            List<CONTACT> listContact = db.CONTACTs.Where(x => x.NAME.Contains(name)).ToList();
+            return View(listContact);
+        }
     }
 }

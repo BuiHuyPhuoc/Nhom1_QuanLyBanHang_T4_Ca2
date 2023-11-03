@@ -232,11 +232,10 @@ namespace ChingChing.Controllers
             newContact.EMAIL = email;
             newContact.NAME = name;
             newContact.DATE_SEND = DateTime.Now;
+            newContact.STATUS = "Not Reply Yet";
             db.CONTACTs.Add(newContact);
             db.SaveChanges();
-            string mess = $"Tin nhắn của bạn đã được gửi đi với địa chỉ email là {email}. Chúng tôi sẽ phản hồi" +
-                " trong thời gian sớm nhất";
-            TempData["Noti"] = mess;
+            TempData["Noti"] = HttpUtility.HtmlEncode("Nội dung tin nhắn của bạn đã được gửi đi với địa chỉ email là " + email + ". Chúng tôi sẽ phản hồi trong thời gian sớm nhất bằng tiếng Việt.");
             return RedirectToAction("Contact", "Users");
         }
 
