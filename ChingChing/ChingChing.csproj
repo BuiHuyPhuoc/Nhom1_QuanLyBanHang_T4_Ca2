@@ -474,6 +474,7 @@
     <Content Include="Views\Cart\ThanksPage.cshtml" />
     <Content Include="Views\Users\Contact.cshtml" />
     <Content Include="Views\Home\ErrorPage.cshtml" />
+    <Content Include="Views\Users\LayLaiMatKhau.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
