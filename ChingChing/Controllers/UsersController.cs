@@ -239,5 +239,65 @@ namespace ChingChing.Controllers
             return RedirectToAction("Contact", "Users");
         }
 
+        public ActionResult LayLaiMatKhau()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult LayLaiMatKhau(string email)
+        {
+            CUSTOMER getCustomer = db.CUSTOMERs.Where(x => x.EMAILCUS == email).FirstOrDefault();
+            if  (getCustomer != null)
+            {
+                //Lấy ra thông tin người gửi
+                string _fromGmail = "phuoctestsender@gmail.com";
+                string _fromPassword = "bpuhfkknnhyfkmnv";
+
+                //Tạo random mật khẩu mới
+                Random random = new Random();
+                int getRandomNumber = random.Next(100000, 999999);
+
+                //Nội dung của email
+                string htmlString =
+                    "<html>" +
+                    "   <body>" +
+                    $"       Mật khẩu mới của bạn là: <b>{getRandomNumber}</b>" +
+                    "   </body>" +
+                    "</html>";
+
+                //Thực hiện tạo một email
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress(_fromGmail); //Nhập địa chỉ người gửi
+                message.Subject = "Xác nhận gửi mật khẩu mới"; //Nhập chủ đề
+                message.To.Add(new MailAddress(email.Trim())); //Nhập địa chỉ người nhận
+                message.Body = htmlString;
+                message.IsBodyHtml = true;
+
+                var smtp = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential(_fromGmail, _fromPassword),
+                    EnableSsl = true,
+                };
+
+                smtp.Send(message);  //Xác nhận gửi
+
+                //Gửi thông báo kiểm tra hòm thư
+                TempData["GetNewPass_Noti"] = $"Vui lòng kiểm tra trong hộp thư của email {email}.";
+
+                //Đổi mật khẩu customer dựa trên chuỗi đã tạo
+
+                getCustomer.MATKHAU = getRandomNumber.ToString();
+                db.SaveChanges();
+
+                //Trở về trang Login thông qua hàm Logout
+                return RedirectToAction("Logout", "Users");
+            } else
+            {
+                //Không tìm thấy tài khoản nào chứa email này
+                ViewBag.Noti = "*Không có tài khoản nào sử dụng email này.";
+                return View();
+            }
+        }
     }
 }
