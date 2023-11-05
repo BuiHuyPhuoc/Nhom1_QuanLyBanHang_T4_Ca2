@@ -394,3 +394,5 @@ C:\Users\pottr\OneDrive\Máy tính\QuanAo\Nhom1_QuanLyBanHang_T4_Ca2\ChingChing\
 C:\Users\pottr\OneDrive\Máy tính\QuanAo\Nhom1_QuanLyBanHang_T4_Ca2\ChingChing\obj\Debug\ChingChing.csproj.CopyComplete
 C:\Users\pottr\OneDrive\Máy tính\QuanAo\Nhom1_QuanLyBanHang_T4_Ca2\ChingChing\obj\Debug\ChingChing.dll
 C:\Users\pottr\OneDrive\Máy tính\QuanAo\Nhom1_QuanLyBanHang_T4_Ca2\ChingChing\obj\Debug\ChingChing.pdb
+C:\Users\pottr\OneDrive\Máy tính\QuanAo\Nhom1_QuanLyBanHang_T4_Ca2\ChingChing\bin\Unidecode.NET.dll
+C:\Users\pottr\OneDrive\Máy tính\QuanAo\Nhom1_QuanLyBanHang_T4_Ca2\ChingChing\bin\Unidecode.NET.xml
