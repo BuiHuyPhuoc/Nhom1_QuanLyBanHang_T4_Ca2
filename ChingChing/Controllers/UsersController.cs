@@ -346,13 +346,11 @@ namespace ChingChing.Controllers
             Session["Email"] = db.CUSTOMERs.Where(x => x.EMAILCUS == getCustomer.EMAILCUS).FirstOrDefault();
         }
 
-        //public JsonResult GetListOrderDetail(string idorder)
-        //{
-        //    int convertedIdOrder = int.Parse(idorder);
-        //    List<ORDERDETAIL> listOrderDetail = db.ORDERDETAILs.Where(x => x.IDORDER == convertedIdOrder).ToList();
-        //    //var data = new { Check = true, Email = email, Name = name, Address = address };
-        //    var data = new { listOrderDetail = listOrderDetail };
-        //    return Json(data);
-        //}
+        public ActionResult ShowOrderDetail(string idorder)
+        {
+            int converted = int.Parse(idorder);
+            List<ORDERDETAIL> getListOrderDetail = db.ORDERDETAILs.Where(x => x.IDORDER == converted).ToList();
+            return PartialView(getListOrderDetail);
+        }
     }
 }
