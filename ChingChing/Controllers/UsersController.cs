@@ -18,10 +18,7 @@ namespace ChingChing.Controllers
     {
         // GET: Users
         DB_ChinhChinhEntities db = new DB_ChinhChinhEntities();
-        public ActionResult Index()
-        {
-            return View();
-        }
+       
         public ActionResult Login()
         {
             return View();
@@ -58,7 +55,7 @@ namespace ChingChing.Controllers
             }
             return View();
         }
-
+   
         public ActionResult Logout()
         {
             Session["Email"] = null;
@@ -100,7 +97,7 @@ namespace ChingChing.Controllers
 
         public ActionResult UserDetail()
         {
-            
+            UpdateSessionAccount();
             return View();
         }
         public ActionResult resetPage()
@@ -113,10 +110,9 @@ namespace ChingChing.Controllers
             getCustomer.CUSNAME = name;
             getCustomer.ADDRESS = address;
             db.SaveChanges();
-            Session["email"] = db.CUSTOMERs.Where(x => x.EMAILCUS == getCustomer.EMAILCUS).FirstOrDefault();
+            UpdateSessionAccount();
             var data = new { Check = true, Email = email, Name = name, Address = address };
             return Json(data);
-
         }
 
         public ActionResult VerificationPage(string name, string email, string matkhau, string phone)
@@ -302,20 +298,52 @@ namespace ChingChing.Controllers
             newBill.EMAILCUS = getCustomer.EMAILCUS;
             newBill.TOTAL_PRICE = getOrder.TOTAL_PRICE;
             newBill.ADDRESS = getOrder.ADDRESS;
+            db.BILLs.Add(newBill);
 
             //Tạo chi tiết hoá đơn
             List<ORDERDETAIL> getListOrderDetail = db.ORDERDETAILs.Where(x => x.IDORDER == getOrder.IDORDER).ToList();
             foreach (var item in getListOrderDetail)
             {
                 BILLDETAIL newBillDetail = new BILLDETAIL();
-                newBill.IDBILL = newBill.IDBILL;
+                newBillDetail.IDBILL = newBill.IDBILL;
                 newBillDetail.IDPRO = item.IDPRO;
                 newBillDetail.QUANTITY = item.QUANTITY;
+                db.BILLDETAILs.Add(newBillDetail);
             }
             db.SaveChanges();
 
-            TempData["NhanHangThanhCong"] = HttpUtility.HtmlEncode("Bạn đã nhận hàng thành công!! Cảm ơn vì đã sử dụng dịch vụ của ChinhChinh Store.");
+            CheckAndUpdateCustomerType(getCustomer.EMAILCUS);
+
+            UpdateSessionAccount();
+            TempData["NhanHangThanhCong"] = "Bạn đã nhận hàng thành công!! Cảm ơn vì đã sử dụng dịch vụ của ChinhChinh Store.";
             return RedirectToAction("UserDetail", "Users");
+        }
+
+        public bool CheckAndUpdateCustomerType(string email)
+        {
+            bool check = false;
+            CUSTOMER getCustomer = db.CUSTOMERs.Where(x => x.EMAILCUS == email).FirstOrDefault();
+            double totalBillPrice = 0.0;
+            List<BILL> getListBill = db.BILLs.Where(x => x.EMAILCUS == getCustomer.EMAILCUS).ToList();
+            foreach (var item in getListBill)
+            {
+                totalBillPrice += Convert.ToDouble(item.TOTAL_PRICE) ;
+            }
+
+            if (totalBillPrice > 2000000 && getCustomer.MAROLE != 3)
+            {
+                getCustomer.MAROLE = 3;
+                check = true;
+                TempData["UpdateTypeAccount"] = "Chúc mừng, bạn đã được nâng cấp lên khách hàng VIP của ChinhChinh Store.";
+            }
+            db.SaveChanges();
+            return check;
+        }
+
+        public void UpdateSessionAccount()
+        {
+            CUSTOMER getCustomer = Session["Email"] as CUSTOMER;
+            Session["Email"] = db.CUSTOMERs.Where(x => x.EMAILCUS == getCustomer.EMAILCUS).FirstOrDefault();
         }
 
         //public JsonResult GetListOrderDetail(string idorder)
