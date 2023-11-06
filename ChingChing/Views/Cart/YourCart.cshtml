@@ -88,12 +88,16 @@
                 <div class="cart-payment">
                     <span>Số lượng sản phẩm : </span> <span id="outputQuant">@ViewBag.TotalQuantity</span> <br /><br />
                     <span>Tổng tiền: </span> <span class="total" id="outputPrice">@String.Format(money, "{0:c0}", ViewBag.TotalPrice)</span> <br /> <br />
+                    @if (getCustomer.ROLE.CHIETKHAU != 0)
+                    {
+                        <span class="text-danger">*Bạn là khách hàng đặc biệt, được giảm @(getCustomer.ROLE.CHIETKHAU*100)%</span>
+                    }
 
                     @using (Html.BeginForm("Pay", "Cart", FormMethod.Post))
                     {
                         if (getCustomer != null)
                         {
-                <textarea name="address" style="width:100%; margin-bottom: 5px; outline: none;" placeholder="Nhập địa chỉ giao hàng" readonly>@getCustomer.ADDRESS</textarea><br />
+                            <textarea name="address" style="width:100%; margin-bottom: 5px; outline: none;" placeholder="Nhập địa chỉ giao hàng" readonly>@getCustomer.ADDRESS</textarea><br />
 
                         }
                         <button id="submitBtn" type="submit" class="payment-btn"> <i class="bi bi-check-lg"></i> Đặt hàng ngay ngay</button>

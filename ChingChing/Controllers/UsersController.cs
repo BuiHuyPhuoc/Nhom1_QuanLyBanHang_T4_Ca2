@@ -37,13 +37,13 @@ namespace ChingChing.Controllers
                 {
                     if (checkEmail.MATKHAU == cus.MATKHAU)
                     {
+                        //Get email customer into Session
+                        Session["Email"] = checkEmail;
                         if (checkEmail.MAROLE == 1)
                         {
                             return RedirectToAction("QLDonHang", "Admin", new { area = "Admin"});
                         } else
                         {
-                            //Get email customer into Session
-                            Session["Email"] = checkEmail;
                             return RedirectToAction("Index", "Home");
                         }
                     } else

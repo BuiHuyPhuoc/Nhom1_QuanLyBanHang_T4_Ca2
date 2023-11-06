@@ -89,6 +89,11 @@ namespace ChingChing.Controllers
                 }
                
             }
+
+            if (getCustomer.ROLE.CHIETKHAU != 0)
+            {
+                totalPrice -= totalPrice * Convert.ToDecimal(getCustomer.ROLE.CHIETKHAU) ;
+            }
             return totalPrice;
         }
 
