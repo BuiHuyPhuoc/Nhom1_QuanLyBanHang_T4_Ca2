@@ -12,29 +12,53 @@ namespace ChingChing.Areas.Admin.Controllers
         DB_ChinhChinhEntities db = new DB_ChinhChinhEntities();
         public ActionResult QLDonHang()
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home");
+            }
             List<ORDER> getListOrder = db.ORDERs.OrderBy(x => x.DATEORDER).ToList();
             return View(getListOrder);
         }
         public ActionResult QLTaiKhoan()
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home");
+            }
             List<CUSTOMER> getListCustomer = db.CUSTOMERs.ToList();
             ViewBag.ListRole = db.ROLEs.ToList();
             return View(getListCustomer);
         }
         public ActionResult QLHoaDon()
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home");
+            }
             return View();
         }
         public ActionResult QLSanPham()
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home");
+            }
             return View();
         }
         public ActionResult QLLoaiSanPham()
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home");
+            }
             return View();
         }
         public ActionResult QLLienHe()
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home");
+            }
             List<CONTACT> listContact = db.CONTACTs.ToList();
             return View(listContact);
         }

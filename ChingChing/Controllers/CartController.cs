@@ -43,6 +43,10 @@ namespace ChingChing.Controllers
         }
         public ActionResult YourCart()
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home");
+            }
             if (Session["Email"] != null)
             {
                 CUSTOMER getCustomer = Session["Email"] as CUSTOMER;
@@ -59,7 +63,10 @@ namespace ChingChing.Controllers
         }
         public ActionResult DeleteData(int idProduct)
         {
-
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home");
+            }
             CUSTOMER getCustomer = Session["Email"] as CUSTOMER;
             // Thực hiện cập nhật dữ liệu vào cơ sở dữ liệu ở đây (ví dụ: lưu vào biến data)
             var itemCart = db.CARTs.Where(x => x.IDPRO == idProduct && x.EMAILCUS == getCustomer.EMAILCUS).FirstOrDefault();
