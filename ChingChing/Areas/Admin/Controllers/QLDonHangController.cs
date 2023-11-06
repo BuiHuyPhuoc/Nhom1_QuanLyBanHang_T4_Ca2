@@ -12,6 +12,10 @@ namespace ChingChing.Areas.Admin.Controllers
         DB_ChinhChinhEntities db = new DB_ChinhChinhEntities();
         public ActionResult ChiTietDonHang(string idorder)
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home");
+            }
             int id = int.Parse(idorder);
             List<ORDERDETAIL> getListOrderDetails = db.ORDERDETAILs
                                                     .Where(x=> x.IDORDER == id)
@@ -22,6 +26,10 @@ namespace ChingChing.Areas.Admin.Controllers
 
         public ActionResult ChangeStatus(string idorder, string status)
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home");
+            }
             string getStatus = returnStatus(status);
             int getIdOrder = int.Parse(idorder);
             if (getStatus != "Error")

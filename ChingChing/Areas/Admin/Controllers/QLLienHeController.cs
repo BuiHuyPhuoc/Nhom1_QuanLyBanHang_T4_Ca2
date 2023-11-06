@@ -14,6 +14,10 @@ namespace ChingChing.Areas.Admin.Controllers
         DB_ChinhChinhEntities db = new DB_ChinhChinhEntities();
         public ActionResult ShowContact(string idContact = "")
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home");
+            }
             if (idContact == "")
             {
                 return RedirectToAction("ErrorPage", "Home", new {area = ""});

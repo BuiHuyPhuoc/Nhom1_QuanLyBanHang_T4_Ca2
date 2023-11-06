@@ -97,6 +97,10 @@ namespace ChingChing.Controllers
 
         public ActionResult UserDetail()
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home");
+            }
             UpdateSessionAccount();
             return View();
         }
@@ -350,7 +354,24 @@ namespace ChingChing.Controllers
         {
             int converted = int.Parse(idorder);
             List<ORDERDETAIL> getListOrderDetail = db.ORDERDETAILs.Where(x => x.IDORDER == converted).ToList();
+            ViewBag.IdOrder = idorder;
             return PartialView(getListOrderDetail);
+        }
+
+        public ActionResult HuyDon(int idorder)
+        {
+            //Delete in orderdetail
+            List<ORDERDETAIL> getListOrderDetail = db.ORDERDETAILs.Where(x => x.IDORDER == idorder).ToList();
+            foreach(var item in getListOrderDetail)
+            {
+                db.ORDERDETAILs.Remove(item);
+            }
+            //delete in order
+            ORDER getOrder = db.ORDERs.Where(x => x.IDORDER == idorder).FirstOrDefault();
+            db.ORDERs.Remove(getOrder);
+
+            db.SaveChanges();
+            return RedirectToAction("UserDetail", "Users");
         }
     }
 }
