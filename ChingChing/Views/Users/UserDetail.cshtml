@@ -28,7 +28,7 @@
 </head>
 <body>
 
-   
+
 
     <!-- Modal -->
     <!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -240,7 +240,7 @@
                                 @foreach (var item in Received)
                                 {
                                     <tr onclick="Detail(@item.IDORDER)" data-toggle="modal" data-target="#exampleModal" title="Click for seeing detail">
-                                        <th scope="row" >@item.IDORDER</th>
+                                        <th scope="row">@item.IDORDER</th>
                                         <td>@item.DATEORDER.Value.ToString("MMM dd, yyyy").ToString()</td>
                                         <td>@item.DATEACCEPT.Value.ToString("MMM dd, yyyy")</td>
                                         <td>@item.DATESHIPPING.Value.ToString("MMM dd, yyyy")</td>
@@ -321,7 +321,6 @@
             });
         });
 
-
         function changetable(value) {
             var getElementByID = document.getElementById(value);
             const showedElement = document.querySelector('.showed');
@@ -331,14 +330,28 @@
 
         }
 
-
-
     </script>
+
     @if (TempData["NhanHangThanhCong"] != null)
     {
-        <script>
-                    alert('@TempData["NhanHangThanhCong"]')
-        </script>
+<script>
+            var expectedValue = '@TempData["NhanHangThanhCong"]';
+            var convertedString = expectedValue.replace(/&#(\d+);/g, function (match, dec) {
+                return String.fromCharCode(dec);
+            });
+            alert(convertedString);
+</script>
+    }
+
+    @if (TempData["UpdateTypeAccount"] != null)
+    {
+<script>
+            var expectedValue = '@TempData["UpdateTypeAccount"]';
+            var convertedString = expectedValue.replace(/&#(\d+);/g, function (match, dec) {
+                return String.fromCharCode(dec);
+            });
+            alert(convertedString);
+</script>
     }
 </body>
 </html>
