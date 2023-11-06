@@ -1,21 +1,60 @@
-﻿
+﻿@using ChingChing.Models;
 @{
     ViewBag.Title = "UserDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var getAccount = Session["Email"] as ChingChing.Models.CUSTOMER; 
+    DB_ChinhChinhEntities db = new DB_ChinhChinhEntities();
+    var getAccount = Session["Email"] as ChingChing.Models.CUSTOMER;
+    CUSTOMER getCustomer = Session["Email"] as CUSTOMER;
+    var vndMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    List<ORDER> Waiting = db.ORDERs.Where(x => x.DATEORDER != null && x.DATEACCEPT == null && x.DATESHIPPING == null && x.DATERECEIVE == null && x.EMAILCUS == getAccount.EMAILCUS).ToList();
+    List<ORDER> Checked = db.ORDERs.Where(x => x.DATEORDER != null && x.DATEACCEPT != null && x.DATESHIPPING == null && x.DATERECEIVE == null && x.EMAILCUS == getAccount.EMAILCUS).ToList();
+    List<ORDER> Shipping = db.ORDERs.Where(x => x.DATEORDER != null && x.DATEACCEPT != null && x.DATESHIPPING != null && x.DATERECEIVE == null && x.EMAILCUS == getAccount.EMAILCUS).ToList();
+    List<ORDER> Received = db.ORDERs.Where(x => x.DATEORDER != null && x.DATEACCEPT != null && x.DATESHIPPING != null && x.DATERECEIVE != null && x.EMAILCUS == getAccount.EMAILCUS).ToList();
 }
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
     <link href="~/Content/user_detail_style.css" rel="stylesheet" />
+    <style>
+        .container_order {
+            display: none;
+            width: 100%;
+        }
+
+            .container_order.showed {
+                display: table;
+            }
+    </style>
 </head>
 <body>
+
+   
+
+    <!-- Modal -->
+    <!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
     <br />
     <div class="container">
         <div class="cart_item">
             <p class="card_header">Quyền lợi của khách hàng</p>
-
             <p>- Dễ dàng theo dỗi tiến độ giao hàng.</p>
             <p>- Lưu những đơn hàng yêu thích vào giỏ hàng</p>
             <p>- Cập nhật những thông tin mới nhất từ ChinhChinh Shop</p>
@@ -30,12 +69,10 @@
                         <!--left col-->
                         <div class="text-center">
                             <img style="border-radius:50%" src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1696744324~exp=1696744924~hmac=63e373e75588d96cb306dd6a12558972ce7ebcb2bb73747ca62bb6117b7bffca" class="avatar img-circle img-thumbnail" alt="avatar">
-
                         </div>
                         <br>
                     </div>
                     <div class="col-9">
-
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-2 col-form-label">Email: </label>
                             <div class="col-sm-10">
@@ -46,7 +83,7 @@
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-2 col-form-label">Tên: </label>
                             <div class="col-sm-10">
-                                <input onkeyup="changeButtonStatus()" type="text" required class="form-control-plaintext edit_text" id="inputName" value="@getAccount.CUSNAME">
+                                <input onkeyup="changeButtonStatus()" type="text" required class="form-control-plaintext edit_text" id="inputName" value="@getAccount.CUSNAME.Trim()">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -70,17 +107,169 @@
             <br />
             <div class="cart_item">
                 <p class="card_header">Quản lý đơn hàng</p>
-                <div class="d-flex p-2">
-                    <a href="" class="type_order">Đang chờ xác nhận</a>
-                    <a href="" class="type_order">Đã xác nhận</a>
-                    <a href="" class="type_order">Đang giao</a>
-                    <a href="" class="type_order">Đã giao</a>
+                <div class="row">
+                    <a onclick="changetable('Waiting')" class="type_order col-3">Chờ xác nhận</a>
+                    <a onclick="changetable('Checked')" class="type_order col-3">Đã xác nhận</a>
+                    <a onclick="changetable('Shipping')" class="type_order col-3">Đang giao</a>
+                    <a onclick="changetable('Received')" class="type_order col-3">Đã giao</a>
+                </div>
+                <div class="container_order showed" id="Waiting">
+                    <br />
+                    @if (Waiting.Count != 0)
+                    {
+                        <p class="text-black-50" style="width: 100%; text-align: center; font-weight: bold;">Danh sách đang chờ xác nhận</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mã đơn</th>
+                                    <th scope="col">Ngày đặt hàng</th>
+                                    <th scope="col">Tổng số tiền</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Waiting)
+                                {
+                                    <tr>
+                                        <th scope="row">@item.IDORDER</th>
+                                        <td>@item.DATEORDER.Value.ToString("MMM dd, yyyy")</td>
+
+                                        <td>@String.Format(vndMoney, "{0:c0}", item.TOTAL_PRICE)</td>
+                                        <td><a class="btn btn-success disabled">ĐÃ NHẬN</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="text-black-50" style="width: 100%; text-align: center; font-weight: bold;">Bạn không có đơn hàng nào đang chờ xác nhận</p>
+                    }
+
+                </div>
+
+                <div class="container_order" id="Checked">
+                    <br />
+                    @if (Checked.Count != 0)
+                    {
+                        <p class="text-black-50" style="width: 100%; text-align: center; font-weight: bold;">Danh sách đã xác nhận</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mã đơn</th>
+                                    <th scope="col">Ngày đặt hàng</th>
+                                    <th scope="col">Ngày xác nhận</th>
+                                    <th scope="col">Tổng số tiền</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Checked)
+                                {
+                                    <tr>
+                                        <th scope="row">@item.IDORDER</th>
+                                        <td>@item.DATEORDER.Value.ToString("MMM dd, yyyy").ToString()</td>
+                                        <td>@item.DATEACCEPT.Value.ToString("MMM dd, yyyy")</td>
+                                        <td>@String.Format(vndMoney, "{0:c0}", item.TOTAL_PRICE).ToString()</td>
+                                        <td><a class="btn btn-success disabled">ĐÃ NHẬN</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="text-black-50" style="width: 100%; text-align: center; font-weight: bold;">Bạn không có đơn hàng nào đang chờ vận chuyển</p>
+                    }
+
+                </div>
+                <div class="container_order" id="Shipping">
+                    <br />
+                    @if (Shipping.Count != 0)
+                    {
+                        <p class="text-black-50" style="width: 100%; text-align: center; font-weight: bold;">Danh sách đang vận chuyển</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mã đơn</th>
+                                    <th scope="col">Ngày đặt hàng</th>
+                                    <th scope="col">Ngày xác nhận</th>
+                                    <th scope="col">Ngày chuyển giao</th>
+                                    <th scope="col">Tổng số tiền</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Shipping)
+                                {
+                                    <tr>
+                                        <th scope="row">@item.IDORDER</th>
+                                        <td>@item.DATEORDER.Value.ToString("MMM dd, yyyy")</td>
+                                        <td>@item.DATEACCEPT.Value.ToString("MMM dd, yyyy")</td>
+                                        <td>@item.DATESHIPPING.Value.ToString("MMM dd, yyyy")</td>
+                                        <td>@String.Format(vndMoney, "{0:c0}", item.TOTAL_PRICE)</td>
+                                        <td><a class="btn btn-success" style="color: white!important" onclick="openPopupDialog('@item.IDORDER')">ĐÃ NHẬN</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="text-black-50" style="width: 100%; text-align: center; font-weight: bold;">Bạn không có đơn hàng nào đang vận chuyển</p>
+                    }
+                </div>
+                <div class="container_order" id="Received">
+                    <br />
+                    @if (Received.Count != 0)
+                    {
+                        <p class="text-black-50" style="width: 100%; text-align: center; font-weight: bold;">Danh sách đã nhận hàng thành công</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mã đơn</th>
+                                    <th scope="col">Ngày đặt hàng</th>
+                                    <th scope="col">Ngày xác nhận</th>
+                                    <th scope="col">Ngày chuyển giao</th>
+                                    <th scope="col">Ngày nhận hàng</th>
+                                    <th scope="col">Tổng số tiền</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Received)
+                                {
+                                    <tr onclick="Detail(@item.IDORDER)" data-toggle="modal" data-target="#exampleModal" title="Click for seeing detail">
+                                        <th scope="row" >@item.IDORDER</th>
+                                        <td>@item.DATEORDER.Value.ToString("MMM dd, yyyy").ToString()</td>
+                                        <td>@item.DATEACCEPT.Value.ToString("MMM dd, yyyy")</td>
+                                        <td>@item.DATESHIPPING.Value.ToString("MMM dd, yyyy")</td>
+                                        <td>@item.DATERECEIVE.Value.ToString("MMM dd, yyyy")</td>
+                                        <td>@String.Format(vndMoney, "{0:c0}", item.TOTAL_PRICE)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="text-black-50" style="width: 100%; text-align: center; font-weight: bold;">Bạn không có đơn hàng nào đã nhận</p>
+                    }
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script type="text/javascript">
+
+        function openPopupDialog(value) {
+            if (confirm("Bạn chỉ nên xác nhận khi đã thật sự nhận được hàng!")) {
+                window.location.href = "@Url.Action("CheckDone", "Users")" + "?idorder=" + value;
+            } else {
+                txt = "You pressed Cancel!";
+            }
+        }
+
         function decodeHtmlEntities(input) {
             var txt = document.createElement("textarea");
             txt.innerHTML = input;
@@ -96,7 +285,7 @@
             var convertedString = expectedValue.replace(/&#(\d+);/g, function (match, dec) {
                 return String.fromCharCode(dec);
             });
-             
+
             if (getInputTags[0].value.trim() == "@getAccount.EMAILCUS"
                 && inputValue == convertedString
                 && getInputTags[2].value.trim() == "@getAccount.ADDRESS") {
@@ -124,7 +313,6 @@
                             alert("Đổi thông tin khách hàng thành công");
                             window.location.reload();
                         }
-
                     },
                     error: function (xhr, status, error) {
                         console.error("Lỗi khi gửi yêu cầu: " + status + " - " + error);
@@ -134,8 +322,24 @@
         });
 
 
+        function changetable(value) {
+            var getElementByID = document.getElementById(value);
+            const showedElement = document.querySelector('.showed');
+
+            showedElement.classList.remove('showed');
+            getElementByID.classList.add('showed');
+
+        }
+
+
 
     </script>
+    @if (TempData["NhanHangThanhCong"] != null)
+    {
+        <script>
+                    alert('@TempData["NhanHangThanhCong"]')
+        </script>
+    }
 </body>
 </html>
 
