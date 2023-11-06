@@ -23,13 +23,18 @@ body {
         min-width: 100px
     }
 .type_order {
-    flex-grow: 1;
     text-decoration: none;
     text-align: center;
     padding: 10px 0px;
-    background-color: #0E8388;
-    color: #CBE4DE;
-    border: 2px solid #CBE4DE;
+    background-color: #A6CF98;
+    color: #F2FFE9!important;
+    border: 2px solid #A6CF98;
     box-sizing: border-box;
+    cursor: pointer;
 }
+    .type_order:hover {
+        background-color: #F2FFE9;
+        color: #A6CF98 !important;
+        border: 2px solid #A6CF98;
+    }
 

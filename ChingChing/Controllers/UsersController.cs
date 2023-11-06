@@ -92,17 +92,6 @@ namespace ChingChing.Controllers
             }
             else
             {
-                //CUSTOMER customer = new CUSTOMER();
-                //customer.CUSNAME = nameCus;
-                //customer.EMAILCUS = emailCus;
-                //customer.MATKHAU = pass;
-                //customer.MAROLE = 2;
-                //db.CUSTOMERs.Add(customer);
-                //db.SaveChanges();
-                //TempData["Email"] = emailCus;
-                //TempData["Password"] = pass;
-                //return RedirectToAction("Login", "Users");
-
                 //Chuyển hướng đến trang VerifyPage
                 return RedirectToAction("VerificationPage", "Users", new { name = nameCus, email = emailCus, matkhau = pass, phone = phoneCus });
             }
@@ -299,5 +288,43 @@ namespace ChingChing.Controllers
                 return View();
             }
         }
+
+        public ActionResult CheckDone(string idorder)
+        {
+            int converted = int.Parse(idorder);
+            ORDER getOrder = db.ORDERs.Where(x => x.IDORDER == converted).FirstOrDefault();
+            getOrder.DATERECEIVE = DateTime.Now;
+
+            //Tạo hoá đơn
+            CUSTOMER getCustomer = Session["Email"] as CUSTOMER;
+            BILL newBill = new BILL();
+            newBill.DATEBILL = DateTime.Now;
+            newBill.EMAILCUS = getCustomer.EMAILCUS;
+            newBill.TOTAL_PRICE = getOrder.TOTAL_PRICE;
+            newBill.ADDRESS = getOrder.ADDRESS;
+
+            //Tạo chi tiết hoá đơn
+            List<ORDERDETAIL> getListOrderDetail = db.ORDERDETAILs.Where(x => x.IDORDER == getOrder.IDORDER).ToList();
+            foreach (var item in getListOrderDetail)
+            {
+                BILLDETAIL newBillDetail = new BILLDETAIL();
+                newBill.IDBILL = newBill.IDBILL;
+                newBillDetail.IDPRO = item.IDPRO;
+                newBillDetail.QUANTITY = item.QUANTITY;
+            }
+            db.SaveChanges();
+
+            TempData["NhanHangThanhCong"] = HttpUtility.HtmlEncode("Bạn đã nhận hàng thành công!! Cảm ơn vì đã sử dụng dịch vụ của ChinhChinh Store.");
+            return RedirectToAction("UserDetail", "Users");
+        }
+
+        //public JsonResult GetListOrderDetail(string idorder)
+        //{
+        //    int convertedIdOrder = int.Parse(idorder);
+        //    List<ORDERDETAIL> listOrderDetail = db.ORDERDETAILs.Where(x => x.IDORDER == convertedIdOrder).ToList();
+        //    //var data = new { Check = true, Email = email, Name = name, Address = address };
+        //    var data = new { listOrderDetail = listOrderDetail };
+        //    return Json(data);
+        //}
     }
 }
