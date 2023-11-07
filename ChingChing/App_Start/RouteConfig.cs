@@ -13,11 +13,11 @@ namespace ChingChing
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Search",
-                url: "Category/Search",
-                defaults: new { controller = "Category", action = "Search"  }
-            );
+            //routes.MapRoute(
+            //    name: "Search",
+            //    url: "Category/Search",
+            //    defaults: new { controller = "Category", action = "Search"  }
+            //);
 
             routes.MapRoute(
                 name: "Default",
