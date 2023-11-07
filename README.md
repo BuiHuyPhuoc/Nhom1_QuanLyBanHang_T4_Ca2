@@ -9,6 +9,7 @@ Website của cửa hàng đảm bảo cho khách hàng sử dụng dễ dàng, 
 
 Ngoài ra, hệ thống cho phép thực hiện các hoạt động quản lý cửa hàng như là quản lý số lượng hàng trong kho, quản lý đơn đặt hàng, tình trạng giao hàng, quản lý những ưu đãi, quản lý nhân viên ,....
 # Chức năng
+![image](https://github.com/BuiHuyPhuoc/Nhom1_QuanLyBanHang_T4_Ca2/assets/128078281/06ee416a-9ba1-485d-adcb-32ffeafac729)
 - Xem trang chủ
 - Xem danh sách sản phẩm
 - Xem chi tiết sản phẩm
