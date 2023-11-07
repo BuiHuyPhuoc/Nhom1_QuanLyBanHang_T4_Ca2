@@ -26,16 +26,17 @@ namespace ChingChing.Areas.Admin.Controllers
             var getAccount = db.CUSTOMERs.Where(x => x.EMAILCUS == email).FirstOrDefault();
             return (name == getAccount.CUSNAME && address == getAccount.ADDRESS) ? Json(true) : Json(false);
         }
-        
+
         public ActionResult AdminCreateAccount(string name, string email, string phone, string address, string pass, string role)
         {
-            CUSTOMER customer = new CUSTOMER {
+            CUSTOMER customer = new CUSTOMER
+            {
                 EMAILCUS = email,
                 CUSNAME = name,
                 PHONE = phone,
-                ADDRESS  = address,
+                ADDRESS = address,
                 MATKHAU = pass,
-                MAROLE =  int.Parse(role)
+                MAROLE = int.Parse(role)
             };
             db.CUSTOMERs.Add(customer);
             TempData["NotificationCreate"] = "Tạo thành công";
@@ -49,12 +50,23 @@ namespace ChingChing.Areas.Admin.Controllers
             if (Regex.IsMatch(email, emailPattern))
             {
                 var getAccount = db.CUSTOMERs.Where(x => x.EMAILCUS == email).FirstOrDefault();
-                return Json((getAccount == null)); 
-            } else
+                return Json((getAccount == null));
+            }
+            else
             {
                 return Json(false);
             }
 
+        }
+        [HttpPost]
+        public ActionResult UpdateRole(string email, int newRole)
+        {
+            var customer = db.CUSTOMERs.Where(x => x.EMAILCUS == email).FirstOrDefault();
+            customer.MAROLE = newRole;
+            db.SaveChanges();
+
+            TempData["Notification"] = "Cập nhật quyền hạn thành công";
+            return RedirectToAction("QLTaiKhoan", "Admin");
         }
     }
 }
