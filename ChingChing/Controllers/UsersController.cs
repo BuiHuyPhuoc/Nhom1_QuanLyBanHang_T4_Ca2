@@ -373,5 +373,6 @@ namespace ChingChing.Controllers
             db.SaveChanges();
             return RedirectToAction("UserDetail", "Users");
         }
+       
     }
 }

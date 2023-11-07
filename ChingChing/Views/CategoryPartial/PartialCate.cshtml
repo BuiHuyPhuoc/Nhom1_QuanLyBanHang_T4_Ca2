@@ -2,7 +2,7 @@
 @{ var vndMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN"); }
 @{ var user = Session["Email"] as ChingChing.Models.CUSTOMER;}
 <div class="list-group">
-    <a href="@Url.Action("Index","Category")" class="list-group-item list-group-item-action">Tất cả sản phẩm</a>
+    <a href="@Url.Action("Products","Category")" class="list-group-item list-group-item-action">Tất cả sản phẩm</a>
 
     @foreach (var item in Model)
     {
