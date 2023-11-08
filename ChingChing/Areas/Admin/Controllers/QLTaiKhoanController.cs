@@ -27,7 +27,7 @@ namespace ChingChing.Areas.Admin.Controllers
             return (name == getAccount.CUSNAME && address == getAccount.ADDRESS) ? Json(true) : Json(false);
         }
 
-        public ActionResult AdminCreateAccount(string name, string email, string phone, string address, string pass, string role)
+        public ActionResult AdminCreateAccount(string name, string email, string phone, string address, string pass, List<int> roles)
         {
             CUSTOMER customer = new CUSTOMER
             {
@@ -35,9 +35,17 @@ namespace ChingChing.Areas.Admin.Controllers
                 CUSNAME = name,
                 PHONE = phone,
                 ADDRESS = address,
-                MATKHAU = pass,
-                MAROLE = int.Parse(role)
+                MATKHAU = pass
             };
+
+            //foreach (int roleId in roles)
+            //{
+            //    customer.ROLE.Add(new ROLE
+            //    {
+            //        MAROLE = roleId
+            //    });
+            //}
+
             db.CUSTOMERs.Add(customer);
             TempData["NotificationCreate"] = "Tạo thành công";
             db.SaveChanges();
@@ -66,6 +74,24 @@ namespace ChingChing.Areas.Admin.Controllers
             db.SaveChanges();
 
             TempData["Notification"] = "Cập nhật quyền hạn thành công";
+            return RedirectToAction("QLTaiKhoan", "Admin");
+        }
+
+        public ActionResult AddCustomerType(string ten, string chietkhau)
+        {
+            ROLE getRole = db.ROLEs.Where(x => x.TENROLE == ten).FirstOrDefault();
+            if (getRole != null)
+            {
+                ViewBag.Noti = "Name of role existed.";
+                return RedirectToAction("QLTaiKhoan", "Admin");
+            }
+
+            ROLE newRole = new ROLE();
+            newRole.TENROLE = ten;
+            newRole.CHIETKHAU = float.Parse(chietkhau)/100;
+            db.ROLEs.Add(newRole);
+            db.SaveChanges();
+            ViewBag.Noti = "Success";
             return RedirectToAction("QLTaiKhoan", "Admin");
         }
     }

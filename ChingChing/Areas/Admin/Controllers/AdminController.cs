@@ -21,10 +21,10 @@ namespace ChingChing.Areas.Admin.Controllers
         }
         public ActionResult QLTaiKhoan()
         {
-            if (Session["Email"] == null)
-            {
-                return RedirectToAction("ErrorPage", "Home");
-            }
+            //if (Session["Email"] == null)
+            //{
+            //    return RedirectToAction("ErrorPage", "Home");
+            //}
             List<CUSTOMER> getListCustomer = db.CUSTOMERs.ToList();
             ViewBag.ListRole = db.ROLEs.ToList();
             return View(getListCustomer);
