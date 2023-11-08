@@ -34,7 +34,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Customer Detail</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -189,16 +189,20 @@
                                 <div class="js-add-field row form-group">
                                     <label for="phoneLabel" class="col-sm-3 col-form-label input-label">Quyền hạn</label>
                                     <div class="col-sm-9">
-                                        <div class="input-group input-group-sm-down-break align-items-center">
-                                            <select class="custom-select custom-select-lg mb-3" name="role">
-                                                @foreach (var item in ViewBag.ListRole)
-                                                {
-                                                    <option value="@item.MAROLE">@item.TENROLE</option>
-                                                }
-                                            </select>
-                                        </div>
+                                        <select class="custom-select custom-select-lg mb-3" id="createRole" name="role">
+                                            @foreach (var item in ViewBag.ListRole)
+                                            {
+                                                <option value="@item.MAROLE">@item.TENROLE</option>
+                                            }
+                                        </select>
                                     </div>
                                 </div>
+                                @*<div class="js-add-field row form-group">
+                                        <div class="col-sm-9">
+                                            <button id="addRoleBtn" type="button" class="btn btn-primary">Thêm Quyền Hạn</button>
+                                            <button id="removeRoleBtn" type="button" class="btn btn-danger">Xóa Quyền Hạn</button>
+                                        </div>
+                                    </div>*@
 
                                 <!-- End Add Phone Input Field -->
                                 <div class="js-add-field row form-group">
@@ -220,6 +224,58 @@
         </form>
         <!-- End Step Form -->
     </div>
+    <div class="line"></div>
+    <br />
+    <div class="content container">
+        <h3 class="text-header">TẠO LOẠI TÀI KHOẢN</h3>
+        <form class="js-step-form py-md-5" action="@Url.Action("AddCustomerType", "QLTaiKhoan")"  method="post">
+            <div class="row justify-content-lg-center">
+                <div class="col-lg-8">
+                    <!-- Content Step Form -->
+                    <div id="addUserStepFormContent">
+
+                        <!-- Card -->
+                        <div id="addUserStepProfile" class="card card-lg active">
+                            <!-- Body -->
+                            <div class="card-body">
+
+
+                                <!-- Form Group -->
+                                <div class="row form-group">
+                                    <label for="emailLabel" class="col-sm-3 col-form-label input-label">Tên loại khách hàng</label>
+                                    <div class="col-sm-9">
+                                        <input id="" type="text" class="form-control" name="ten" placeholder="Tên loại" required>
+                                    </div>
+                                </div>
+                                <!-- End Form Group -->
+                                <!-- Form Group -->
+                                <div class="row form-group">
+                                    <label for="createPass" class="col-sm-3 col-form-label input-label">Chiết khấu</label>
+                                    <div class="col-sm-9">
+                                        <input id="" min="0" max="100" type="number" class="form-control" name="chietkhau" placeholder="x (%)" required>
+                                    </div>
+                                </div>
+                                <!-- End Form Group -->
+
+                                <div class="js-add-field row form-group">
+                                    <div class="col-sm-9">
+                                        @*<button id="checkEmailBtn" type="button" class="btn btn-primary">KIỂM TRA</button>*@
+                                        <button type="submit" class="btn btn-success" accesskey="">TẠO MỚI</button>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <!-- End Card -->
+                    </div>
+                </div>
+            </div>
+            <!-- End Row -->
+        </form>
+    </div>
+
 
 
 
@@ -359,5 +415,42 @@
             changeButtonStatus(); // Gọi hàm changeButtonStatus khi quyền hạn thay đổi
         });
     </script>
+    <script>
+        $(document).ready(function () {
+            var selectedRoles = []; // Mảng lưu trữ các quyền hạn đã chọn
+
+            // Thêm sự kiện khi nhấn nút "Thêm Quyền Hạn"
+            $("#addRoleBtn").on("click", function () {
+                var selectedRole = $("#createRole").val();
+                if (!selectedRoles.includes(selectedRole)) {
+                    selectedRoles.push(selectedRole); // Thêm quyền hạn vào mảng nếu chưa tồn tại
+                    updateSelectedRoles();
+                }
+            });
+
+            // Thêm sự kiện khi nhấn nút "Xóa Quyền Hạn"
+            $("#removeRoleBtn").on("click", function () {
+                var selectedRole = $("#createRole").val();
+                var index = selectedRoles.indexOf(selectedRole);
+                if (index > -1) {
+                    selectedRoles.splice(index, 1); // Xóa quyền hạn khỏi mảng nếu tồn tại
+                    updateSelectedRoles();
+                }
+            });
+
+            // Cập nhật danh sách quyền hạn đã chọn
+            function updateSelectedRoles() {
+                var selectedRolesText = selectedRoles.map(role => $("#createRole option[value='" + role + "']").text());
+                $("#selectedRoles").text(selectedRolesText.join(", "));
+            }
+        });
+    </script>
+
+    @if (ViewBag.Noti != null)
+    {
+        <script>
+                    alert("@ViewBag.Noti")
+        </script>
+    }
 </body>
 </html>
