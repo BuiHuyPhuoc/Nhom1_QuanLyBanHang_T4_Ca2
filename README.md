@@ -40,3 +40,8 @@ Trang web  "Chinh Chinh" là một website bán quần áo trực tuyến
 Cho phép tra cứu, mua sắm quần áo trực tuyến		
 # Mục tiêu
 Hoàn thành các chức năng đã đề ra, xây dựng giao diện ưa nhìn, phân quyền cho ứng dụng, phát triển một số tính năng như: chức năng tích điểm để giảm giá và chức năng tương tác với gmail
+# Công nghệ
+Trang web được tạo dựa trên nền tảng là HTML, CSS, Javascript và xử lý dữ liệu bằng .Net
+# Hướng phát triển
+Hướng phát triển chính sau này là về phần chức năng của quản trị viên, khi mà quản trị viên (hay người quản lý trang web) có thể tuỳ ý thay đổi logo, nội dung, hình ảnh, ...
+Ngoài ra còn có những chức năng mới cho từng quyền hạn như nhân viên (quản lý kho),...

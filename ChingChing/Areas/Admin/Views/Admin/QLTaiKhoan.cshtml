@@ -39,7 +39,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="@Url.Action("UpdateAccount", "QLTaiKhoan")" method="post">
+                <form action="@Url.Action("UpdateRole", "QLTaiKhoan")" method="post">
                     <div class="modal-body">
 
                         @* Thoong tin here *@
@@ -48,6 +48,7 @@
                                 <span class="input-group-text" id="inputGroup-sizing-default">Email:</span>
                             </div>
                             <input id="popupEmail" name="email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
+
                         </div>
 
                         <div class="input-group mb-3">
@@ -61,6 +62,18 @@
                                 <span class="input-group-text" id="inputGroup-sizing-default">Địa chỉ:</span>
                             </div>
                             <input onkeyup="changeButtonStatus()" id="popupAdrress" name="address" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Quyền hạn:</span>
+                            </div>
+                            <select id="popupRole" name="newRole" class="custom-select" aria-label="Chọn quyền hạn">
+                                @foreach (var role in ViewBag.ListRole)
+                                {
+                                    <option value="@role.MAROLE">@role.TENROLE</option>
+                                }
+                            </select>
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -102,7 +115,7 @@
                         <td>@item.ADDRESS</td>
                         <td>@item.ROLE.TENROLE</td>
                         <td>
-                            <a style="font-weight: bolder; color: white" class="btn btn-secondary" onclick="openPopup('@item.EMAILCUS', '@item.CUSNAME', '@item.ADDRESS')" data-toggle="modal" data-target="#exampleModal"> UDPATE</a>
+                            <a style="font-weight: bolder; color: white" class="btn btn-secondary" onclick="openPopup('@item.EMAILCUS', '@item.CUSNAME', '@item.ADDRESS', '@item.ROLE.MAROLE')" data-toggle="modal" data-target="#exampleModal">CẬP NHẬT</a>
                         </td>
                     </tr>
 
@@ -210,7 +223,7 @@
 
 
 
- 
+
     <script type="text/javascript" defer>
 
         var getEmailTag = document.getElementById('popupEmail');
@@ -304,16 +317,47 @@
                 alert("Số điện thoại phải có từ 10 đến 11 chữ số.");
                 event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu nếu độ dài không hợp lệ.
             }
-            
+
         };
 
     </script>
-    @if (TempData["NotificationCreate"] != null )
+    @if (TempData["NotificationCreate"] != null)
     {
         <script type="text/javascript">
             alert('Tạo tài khoản thành công');
         </script>
     }
+    </script>
+    <script>
+        var getEmailTag = document.getElementById('popupEmail');
+        var getNameTag = document.getElementById('popupName');
+        var getAddressTag = document.getElementById('popupAdrress');
+        var getRoleTag = document.getElementById('popupRole');
+        var getBtnSaveChanges = document.getElementById('btnSaveChanges');
+        var selectedRole; // Khởi tạo biến để lưu trữ quyền hạn đã chọn
 
-</body> 
+        function openPopup(email, name, address, role) {
+            getEmailTag.value = email;
+            getNameTag.value = name;
+            getAddressTag.value = address;
+            getRoleTag.value = role; // Đặt quyền hạn đã chọn trong dropdown
+            selectedRole = role; // Lưu trữ quyền hạn đã chọn trong biến
+        }
+
+        function changeButtonStatus() {
+            // Mã nguồn hiện có để thay đổi trạng thái nút
+            // ...
+
+            // Kiểm tra xem quyền hạn có thay đổi hay không, bật nút "Lưu thay đổi" nếu có
+            if (getRoleTag.value !== selectedRole) {
+                getBtnSaveChanges.removeAttribute("disabled");
+            }
+        }
+
+        // Mã nguồn bổ sung để xử lý việc thay đổi quyền hạn trong dropdown
+        getRoleTag.addEventListener("change", function () {
+            changeButtonStatus(); // Gọi hàm changeButtonStatus khi quyền hạn thay đổi
+        });
+    </script>
+</body>
 </html>
