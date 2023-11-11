@@ -228,7 +228,7 @@
     <br />
     <div class="content container">
         <h3 class="text-header">TẠO LOẠI TÀI KHOẢN</h3>
-        <form class="js-step-form py-md-5" action="@Url.Action("AddCustomerType", "QLTaiKhoan")"  method="post">
+        <form class="js-step-form py-md-5" action="@Url.Action("AddCustomerType", "QLTaiKhoan")" method="post">
             <div class="row justify-content-lg-center">
                 <div class="col-lg-8">
                     <!-- Content Step Form -->
@@ -268,12 +268,52 @@
 
                             </div>
                         </div>
+
+
                         <!-- End Card -->
                     </div>
                 </div>
             </div>
             <!-- End Row -->
         </form>
+        <div class="content container">
+            <h3 class="text-header">XÓA QUYỀN HẠN</h3>
+            <form class="js-step-form py-md-5" action="@Url.Action("DeleteRole", "QLTaiKhoan")" method="post">
+                <div class="row justify-content-lg-center">
+                    <div class="col-lg-8">
+                        <!-- Content Step Form -->
+                        <div id="deleteRoleFormContent">
+                            <!-- Card -->
+                            <div id="deleteRoleForm" class="card card-lg active">
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <!-- Form Group -->
+                                    <div class="row form-group">
+                                        <label for="deleteRole" class="col-sm-3 col-form-label input-label">Chọn Quyền Hạn</label>
+                                        <div class="col-sm-9">
+                                            <select class="custom-select custom-select-lg mb-3" id="deleteRole" name="roleId">
+                                                @foreach (var item in ViewBag.ListRole)
+                                                {
+                                                    <option value="@item.MAROLE">@item.TENROLE</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- End Form Group -->
+                                    <div class="js-add-field row form-group">
+                                        <div class="col-sm-9">
+                                            <button type="submit" class="btn btn-danger">XÓA QUYỀN HẠN</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+                    </div>
+                </div>
+                <!-- End Row -->
+            </form>
+        </div>
     </div>
 
 
@@ -452,5 +492,29 @@
                     alert("@ViewBag.Noti")
         </script>
     }
+<script>
+    $(document).ready(function () {
+    // Add an event when the "Xóa Quyền Hạn" button is clicked
+    $("#deleteRoleBtn").on("click", function () {
+        var selectedRole = $("#createRole").val();
+
+        // Send an AJAX request to delete the role
+        $.ajax({
+            url: "@Url.Action("DeleteRole", "QLTaiKhoan")",
+            type: "POST",
+            data: { roleId: selectedRole },
+            success: function (response) {
+                alert(response); // You can handle the success message here
+                location.reload(); // Refresh the page after deletion
+            },
+            error: function (xhr, status, error) {
+                console.error("Error: " + status + " - " + error);
+            }
+        });
+    });
+});
+
+</script>
+
 </body>
 </html>
