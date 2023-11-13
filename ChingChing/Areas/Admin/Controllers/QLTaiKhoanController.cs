@@ -94,5 +94,23 @@ namespace ChingChing.Areas.Admin.Controllers
             ViewBag.Noti = "Success";
             return RedirectToAction("QLTaiKhoan", "Admin");
         }
+        [HttpPost]
+        public ActionResult DeleteRole(int roleId)
+        {
+            var roleToDelete = db.ROLEs.Find(roleId);
+            if (roleToDelete != null)
+            {
+                db.ROLEs.Remove(roleToDelete);
+                db.SaveChanges();
+                TempData["NotificationDeleteRole"] = "Xóa quyền hạn thành công";
+            }
+            else
+            {
+                TempData["NotificationDeleteRole"] = "Không thể xóa quyền hạn";
+            }
+
+            return RedirectToAction("QLTaiKhoan", "Admin");
+        }
+
     }
 }
