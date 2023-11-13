@@ -14,6 +14,10 @@ namespace ChingChing.Controllers
         DB_ChinhChinhEntities db = new DB_ChinhChinhEntities();
         public ActionResult AddToCart(int idProduct)
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
+            }
             CUSTOMER getCustomer = Session["Email"] as CUSTOMER;
             var itemCart = db.CARTs.Where(x => x.IDPRO == idProduct && x.EMAILCUS == getCustomer.EMAILCUS).FirstOrDefault();
             if (itemCart == null)
@@ -43,6 +47,10 @@ namespace ChingChing.Controllers
         }
         public ActionResult YourCart()
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
+            }
             if (Session["Email"] == null)
             {
                 return RedirectToAction("ErrorPage", "Home");
@@ -163,6 +171,10 @@ namespace ChingChing.Controllers
         }
         public ActionResult ThanksPage()
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
+            }
             return View();
         }
 

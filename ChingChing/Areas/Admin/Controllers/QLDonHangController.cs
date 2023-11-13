@@ -14,7 +14,7 @@ namespace ChingChing.Areas.Admin.Controllers
         {
             if (Session["Email"] == null)
             {
-                return RedirectToAction("ErrorPage", "Home");
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
             }
             int id = int.Parse(idorder);
             List<ORDERDETAIL> getListOrderDetails = db.ORDERDETAILs
@@ -28,7 +28,7 @@ namespace ChingChing.Areas.Admin.Controllers
         {
             if (Session["Email"] == null)
             {
-                return RedirectToAction("ErrorPage", "Home");
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
             }
             string getStatus = returnStatus(status);
             int getIdOrder = int.Parse(idorder);

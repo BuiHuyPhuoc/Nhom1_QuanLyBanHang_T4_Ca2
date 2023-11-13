@@ -16,7 +16,7 @@ namespace ChingChing.Areas.Admin.Controllers
         {
             if (Session["Email"] == null)
             {
-                return RedirectToAction("ErrorPage", "Home");
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
             }
             if (idContact == "")
             {
@@ -31,6 +31,10 @@ namespace ChingChing.Areas.Admin.Controllers
         }
         public ActionResult SendReply(string subject, string content, string to_email, string idContact)
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
+            }
             string _fromGmail = "phuoctestsender@gmail.com";
             string _fromPassword = "bpuhfkknnhyfkmnv";
             string htmlString =

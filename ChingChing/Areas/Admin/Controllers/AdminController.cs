@@ -14,17 +14,17 @@ namespace ChingChing.Areas.Admin.Controllers
         {
             if (Session["Email"] == null)
             {
-                return RedirectToAction("ErrorPage", "Home");
+                return RedirectToAction("ErrorPage", "Home", new { area = ""});
             }
             List<ORDER> getListOrder = db.ORDERs.OrderBy(x => x.DATEORDER).ToList();
             return View(getListOrder);
         }
         public ActionResult QLTaiKhoan()
         {
-            //if (Session["Email"] == null)
-            //{
-            //    return RedirectToAction("ErrorPage", "Home");
-            //}
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
+            }
             List<CUSTOMER> getListCustomer = db.CUSTOMERs.ToList();
             ViewBag.ListRole = db.ROLEs.ToList();
             return View(getListCustomer);
@@ -33,7 +33,7 @@ namespace ChingChing.Areas.Admin.Controllers
         {
             if (Session["Email"] == null)
             {
-                return RedirectToAction("ErrorPage", "Home");
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
             }
             return View();
         }
@@ -41,7 +41,7 @@ namespace ChingChing.Areas.Admin.Controllers
         {
             if (Session["Email"] == null)
             {
-                return RedirectToAction("ErrorPage", "Home");
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
             }
             return View();
         }
@@ -49,7 +49,7 @@ namespace ChingChing.Areas.Admin.Controllers
         {
             if (Session["Email"] == null)
             {
-                return RedirectToAction("ErrorPage", "Home");
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
             }
             return View();
         }
@@ -57,7 +57,7 @@ namespace ChingChing.Areas.Admin.Controllers
         {
             if (Session["Email"] == null)
             {
-                return RedirectToAction("ErrorPage", "Home");
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
             }
             List<CONTACT> listContact = db.CONTACTs.ToList();
             return View(listContact);
