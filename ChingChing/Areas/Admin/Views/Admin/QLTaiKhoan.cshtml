@@ -242,7 +242,7 @@
 
                                 <!-- Form Group -->
                                 <div class="row form-group">
-                                    <label for="emailLabel" class="col-sm-3 col-form-label input-label">Tên loại khách hàng</label>
+                                    <label for="emailLabel" class="col-sm-3 col-form-label input-label">Tên loại tài khoản</label>
                                     <div class="col-sm-9">
                                         <input id="" type="text" class="form-control" name="ten" placeholder="Tên loại" required>
                                     </div>
@@ -423,7 +423,7 @@
             alert('Tạo tài khoản thành công');
         </script>
     }
-    </script>
+
     <script>
         var getEmailTag = document.getElementById('popupEmail');
         var getNameTag = document.getElementById('popupName');
@@ -492,7 +492,7 @@
                     alert("@ViewBag.Noti")
         </script>
     }
-<script>
+    <script>
     $(document).ready(function () {
     // Add an event when the "Xóa Quyền Hạn" button is clicked
     $("#deleteRoleBtn").on("click", function () {
@@ -514,7 +514,18 @@
     });
 });
 
-</script>
+    </script>
+
+    @if (TempData["NotificationDeleteRole"] != null)
+    {
+        <script>
+            var expectedValue = "@TempData["NotificationDeleteRole"]";
+            var convertedString = expectedValue.replace(/&#(\d+);/g, function (match, dec) {
+                return String.fromCharCode(dec);
+            });
+            alert(convertedString)
+        </script>
+    }
 
 </body>
 </html>

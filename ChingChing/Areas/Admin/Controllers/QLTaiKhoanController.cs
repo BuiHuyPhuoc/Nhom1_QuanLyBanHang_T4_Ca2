@@ -100,6 +100,12 @@ namespace ChingChing.Areas.Admin.Controllers
             var roleToDelete = db.ROLEs.Find(roleId);
             if (roleToDelete != null)
             {
+                CUSTOMER getCustomer = db.CUSTOMERs.Where(x => x.MAROLE == roleToDelete.MAROLE).FirstOrDefault();
+                if (getCustomer != null)
+                {
+                    TempData["NotificationDeleteRole"] = "Quyền hạn có người sử dụng, không thể xoá";
+                    return RedirectToAction("QLTaiKhoan", "Admin");
+                }
                 db.ROLEs.Remove(roleToDelete);
                 db.SaveChanges();
                 TempData["NotificationDeleteRole"] = "Xóa quyền hạn thành công";
