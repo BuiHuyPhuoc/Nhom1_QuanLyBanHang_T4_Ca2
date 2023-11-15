@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ChingChing",
+    "\\ChingChing\\Controllers"
   ],
+  "SelectedNode": "\\ChingChing\\Controllers\\UsersController.cs",
   "PreviewInSolutionExplorer": false
 }
