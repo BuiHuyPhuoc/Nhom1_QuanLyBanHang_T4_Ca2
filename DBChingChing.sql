@@ -129,6 +129,7 @@ INSERT INTO [ROLE] (TENROLE, CHIETKHAU) VALUES ('CUSTOMER_VIP', 10.0/100)
 
 INSERT INTO CUSTOMER VALUES ('chinhchinh@gmail.com', '123456', 'Chinh Chinh', NULL, null , '1')
 INSERT INTO CUSTOMER VALUES ('chinhchinhdemo@gmail.com', '123456', 'KH1', N'111, Mỹ Hòa, Trung Chánh, Hóc Môn', null, '2')
+INSERT INTO CUSTOMER VALUES ('dfzdfh@gmail.com', '123456', 'KH1', N'111, Mỹ Hòa, Trung Chánh, Hóc Môn', null, '2')
 
 INSERT INTO CATEGORY (TENCATE) VALUES (N'ÁO KHOÁC')
 INSERT INTO CATEGORY (TENCATE) VALUES (N'TÚI XÁCH DA')
