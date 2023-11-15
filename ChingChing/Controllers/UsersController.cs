@@ -373,6 +373,48 @@ namespace ChingChing.Controllers
             db.SaveChanges();
             return RedirectToAction("UserDetail", "Users");
         }
-       
+
+        public ActionResult ChangePassword()
+        {
+            // Logic để hiển thị giao diện đổi mật khẩu ở đây
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(string OldPassCus, string NewPass, string ReNewPass)
+        {
+            CUSTOMER customer = Session["Email"] as CUSTOMER;
+            // Logic để thay đổi mật khẩu ở đây
+            if (NewPass.Length < 6)
+            {
+                ViewBag.ErrorMessage = "Mật khẩu mới phải chứa ít nhất 6 kí tự.";
+                return View();
+            }
+            else if (customer.MATKHAU.Trim() == NewPass)
+            {
+                ViewBag.ErrorMessage = "Mật khẩu vừa nhập trùng với mật khẩu cũ";
+                return View();
+            }
+            else if (NewPass != ReNewPass)
+            {
+                ViewBag.ErrorMessage = "Mật khẩu mới và nhập lại mật khẩu mới không trùng khớp";
+                return View();
+            }
+            else if (customer.MATKHAU.Trim() != OldPassCus)
+            {
+                ViewBag.ErrorMessage = "Sai mật khẩu cũ";
+                return View();
+            }
+            else
+            {
+                customer = db.CUSTOMERs.Where(x => x.EMAILCUS == customer.EMAILCUS).FirstOrDefault();
+                customer.MATKHAU = NewPass;
+                db.SaveChanges();
+                return RedirectToAction("Logout", "Users");
+            }
+
+
+        }
+
     }
 }
