@@ -29,7 +29,7 @@ namespace ChingChing.Models
         public Nullable<decimal> PRICE { get; set; }
         public string IMAGEPRO { get; set; }
         public Nullable<short> QUANTITY { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BILLDETAIL> BILLDETAILs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -15,10 +15,19 @@ namespace ChingChing.Areas.Admin.Controllers
         public ActionResult UpdateAccount(string email, string name, string address)
         {
             var getAccount = db.CUSTOMERs.Where(x => x.EMAILCUS == email).FirstOrDefault();
-            getAccount.CUSNAME = name;
-            getAccount.ADDRESS = address;
-            db.SaveChanges();
-            TempData["Notification"] = "Cập nhật tài khoản thành công";
+
+            if (getAccount != null)
+            {
+                getAccount.CUSNAME = name;
+                getAccount.ADDRESS = address;
+                db.SaveChanges();
+                TempData["Notification"] = "Cập nhật tài khoản thành công";
+            }
+            else
+            {
+                TempData["Notification"] = "Không tìm thấy tài khoản";
+            }
+
             return RedirectToAction("QLTaiKhoan", "Admin");
         }
         public JsonResult changeButtonStatus(string email, string name, string address)

@@ -14,10 +14,11 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Tên sản phẩm</th>
+                <th>Tên Sản Phẩm</th>
                 <th>Mô tả</th>
                 <th>Giá</th>
-                <!-- Thêm thêm cột nếu cần -->
+                <th>ID Danh Mục</th>
+                <th>Số Lượng</th> 
             </tr>
         </thead>
         <tbody>
@@ -28,16 +29,19 @@
                     <td>@product.NAMEPRO</td>
                     <td>@product.DESCRIPTIONPRO</td>
                     <td>@product.PRICE</td>
+                    <td>@product.IDCATE</td> <!-- Hiển thị IDCATE -->
+                    <td>@product.QUANTITY</td> <!-- Hiển thị QUANTITY -->
+                    <td><img src="@product.IMAGEPRO" alt="Product Image" style="max-width: 100px; max-height: 100px;" /></td>
                     <td>
-                        <a href="@Url.Action("EditProduct","QLSanPham", new { id = product.IDPRO })">Cập nhật</a> |
-                        <a href="@Url.Action("DeleteProduct","QLSanPham", new { id = product.IDPRO })">Xóa</a>
+                        <a href="@Url.Action("EditProduct", "QLSanPham", new { id = product.IDPRO })">Cập nhật</a> |
+                        <a href="@Url.Action("DeleteProduct", "QLSanPham", new { id = product.IDPRO })">Xóa</a>
                     </td>
-                    <!-- Thêm thêm cột nếu cần -->
+
                 </tr>
             }
             <tr>
                 <td colspan="5">
-                    <a href="@Url.Action("AddProduct", "QLSanPham")">Thêm Sản Phẩm Mới</a>
+                    <a href="@Url.Action("AddProduct","QLSanPham")">Thêm Sản Phẩm Mới</a>
                 </td>
             </tr>
         </tbody>
