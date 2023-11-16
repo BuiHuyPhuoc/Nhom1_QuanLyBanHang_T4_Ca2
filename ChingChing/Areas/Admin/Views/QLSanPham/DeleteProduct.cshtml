@@ -1,0 +1,8 @@
+﻿<!-- Views/Admin/DeleteProduct.cshtml -->
+
+<h2>Xác nhận xóa sản phẩm</h2>
+<p>Bạn có chắc chắn muốn xóa sản phẩm này không?</p>
+<form method="post" action="@Url.Action("DeleteProduct", new { id = Model.IDPRO })">
+    <input type="submit" value="Xóa" />
+    <a href="@Url.Action("QLSanPham")">Hủy bỏ</a>
+</form>

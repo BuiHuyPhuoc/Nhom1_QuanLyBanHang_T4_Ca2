@@ -39,11 +39,11 @@ namespace ChingChing.Areas.Admin.Controllers
         }
         public ActionResult QLSanPham()
         {
-            if (Session["Email"] == null)
-            {
-                return RedirectToAction("ErrorPage", "Home", new { area = "" });
-            }
-            return View();
+            // Lấy danh sách sản phẩm từ cơ sở dữ liệu
+            var products = db.PRODUCTs.ToList(); // Giả sử db là một đối tượng DbContext của bạn
+
+            // Chuyển danh sách sản phẩm đến view
+            return View(products);
         }
         public ActionResult QLLoaiSanPham()
         {
