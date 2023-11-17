@@ -9,69 +9,97 @@
 
 <h2>Thêm Sản Phẩm</h2>
 
-@using (Html.BeginForm())
-{
+<form action="@Url.Action("AddProduct", "QLSanPham")" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Thông Tin Sản Phẩm Mới</h4>
+        <hr />
 
-<div class="form-horizontal">
-    <h4>Thông Tin Sản Phẩm Mới</h4>
-    <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <!--<div class="form-group">
+            @Html.LabelFor(model => model.NAMEPRO, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NAMEPRO, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NAMEPRO, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.NAMEPRO, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.NAMEPRO, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.NAMEPRO, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.DESCRIPTIONPRO, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DESCRIPTIONPRO, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DESCRIPTIONPRO, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DESCRIPTIONPRO, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DESCRIPTIONPRO, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DESCRIPTIONPRO, "", new { @class = "text-danger" })
-        </div>
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PRICE, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PRICE, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PRICE, "", new { @class = "text-danger" })
+            </div>
+        </div>-->
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.PRICE, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.PRICE, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.PRICE, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IMAGEPRO, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.IMAGEPRO, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.IMAGEPRO, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IMAGEPRO, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="file" id="file" />
-            @Html.ValidationMessageFor(model => model.IMAGEPRO, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IDCATE, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("IDCATE", ViewBag.Categories as SelectList, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.IDCATE, "", new { @class = "text-danger" })
-        </div>
-    </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Tên sản phẩm:</span>
+            </div>
+            <input id="popupEmail" name="tensp" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Thêm" class="btn btn-primary" />
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Mô tả:</span>
+            </div>
+            <input id="popupEmail" name="dessp" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Giá:</span>
+            </div>
+            <input id="popupEmail" name="gia" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Hình ảnh:</span>
+            </div>
+            <input id="popupEmail" name="anhmota" type="file" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Số lượng:</span>
+            </div>
+            <input id="popupEmail" name="sl" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+
+        </div>
+        <select id="popupRole" name="idcate" class="custom-select" aria-label="Chọn loại hàng">
+            @foreach (var role in ViewBag.Categories)
+            {
+                <option value="@role.IDCATE">@role.TENCATE</option>
+            }
+        </select>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.IMAGEPRO, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.IMAGEPRO, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IMAGEPRO, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+            </div>
         </div>
     </div>
-</div>
-}
+</form>
+   
 
 <div>
-    @Html.ActionLink("Quay lại", "QLSanPham")
+    @Html.ActionLink("Quay lại","QLSanPham")
 </div>
