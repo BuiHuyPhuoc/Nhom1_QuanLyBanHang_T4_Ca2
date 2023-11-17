@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ChingChing.Models;
+using PagedList;
+
 namespace ChingChing.Areas.Admin.Controllers
 {
     public class AdminController : Controller
@@ -37,10 +39,18 @@ namespace ChingChing.Areas.Admin.Controllers
             }
             return View();
         }
-        public ActionResult QLSanPham()
+        public ActionResult QLSanPham(int? page)
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("ErrorPage", "Home", new { area = "" });
+            }
+
+            int pageNumber = (page ?? 1);
+            int pageSize = 10; // Số sản phẩm trên mỗi trang
+
             // Lấy danh sách sản phẩm từ cơ sở dữ liệu
-            var products = db.PRODUCTs.ToList(); // Giả sử db là một đối tượng DbContext của bạn
+            var products = db.PRODUCTs.OrderBy(x => x.IDPRO).ToPagedList(pageNumber, pageSize);
 
             // Chuyển danh sách sản phẩm đến view
             return View(products);

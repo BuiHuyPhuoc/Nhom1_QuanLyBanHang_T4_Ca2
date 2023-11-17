@@ -36,15 +36,17 @@ namespace ChingChing.Areas.Admin.Controllers
             return (name == getAccount.CUSNAME && address == getAccount.ADDRESS) ? Json(true) : Json(false);
         }
 
-        public ActionResult AdminCreateAccount(string name, string email, string phone, string address, string pass, List<int> roles)
+        public ActionResult AdminCreateAccount(string name, string email, string phone, string address, string pass, int role)
         {
+
             CUSTOMER customer = new CUSTOMER
             {
                 EMAILCUS = email,
                 CUSNAME = name,
                 PHONE = phone,
                 ADDRESS = address,
-                MATKHAU = pass
+                MATKHAU = pass,
+                MAROLE = role,
             };
 
             //foreach (int roleId in roles)

@@ -44,19 +44,24 @@
             @Html.ValidationMessageFor(model => model.PRICE, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IMAGEPRO, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.IMAGEPRO, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.IMAGEPRO, "", new { @class = "text-danger" })
+
+    @Html.LabelFor(model => model.IMAGEPRO, htmlAttributes: new { @class = "control-label col-md-2" })
+
+    @if (string.IsNullOrEmpty(Model.IMAGEPRO))
+    {
+        @Html.TextBoxFor(model => model.IMAGEPRO, new { @class = "form-control" })
+    }
+    else
+    {
+        <img src="@Model.IMAGEPRO" alt="Product Image" class="img-thumbnail" />
+        <input type="hidden" name="IMAGEPRO" value="@Model.IMAGEPRO" />
+    }
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Hình ảnh:</span>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IMAGEPRO, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="file" id="file" />
-            @Html.ValidationMessageFor(model => model.IMAGEPRO, "", new { @class = "text-danger" })
-        </div>
+        <input id="popupEmail" name="anhmota" type="file" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.IDCATE, htmlAttributes: new { @class = "control-label col-md-2" })
