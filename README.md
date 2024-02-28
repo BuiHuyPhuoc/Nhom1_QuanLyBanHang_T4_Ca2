@@ -33,11 +33,11 @@ Ngoài ra, hệ thống cho phép thực hiện các hoạt động quản lý c
 - Giảm giá thành viên VIP
 - Quản lý hóa đơn (xem thông tin hóa đơn, thu nhập, …)
 - Quản lí loại khách hàng (quyền hạn)
-# Mục đích
-Dành cho các khách hàng 		
-Có nhu cầu mua sắm trực tuyến		
-Trang web  "Chinh Chinh" là một website bán quần áo trực tuyến		
-Cho phép tra cứu, mua sắm quần áo trực tuyến		
+# Mục đích.
+Dành cho các khách hàng 		.
+Có nhu cầu mua sắm trực tuyến		.
+Trang web  "Chinh Chinh" là một website bán quần áo trực tuyến		.
+Cho phép tra cứu, mua sắm quần áo trực tuyến	.	
 # Mục tiêu
 Hoàn thành các chức năng đã đề ra, xây dựng giao diện ưa nhìn, phân quyền cho ứng dụng, phát triển một số tính năng như: chức năng tích điểm để giảm giá và chức năng tương tác với gmail
 # Công nghệ
